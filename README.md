@@ -99,3 +99,100 @@ Reserva
     ├── Data
     ├── Repositories
     └── Migrations
+```
+## Layers
+
+### Presentation
+
+Blazor components
+Pages
+Layouts
+UI styling
+Client-side JavaScript
+
+### Application
+
+Business logic
+DTOs
+Service interfaces
+Repository interfaces
+
+### Domain
+
+Core entities
+Relationships
+Enums
+
+### Infrastructure
+
+Entity Framework Core
+SQL Server
+Database context
+Repository implementations
+Database migrations
+
+## Main Entities
+```text
+User
+ │
+ ├── Customer
+ ├── Business Owner
+ └── Employee
+       │
+       ├── Services
+       ├── Working Hours
+       └── Appointments
+
+Business
+ │
+ ├── Services
+ ├── Employees
+ ├── Working Hours
+ └── Appointments
+
+Service
+ │
+ ├── Price
+ ├── Duration
+ └── Employees
+
+Appointment
+ │
+ ├── Customer
+ ├── Employee
+ ├── Service
+ └── Business
+```
+ ## User Roles
+
+Reserva supports three main user roles:
+
+Role	Main Responsibilities
+Customer	Browse services and make appointments
+Business Owner	Manage businesses, employees, services, and appointments
+Employee	View and manage assigned appointments
+
+## Screenshots
+Home Page
+
+Add screenshot here
+
+Business Profile
+
+Add screenshot here
+
+Booking
+
+Add screenshot here
+
+Customer Dashboard
+
+Add screenshot here
+
+Employee Dashboard
+
+Add screenshot here
+
+Business Management
+
+Add screenshot here
