@@ -171,28 +171,34 @@ Role	Main Responsibilities
 Customer	Browse services and make appointments
 Business Owner	Manage businesses, employees, services, and appointments
 Employee	View and manage assigned appointments
+## 📸 Screenshots
 
-## Screenshots
-Home Page
+### Home Page
 
-Add screenshot here
+![Home Page](screenshots/home.png)
 
-Business Profile
+### Business Profile
 
-Add screenshot here
+![Business Profile](screenshots/business-profile.png)
 
-Booking
+### Booking
 
-Add screenshot here
+![Booking](screenshots/booking.png)
 
-Customer Dashboard
+### Customer Dashboard
 
-Add screenshot here
+![Customer Dashboard](screenshots/customer-dashboard.png)
 
-Employee Dashboard
+### Employee Dashboard
 
-Add screenshot here
+![Employee Dashboard](screenshots/employee-dashboard.png)
+![Employee Dashboard](screenshots/employee-dashboard2.png)
 
-Business Management
+
+### Business Management
+
+![Business Management](screenshots/business-management.png)
+![Business Management](screenshots/business-management2.png)
+
 
 Add screenshot here
