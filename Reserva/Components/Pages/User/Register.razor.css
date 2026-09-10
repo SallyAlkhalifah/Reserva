@@ -1,0 +1,475 @@
+/* =========================================================
+   RESERVA — REGISTER PAGE
+   Premium / Modern / Elegant
+========================================================= */
+
+.register-page {
+    min-height: calc(100vh - 80px);
+    padding: 90px 24px 110px;
+    background: radial-gradient(circle at 10% 10%, rgba(197, 141, 59, 0.07), transparent 30%), radial-gradient(circle at 90% 85%, rgba(9, 40, 70, 0.05), transparent 30%), #fafaf8;
+    box-sizing: border-box;
+}
+
+.register-container {
+    width: 100%;
+    max-width: 920px;
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.register-header {
+    max-width: 680px;
+    margin: 0 auto 55px;
+    text-align: center;
+}
+
+.register-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    color: #b57d2f;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 4px;
+}
+
+    .register-eyebrow::before,
+    .register-eyebrow::after {
+        content: "";
+        width: 28px;
+        height: 1px;
+        background: #d8b27a;
+    }
+
+.register-header h1 {
+    margin: 0;
+    color: #082844;
+    font-size: clamp(42px, 6vw, 62px);
+    font-weight: 700;
+    letter-spacing: -2.5px;
+    line-height: 1.05;
+}
+
+    .register-header h1 span {
+        color: #b57d2f;
+        font-style: italic;
+        font-weight: 500;
+    }
+
+.register-header p {
+    max-width: 520px;
+    margin: 22px auto 0;
+    color: #718092;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   ACCOUNT TYPE
+========================================================= */
+
+.account-type-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.account-type-card {
+    position: relative;
+    min-height: 275px;
+    padding: 36px;
+    overflow: hidden;
+    border: 1px solid #e7e3dc;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #082844;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.35s cubic-bezier(.2,.8,.2,1), border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+    /* subtle decorative glow */
+    .account-type-card::before {
+        content: "";
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        right: -70px;
+        top: -70px;
+        border-radius: 50%;
+        background: rgba(197, 141, 59, 0.07);
+        transition: transform 0.4s ease;
+    }
+
+    .account-type-card::after {
+        content: "→";
+        position: absolute;
+        right: 30px;
+        bottom: 28px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #e5d8c5;
+        border-radius: 50%;
+        color: #b57d2f;
+        font-size: 19px;
+        transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    }
+
+    .account-type-card:hover {
+        transform: translateY(-8px);
+        border-color: #d4ae73;
+        box-shadow: 0 25px 60px rgba(8, 40, 68, 0.09), 0 5px 15px rgba(197, 141, 59, 0.06);
+    }
+
+        .account-type-card:hover::before {
+            transform: scale(1.35);
+        }
+
+        .account-type-card:hover::after {
+            background: #b57d2f;
+            color: white;
+            transform: translateX(4px);
+        }
+
+
+/* ICON */
+
+.account-type-icon {
+    position: relative;
+    z-index: 1;
+    width: 58px;
+    height: 58px;
+    margin-bottom: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #eadbc5;
+    border-radius: 17px;
+    background: linear-gradient( 145deg, #fffaf2, #f5eadb );
+    color: #b57d2f;
+    font-size: 23px;
+    box-shadow: 0 8px 20px rgba(197, 141, 59, 0.08);
+}
+
+.account-type-card h2 {
+    position: relative;
+    z-index: 1;
+    margin: 0 0 10px;
+    color: #082844;
+    font-size: 23px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.account-type-card p {
+    position: relative;
+    z-index: 1;
+    max-width: 330px;
+    margin: 0;
+    color: #7b8794;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.account-type-arrow {
+    display: none;
+}
+
+
+/* =========================================================
+   FORM CARD
+========================================================= */
+
+.register-form-card {
+    position: relative;
+    padding: 46px;
+    border: 1px solid #e7e3dc;
+    border-radius: 26px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 30px 80px rgba(8, 40, 68, 0.07), 0 4px 20px rgba(8, 40, 68, 0.03);
+    backdrop-filter: blur(10px);
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 35px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #7a8794;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+    .back-button:hover {
+        color: #082844;
+        transform: translateX(-3px);
+    }
+
+
+/* =========================================================
+   SELECTED ACCOUNT
+========================================================= */
+
+.selected-account {
+    position: relative;
+    margin-bottom: 38px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #eeeae4;
+}
+
+    .selected-account span {
+        display: block;
+        margin-bottom: 9px;
+        color: #b57d2f;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 3px;
+    }
+
+    .selected-account h2 {
+        margin: 0;
+        color: #082844;
+        font-size: 30px;
+        font-weight: 700;
+        letter-spacing: -1px;
+    }
+
+/* =========================================================
+   INPUTS
+========================================================= */
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+    .form-group label {
+        display: block;
+        margin-bottom: 9px;
+        color: #263b4d;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+    }
+
+/* IMPORTANT: InputText is a child component */
+::deep input.form-input {
+    display: block;
+    width: 100%;
+    height: 48px;
+    padding: 0 15px;
+    box-sizing: border-box;
+    border: 1px solid #e2dfda;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #263b4d;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+    ::deep input.form-input::placeholder {
+        color: #aab2ba;
+        font-size: 13px;
+    }
+
+    ::deep input.form-input:hover {
+        border-color: #d4cfc7;
+    }
+
+    ::deep input.form-input:focus {
+        border-color: #c49a5b;
+        background: #ffffff;
+        box-shadow: 0 0 0 3px rgba(197, 141, 59, 0.10);
+    }
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.register-button {
+    position: relative;
+    width: 100%;
+    height: 56px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 12px;
+    background: #082844;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+    .register-button::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient( 90deg, transparent, rgba(255,255,255,0.10), transparent );
+        transform: translateX(-100%);
+        transition: transform 0.5s ease;
+    }
+
+    .register-button:hover {
+        background: #0d3555;
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(8, 40, 68, 0.18);
+    }
+
+        .register-button:hover::before {
+            transform: translateX(100%);
+        }
+
+    .register-button:active {
+        transform: translateY(0);
+    }
+
+    .register-button:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.register-error {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+    padding: 13px 16px;
+    border: 1px solid #f0cccc;
+    border-radius: 11px;
+    background: #fff7f7;
+    color: #a82b2b;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+.login-link {
+    margin-top: 28px;
+    color: #7b8794;
+    font-size: 13px;
+    text-align: center;
+}
+
+    .login-link a {
+        margin-left: 5px;
+        color: #b57d2f;
+        font-weight: 700;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+        .login-link a:hover {
+            color: #082844;
+        }
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .register-page {
+        padding: 60px 18px 80px;
+    }
+
+    .register-header {
+        margin-bottom: 38px;
+    }
+
+        .register-header h1 {
+            font-size: 42px;
+            letter-spacing: -1.8px;
+        }
+
+        .register-header p {
+            font-size: 14px;
+        }
+
+    .account-type-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .account-type-card {
+        min-height: 245px;
+        padding: 28px;
+    }
+
+    .account-type-icon {
+        margin-bottom: 28px;
+    }
+
+    .register-form-card {
+        padding: 30px 22px;
+        border-radius: 20px;
+    }
+
+    .selected-account h2 {
+        font-size: 26px;
+    }
+}
+
+
+@media (max-width: 420px) {
+
+    .register-page {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .register-header h1 {
+        font-size: 36px;
+    }
+
+    .register-eyebrow {
+        letter-spacing: 3px;
+    }
+
+    .account-type-card {
+        min-height: 230px;
+    }
+
+    .register-form-card {
+        padding: 26px 18px;
+    }
+}
+

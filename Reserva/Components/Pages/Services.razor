@@ -1,0 +1,192 @@
+﻿@page "/services"
+
+@using Reserva.Application.DTOs
+@using Reserva.Application.Interfaces
+
+@inject IBusinessService BusinessService
+
+<PageTitle>Reserva - Services</PageTitle>
+
+<div class="services-page">
+
+    <!-- HEADER -->
+    <section class="services-hero">
+
+        <div class="services-container">
+
+            <span class="services-eyebrow">
+                EXPLORE
+            </span>
+
+            <h1>
+                Find your <span>perfect place</span>
+            </h1>
+
+            <p>
+                Discover trusted businesses and book your appointment
+                with ease.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- BUSINESSES -->
+    <section class="businesses-section">
+
+        <div class="services-container">
+
+            @if (businesses == null)
+            {
+                <div class="services-loading">
+                    Loading...
+                </div>
+            }
+            else if (!businesses.Any())
+            {
+                <div class="empty-businesses">
+
+                    <span class="empty-icon">◇</span>
+
+                    <h2>No businesses available</h2>
+
+                    <p>
+                        There are no businesses available in this category yet.
+                    </p>
+
+                </div>
+            }
+            else
+            {
+                <div class="businesses-grid">
+
+                    @foreach (var business in businesses)
+                    {
+                        <a href="@($"/business/{business.Id}")"
+                           class="business-card">
+
+                            <div class="business-image">
+
+                                @if (!string.IsNullOrWhiteSpace(business.LogoUrl))
+                                {
+                                    <img src="@business.LogoUrl"
+                                         alt="@business.Name" />
+                                }
+                                else
+                                {
+                                    <div class="business-image-placeholder">
+                                        @business.Name.Substring(0, 1).ToUpper()
+                                    </div>
+                                }
+
+                            </div>
+
+                            <div class="business-card-content">
+
+                                <span class="business-category">
+                                    @business.Category
+                                </span>
+
+                                <h2>
+                                    @business.Name
+                                </h2>
+
+                                @if (!string.IsNullOrWhiteSpace(business.Description))
+                                {
+                                    <p>
+                                        @business.Description
+                                    </p>
+                                }
+
+                                <div class="business-location">
+                                    <span>
+                                        @business.City
+                                    </span>
+                                </div>
+
+                                <div class="business-card-footer">
+                                    <span>View Details</span>
+                                    <strong>→</strong>
+                                </div>
+
+                            </div>
+
+                        </a>
+                    }
+
+                </div>
+            }
+
+        </div>
+
+    </section>
+
+</div>
+
+
+@code {
+
+    [SupplyParameterFromQuery(Name = "category")]
+    public string? Category { get; set; }
+
+    private List<BusinessDto>? businesses;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var allBusinesses = await BusinessService.GetAllBusinessesAsync();
+
+        if (string.IsNullOrWhiteSpace(Category))
+        {
+            businesses = allBusinesses;
+        }
+        else
+        {
+            businesses = allBusinesses
+                .Where(b => MatchesCategory(b.Category, Category))
+                .ToList();
+        }
+    }
+
+    private bool MatchesCategory(
+        string? businessCategory,
+        string? selectedCategory)
+    {
+        if (string.IsNullOrWhiteSpace(businessCategory) ||
+            string.IsNullOrWhiteSpace(selectedCategory))
+        {
+            return false;
+        }
+
+        var businessCategoryNormalized =
+            businessCategory.Trim().ToLowerInvariant();
+
+        var selectedCategoryNormalized =
+            selectedCategory.Trim().ToLowerInvariant();
+
+        return selectedCategoryNormalized switch
+        {
+            "beauty" =>
+                businessCategoryNormalized is
+                    "beauty" or
+                    "salon" or
+                    "salons" or
+                    "spa" or
+                    "salon / spa",
+
+            "clinics" =>
+                businessCategoryNormalized is
+                    "clinic" or
+                    "clinics",
+
+            "fitness" =>
+                businessCategoryNormalized is
+                    "fitness" or
+                    "gym",
+
+            _ =>
+                businessCategoryNormalized ==
+                selectedCategoryNormalized
+        };
+    }
+}اص 

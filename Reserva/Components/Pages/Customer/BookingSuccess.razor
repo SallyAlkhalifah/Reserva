@@ -1,0 +1,72 @@
+﻿@page "/booking-success"
+
+@using Reserva.Application.Services
+
+@inject CurrentUserService CurrentUserService
+@inject NavigationManager Navigation
+
+<PageTitle>Reserva - Booking Confirmed</PageTitle>
+
+<div class="booking-success-page">
+
+    <div class="booking-success-card">
+
+        <div class="booking-success-icon">
+            ✓
+        </div>
+
+        <span class="booking-success-eyebrow">
+            BOOKING CONFIRMED
+        </span>
+
+        <h1>
+            You're all
+            <span>booked.</span>
+        </h1>
+
+        <p>
+            Your appointment has been successfully booked.
+            You can view your booking details from your profile.
+        </p>
+
+        <div class="booking-success-actions">
+
+            <button type="button"
+                    class="success-primary-button"
+                    @onclick="GoToDashboard">
+                View My Bookings
+                <span>→</span>
+            </button>
+
+            <button type="button"
+                    class="success-secondary-button"
+                    @onclick="GoToServices">
+                Browse More Services
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    private void GoToDashboard()
+    {
+        if (CurrentUserService.User != null)
+        {
+            Navigation.NavigateTo(
+                $"/customer/dashboard?userId={CurrentUserService.User.Id}");
+        }
+        else
+        {
+            Navigation.NavigateTo("/login");
+        }
+    }
+
+    private void GoToServices()
+    {
+        Navigation.NavigateTo("/services");
+    }
+}

@@ -1,0 +1,179 @@
+﻿@page "/booking-cart"
+
+@using Reserva.Application.DTOs
+@using Reserva.Application.Interfaces
+
+@inject IBookingCartService BookingCartService
+@inject NavigationManager Navigation
+
+<PageTitle>Reserva - Booking Cart</PageTitle>
+
+<div class="booking-cart-page">
+
+    <div class="booking-cart-container">
+
+        <div class="booking-cart-header">
+
+            <span class="booking-cart-eyebrow">
+                YOUR BOOKING
+            </span>
+
+            <h1>
+                Booking <span>cart.</span>
+            </h1>
+
+            <p>
+                Review the services you want to book before choosing your appointment time.
+            </p>
+
+        </div>
+
+
+        @if (!BookingCartService.Items.Any())
+        {
+            <div class="empty-cart">
+
+                <div class="empty-cart-icon">
+                    🛒
+                </div>
+
+                <h2>
+                    Your cart is empty
+                </h2>
+
+                <p>
+                    Explore our businesses and choose a service to get started.
+                </p>
+
+                <a href="/services" class="cart-browse-button">
+                    Browse Services
+                    <span>→</span>
+                </a>
+
+            </div>
+        }
+        else
+        {
+            <div class="booking-cart-layout">
+
+                <div class="booking-cart-items">
+
+                    @foreach (var item in BookingCartService.Items)
+                    {
+                        <article class="booking-cart-item">
+
+                            <div class="booking-cart-item-info">
+
+                                <span class="booking-cart-business">
+                                    @item.BusinessName
+                                </span>
+
+                                <h3>
+                                    @item.ServiceName
+                                </h3>
+
+                                <div class="booking-cart-meta">
+
+                                    <span>
+                                        @item.EmployeeName
+                                    </span>
+
+                                    <span>•</span>
+
+                                    <span>
+                                        @item.AppointmentDate.ToString("ddd, dd MMM yyyy")
+                                    </span>
+
+                                    <span>•</span>
+
+                                    <span>
+                                        @item.AppointmentDate.ToString("hh:mm tt")
+                                    </span>
+
+                                    <span>•</span>
+
+                                    <span>
+                                        @item.DurationInMinutes min
+                                    </span>
+
+                                    <span>•</span>
+
+                                    <strong>
+                                        @item.Price.ToString("0.##") SAR
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                            <button type="button"
+                                    class="remove-cart-item"
+                                    @onclick="() => RemoveItem(item.ServiceId)">
+                                Remove
+                            </button>
+
+                        </article>
+                    }
+
+                </div>
+
+
+                <aside class="booking-cart-summary">
+
+                    <span>
+                        BOOKING SUMMARY
+                    </span>
+
+                    <h2>
+                        Your booking
+                    </h2>
+
+                    <div class="cart-summary-row">
+                        <span>Services</span>
+
+                        <strong>
+                            @BookingCartService.Items.Count
+                        </strong>
+                    </div>
+
+                    <div class="cart-summary-row cart-total">
+                        <span>Total</span>
+
+                        <strong>
+                            @BookingCartService.GetTotal().ToString("0.##")
+                            SAR
+                        </strong>
+                    </div>
+
+                    <button type="button"
+                            class="continue-booking-button"
+                            @onclick="ContinueBooking">
+
+                        Continue to Booking
+
+                        <span>→</span>
+
+                    </button>
+
+                </aside>
+
+            </div>
+        }
+
+    </div>
+
+</div>
+
+
+@code {
+
+    private void RemoveItem(Guid serviceId)
+    {
+        BookingCartService.RemoveService(serviceId);
+    }
+
+    private void ContinueBooking()
+    {
+        Navigation.NavigateTo("/booking");
+    }
+}

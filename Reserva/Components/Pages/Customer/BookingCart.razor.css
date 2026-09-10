@@ -1,0 +1,385 @@
+/* CSS for BookingCart component */
+/* =========================================================
+   BOOKING CART
+   ========================================================= */
+
+.booking-cart-page {
+    min-height: calc(100vh - 90px);
+    background: #f8f9fb;
+    padding: 80px 0 110px;
+}
+
+.booking-cart-container {
+    width: min(1180px, 92%);
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.booking-cart-header {
+    margin-bottom: 55px;
+}
+
+.booking-cart-eyebrow {
+    display: inline-block;
+    margin-bottom: 14px;
+    color: #c99135;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 5px;
+}
+
+.booking-cart-header h1 {
+    margin: 0 0 15px;
+    color: #0d2d4a;
+    font-size: clamp(42px, 5vw, 64px);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -2px;
+}
+
+    .booking-cart-header h1 span {
+        color: #c99135;
+    }
+
+.booking-cart-header p {
+    max-width: 620px;
+    margin: 0;
+    color: #718096;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   CART LAYOUT
+   ========================================================= */
+
+.booking-cart-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 350px;
+    gap: 30px;
+    align-items: start;
+}
+
+
+/* =========================================================
+   CART ITEMS
+   ========================================================= */
+
+.booking-cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.booking-cart-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 28px 30px;
+    background: #ffffff;
+    border: 1px solid #e7eaf0;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(13, 45, 74, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+    .booking-cart-item:hover {
+        transform: translateY(-2px);
+        border-color: #d9c39b;
+        box-shadow: 0 14px 35px rgba(13, 45, 74, 0.08);
+    }
+
+
+/* =========================================================
+   ITEM INFO
+   ========================================================= */
+
+.booking-cart-item-info {
+    min-width: 0;
+}
+
+.booking-cart-business {
+    display: block;
+    margin-bottom: 8px;
+    color: #c99135;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.booking-cart-item h3 {
+    margin: 0 0 12px;
+    color: #0d2d4a;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.booking-cart-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    color: #7a8797;
+    font-size: 14px;
+}
+
+    .booking-cart-meta strong {
+        color: #0d2d4a;
+        font-weight: 700;
+    }
+
+
+/* =========================================================
+   REMOVE BUTTON
+   ========================================================= */
+
+.remove-cart-item {
+    flex-shrink: 0;
+    padding: 10px 16px;
+    background: transparent;
+    border: 1px solid #e2e5ea;
+    border-radius: 8px;
+    color: #8a929d;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+    .remove-cart-item:hover {
+        background: #fff7f5;
+        border-color: #d8a9a0;
+        color: #a34d43;
+    }
+
+
+/* =========================================================
+   SUMMARY
+   ========================================================= */
+
+.booking-cart-summary {
+    position: sticky;
+    top: 110px;
+    padding: 30px;
+    background: #0d2d4a;
+    border-radius: 18px;
+    box-shadow: 0 18px 45px rgba(13, 45, 74, 0.16);
+}
+
+    .booking-cart-summary > span {
+        display: block;
+        margin-bottom: 10px;
+        color: #c99135;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 3px;
+    }
+
+    .booking-cart-summary h2 {
+        margin: 0 0 28px;
+        color: #ffffff;
+        font-size: 26px;
+        font-weight: 700;
+    }
+
+
+/* =========================================================
+   SUMMARY ROWS
+   ========================================================= */
+
+.cart-summary-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 17px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    color: #c5cfda;
+    font-size: 14px;
+}
+
+    .cart-summary-row strong {
+        color: #ffffff;
+        font-weight: 700;
+    }
+
+    .cart-summary-row.cart-total {
+        padding-top: 22px;
+        border-bottom: none;
+    }
+
+        .cart-summary-row.cart-total span {
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .cart-summary-row.cart-total strong {
+            color: #c99135;
+            font-size: 25px;
+        }
+
+
+/* =========================================================
+   CONTINUE BUTTON
+   ========================================================= */
+
+.continue-booking-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 22px;
+    padding: 15px 18px;
+    background: #c99135;
+    border: 1px solid #c99135;
+    border-radius: 9px;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+    .continue-booking-button span {
+        font-size: 20px;
+        line-height: 1;
+    }
+
+    .continue-booking-button:hover {
+        background: #d9a64d;
+        border-color: #d9a64d;
+        transform: translateY(-1px);
+    }
+
+
+/* =========================================================
+   EMPTY CART
+   ========================================================= */
+
+.empty-cart {
+    max-width: 650px;
+    margin: 20px auto 0;
+    padding: 70px 40px;
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid #e7eaf0;
+    border-radius: 18px;
+    box-shadow: 0 10px 35px rgba(13, 45, 74, 0.05);
+}
+
+.empty-cart-icon {
+    width: 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    background: #f8f1e5;
+    border-radius: 50%;
+    color: #c99135;
+    font-size: 30px;
+}
+
+.empty-cart h2 {
+    margin: 0 0 12px;
+    color: #0d2d4a;
+    font-size: 28px;
+}
+
+.empty-cart p {
+    max-width: 450px;
+    margin: 0 auto 28px;
+    color: #718096;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   BROWSE BUTTON
+   ========================================================= */
+
+.cart-browse-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 18px;
+    padding: 14px 22px;
+    background: #0d2d4a;
+    border-radius: 9px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.2s ease;
+}
+
+    .cart-browse-button span {
+        color: #c99135;
+        font-size: 19px;
+    }
+
+    .cart-browse-button:hover {
+        background: #123b60;
+        transform: translateY(-1px);
+    }
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .booking-cart-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .booking-cart-summary {
+        position: static;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .booking-cart-page {
+        padding: 55px 0 80px;
+    }
+
+    .booking-cart-header {
+        margin-bottom: 35px;
+    }
+
+        .booking-cart-header h1 {
+            font-size: 42px;
+        }
+
+    .booking-cart-item {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 20px;
+        padding: 24px;
+    }
+
+    .remove-cart-item {
+        width: 100%;
+    }
+
+    .booking-cart-summary {
+        padding: 25px;
+    }
+
+    .empty-cart {
+        padding: 50px 25px;
+    }
+}

@@ -1,0 +1,1650 @@
+/* =========================================================
+   BUSINESS DETAILS PAGE
+========================================================= */
+
+.business-details {
+    width: 100%;
+    min-height: 100vh;
+    background: #fafaf8;
+    color: #263b4d;
+    padding-bottom: 100px;
+}
+
+
+/* =========================================
+   LINKEDIN STYLE BUSINESS PROFILE HEADER
+   ========================================= */
+
+/* =========================================
+   LINKEDIN STYLE BUSINESS PROFILE HEADER
+   ========================================= */
+
+.business-profile-header {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #e7e1d5;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(22, 34, 58, 0.06);
+}
+
+
+/* =========================================
+   BANNER
+   ========================================= */
+
+.business-banner {
+    width: 100%;
+    height: 260px;
+    overflow: hidden;
+    background: #eee8dc;
+}
+
+    .business-banner img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        object-position: center;
+    }
+
+.business-banner-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient( 135deg, #16223a 0%, #253653 55%, #c9a96e 100% );
+}
+
+
+/* =========================================
+   PROFILE INFORMATION
+   ========================================= */
+
+.business-profile-info {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 28px;
+    padding: 0 34px 34px;
+}
+
+
+/* =========================================
+   LOGO
+   ========================================= */
+
+.business-logo-wrapper {
+    flex-shrink: 0;
+    margin-top: -70px;
+    position: relative;
+    z-index: 2;
+}
+
+
+.business-logo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: #fff;
+    border: 6px solid #fff;
+    box-shadow: 0 6px 20px rgba(22, 34, 58, 0.16);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+    .business-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+
+.business-logo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #16223a;
+    color: #c9a96e;
+    font-size: 48px;
+    font-weight: 700;
+}
+
+
+/* =========================================
+   BUSINESS INFORMATION
+   ========================================= */
+
+.business-info {
+    flex: 1;
+    padding-top: 24px;
+}
+
+
+.business-category {
+    display: inline-block;
+    margin-bottom: 7px;
+    color: #b08b4f;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+
+.business-info h1 {
+    margin: 0;
+    color: #16223a;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+
+.business-description {
+    max-width: 750px;
+    margin: 10px 0 12px;
+    color: #6d6d72;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+.business-location {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #77777c;
+    font-size: 13px;
+}
+
+
+.location-icon {
+    font-size: 14px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 700px) {
+
+    .business-banner {
+        height: 190px;
+    }
+
+    .business-profile-info {
+        flex-direction: column;
+        gap: 0;
+        padding: 0 22px 26px;
+    }
+
+    .business-logo-wrapper {
+        margin-top: -55px;
+    }
+
+    .business-logo {
+        width: 110px;
+        height: 110px;
+        border-width: 5px;
+    }
+
+    .business-info {
+        padding-top: 18px;
+    }
+
+        .business-info h1 {
+            font-size: 26px;
+        }
+}
+
+/* =========================================================
+   CONTACT + OPENING HOURS
+========================================================= */
+
+.business-meta-section {
+    width: 100%;
+    max-width: 1280px;
+
+    margin: 0 auto;
+
+    padding: 35px 40px 65px;
+
+    box-sizing: border-box;
+
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 25px;
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.business-contact-card,
+.business-hours-card {
+    padding: 32px 35px;
+
+    border: 1px solid #e8e2d9;
+    border-radius: 18px;
+
+    background: #ffffff;
+
+    box-shadow: 0 12px 35px rgba(8, 40, 68, 0.045);
+}
+
+
+/* =========================================================
+   SECTION EYEBROW
+========================================================= */
+
+.section-eyebrow {
+    margin-bottom: 8px;
+
+    color: #b57d2f;
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+
+/* =========================================================
+   CARD TITLES
+========================================================= */
+
+.business-contact-card h2,
+.business-hours-card h2 {
+    margin: 0 0 25px;
+
+    color: #082844;
+
+    font-size: 28px;
+    font-weight: 500;
+
+    letter-spacing: -0.8px;
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    margin-bottom: 16px;
+
+    color: #263b4d;
+
+    text-decoration: none;
+
+    transition: transform 0.2s ease;
+}
+
+.contact-item:last-child {
+    margin-bottom: 0;
+}
+
+.contact-item:hover {
+    transform: translateX(3px);
+}
+
+.contact-icon {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #eadbc5;
+    border-radius: 10px;
+
+    background: #fffaf2;
+
+    color: #b57d2f;
+
+    font-size: 15px;
+}
+
+.contact-item div {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.contact-item small {
+    color: #8994a0;
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.contact-item strong {
+    color: #263b4d;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   OPENING HOURS
+========================================================= */
+
+.hours-list {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.hours-row {
+    display: grid;
+    grid-template-columns: 45px 1fr;
+
+    align-items: center;
+
+    padding-bottom: 8px;
+
+    border-bottom: 1px solid #f0ece6;
+}
+
+.hours-row:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.hours-day {
+    color: #263b4d;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.hours-open {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #082844;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.hours-open span {
+    color: #b57d2f;
+}
+
+.hours-closed {
+    color: #a5adb5;
+
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* =========================================================
+   SERVICES SECTION
+========================================================= */
+
+.business-services {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px 70px;
+    box-sizing: border-box;
+}
+
+
+    /* =========================================================
+   SECTION TITLE
+========================================================= */
+
+    .business-services .section-title {
+        margin-bottom: 28px;
+    }
+
+        .business-services .section-title > span {
+            display: block;
+            margin-bottom: 8px;
+            color: #b57d2f;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 3px;
+        }
+
+        .business-services .section-title h2 {
+            margin: 0;
+            color: #082844;
+            font-size: 30px;
+            font-weight: 500;
+            letter-spacing: -0.8px;
+        }
+
+
+/* =========================================================
+   CAROUSEL
+========================================================= */
+
+.services-carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+}
+
+
+/* =========================================================
+   SLIDER
+========================================================= */
+
+.services-slider {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    overflow-x: auto;
+    padding: 8px 5px 20px;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+}
+
+    .services-slider::-webkit-scrollbar {
+        display: none;
+    }
+
+
+/* =========================================================
+   SERVICE CARD
+========================================================= */
+
+/* =========================================================
+   SERVICE CARD
+========================================================= */
+
+.service-card {
+    flex: 0 0 340px;
+    min-width: 340px;
+    min-height: 290px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 24px;
+    border: 1px solid #e8e2d9;
+    border-radius: 17px;
+    background: #ffffff;
+    scroll-snap-align: start;
+    box-shadow: 0 8px 25px rgba(8, 40, 68, 0.045);
+    text-align: left;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+    .service-card:hover {
+        transform: translateY(-3px);
+        border-color: #d8c3a2;
+        box-shadow: 0 16px 35px rgba(8, 40, 68, 0.08);
+    }
+    .service-card:hover {
+        transform: translateY(-3px);
+        border-color: #d8c3a2;
+        box-shadow: 0 16px 35px rgba(8, 40, 68, 0.08);
+    }
+
+
+/* =========================================================
+   CARD TOP
+========================================================= */
+
+.service-card-top {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   SERVICE NUMBER
+========================================================= */
+
+.service-number {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: #082844;
+    color: #c9a96e;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+
+/* =========================================================
+   SERVICE CONTENT
+========================================================= */
+
+.service-content {
+    width: 100%;
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+}
+
+    .service-content h3 {
+        margin: 0;
+        color: #082844;
+        font-size: 19px;
+        font-weight: 700;
+        line-height: 1.3;
+        text-align: left;
+    }
+
+    .service-content p {
+        margin: 9px 0 0;
+        color: #8994a0;
+        font-size: 12px;
+        line-height: 1.65;
+        text-align: left;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .service-content .no-description {
+        margin-top: 9px;
+        color: #a3a9ae;
+        text-align: left;
+    }
+
+
+/* =========================================================
+   CARD BOTTOM
+========================================================= */
+
+
+
+/* =========================================================
+   DURATION
+========================================================= */
+
+.service-duration {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 11px;
+    border-radius: 7px;
+    background: #f8f0e5;
+    color: #a0783f;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   PRICE AREA
+========================================================= */
+
+
+/* =========================================================
+   STARTING FROM
+========================================================= */
+
+
+
+/* =========================================================
+   ARROWS
+========================================================= */
+
+.services-arrow {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e5ddd0;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #082844;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(8, 40, 68, 0.07);
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+    .services-arrow:hover {
+        background: #082844;
+        border-color: #082844;
+        color: #c9a96e;
+        transform: translateY(-1px);
+    }
+
+    .services-arrow:active {
+        transform: scale(0.96);
+    }
+
+
+/* =========================================================
+   EMPTY SERVICES
+========================================================= */
+
+.empty-services {
+    padding: 45px 25px;
+    border: 1px dashed #ddd6cc;
+    border-radius: 15px;
+    background: #fcfbf9;
+    text-align: center;
+}
+
+    .empty-services p {
+        margin: 0;
+        color: #8994a0;
+        font-size: 13px;
+    }
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .business-services {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+    .service-card {
+        flex-basis: 320px;
+        min-width: 320px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .business-services {
+        padding: 0 22px 55px;
+    }
+
+        .business-services .section-title h2 {
+            font-size: 27px;
+        }
+
+    .services-carousel {
+        gap: 8px;
+    }
+
+    .services-arrow {
+        width: 36px;
+        height: 36px;
+        flex-basis: 36px;
+        font-size: 15px;
+    }
+
+    .service-card {
+        flex: 0 0 calc(100vw - 100px);
+        min-width: calc(100vw - 100px);
+        height: 220px;
+        padding: 21px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 500px) {
+
+    .services-carousel {
+        display: block;
+    }
+
+    .services-slider {
+        width: 100%;
+    }
+
+    .service-card {
+        flex: 0 0 100%;
+        min-width: 100%;
+    }
+
+    .services-arrow {
+        position: absolute;
+        top: -58px;
+        width: 34px;
+        height: 34px;
+    }
+
+    .services-arrow-left {
+        right: 48px;
+        left: auto;
+    }
+
+    .services-arrow-right {
+        right: 4px;
+    }
+
+    .business-services .section-title {
+        padding-right: 85px;
+    }
+}
+/* =========================================================
+   LOCATION
+========================================================= */
+
+.location-section {
+    width: 100%;
+    max-width: 1280px;
+
+    margin: 0 auto;
+
+    padding: 0 40px 20px;
+
+    box-sizing: border-box;
+}
+
+.location-section .section-title {
+    margin-bottom: 28px;
+}
+
+.map-card {
+    position: relative;
+
+    width: 100%;
+    height: 420px;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+    border: 1px solid #e5ebef;
+
+    box-shadow: 0 20px 50px rgba(9, 40, 70, 0.08);
+
+    background: #f7f9fb;
+}
+
+.map-card iframe {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    border: 0;
+}
+
+.map-location-badge {
+    position: absolute;
+
+    left: 20px;
+    bottom: 20px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 13px 17px;
+
+    background: rgba(255, 255, 255, 0.96);
+
+    border-radius: 12px;
+
+    box-shadow: 0 10px 30px rgba(9, 40, 70, 0.12);
+}
+
+.map-pin {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background: #f8f0e5;
+    color: #c58d3b;
+
+    font-size: 13px;
+}
+
+.map-location-badge strong,
+.map-location-badge small {
+    display: block;
+}
+
+.map-location-badge strong {
+    color: #092846;
+    font-size: 13px;
+}
+
+.map-location-badge small {
+    margin-top: 3px;
+    color: #8794a1;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .business-banner {
+        height: 260px;
+    }
+
+    .business-meta-section {
+        grid-template-columns: 1fr;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .business-banner {
+        height: 210px;
+    }
+
+    .business-identity-section {
+        padding: 0 22px;
+    }
+
+    .business-identity {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .business-logo {
+        width: 115px;
+        height: 115px;
+        flex-basis: 115px;
+
+        margin-top: -55px;
+
+        border-width: 5px;
+    }
+
+    .business-info {
+        width: 100%;
+        padding-top: 18px;
+    }
+
+    .business-info h1 {
+        font-size: 30px;
+        letter-spacing: -1px;
+    }
+
+    .business-description {
+        font-size: 13px;
+    }
+
+    .business-meta-section {
+        grid-template-columns: 1fr;
+
+        padding: 30px 22px 50px;
+
+        gap: 18px;
+    }
+
+    .business-contact-card,
+    .business-hours-card {
+        padding: 25px 22px;
+    }
+
+    .business-services {
+        padding: 0 22px 60px;
+    }
+
+    .location-section {
+        padding: 0 22px 20px;
+    }
+
+    .map-card {
+        height: 330px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 500px) {
+
+    .business-banner {
+        height: 190px;
+    }
+
+    .business-logo {
+        width: 105px;
+        height: 105px;
+        flex-basis: 105px;
+    }
+
+    .business-info h1 {
+        font-size: 28px;
+    }
+
+    .service-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .service-details {
+        width: 100%;
+
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+/* =========================================================
+   LOCATION SECTION TITLE
+========================================================= */
+
+.location-section .section-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 28px;
+}
+
+    .location-section .section-title span {
+        display: block;
+        margin-bottom: 8px;
+        color: #b57d2f;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+    }
+
+    .location-section .section-title h2 {
+        margin: 0;
+        color: #082844;
+        font-size: 28px;
+        font-weight: 500;
+        line-height: 1.2;
+        letter-spacing: -0.8px;
+    }
+
+/* =========================================================
+   SERVICE PRICE
+========================================================= */
+
+
+
+    .service-price > span {
+        color: #8994a0;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+    }
+
+    .service-price strong {
+        color: #b57d2f;
+        font-size: 19px;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+        .service-price strong small {
+            margin-left: 3px;
+            color: #b57d2f;
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+
+/* =========================================================
+   BOOK SERVICE BUTTON
+========================================================= */
+
+
+
+    .book-service-button span {
+        color: #b57d2f;
+        font-size: 15px;
+        line-height: 1;
+    }
+
+    .book-service-button:hover {
+        background: #082844;
+        border-color: #082844;
+        color: #ffffff;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(8, 40, 68, 0.12);
+    }
+
+        .book-service-button:hover span {
+            color: #c9a96e;
+        }
+
+
+/* =========================================================
+   SERVICE DURATION
+========================================================= */
+
+.service-duration {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 18px;
+    padding: 7px 11px;
+    border-radius: 7px;
+    background: #f8f0e5;
+    color: #a0783f;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   SERVICE PRICE + BOOKING
+========================================================= */
+
+.service-price-row {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 18px;
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid #eee8df;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+.service-price {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+    .service-price > span {
+        color: #8994a0;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+    }
+
+    .service-price strong {
+        color: #b57d2f;
+        font-size: 19px;
+        font-weight: 700;
+        line-height: 1;
+        white-space: nowrap;
+    }
+
+        .service-price strong small {
+            margin-left: 4px;
+            color: #b57d2f;
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+
+/* =========================================================
+   BOOK SERVICE BUTTON
+========================================================= */
+
+.book-service-button {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 13px;
+    border: 1px solid #d8c29f;
+    border-radius: 9px;
+    background: #fffaf2;
+    color: #082844;
+    font-size: 10px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .book-service-button span {
+        color: #b57d2f;
+        font-size: 14px;
+        line-height: 1;
+    }
+
+    .book-service-button:hover {
+        background: #082844;
+        border-color: #082844;
+        color: #ffffff;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(8, 40, 68, 0.12);
+    }
+
+        .book-service-button:hover span {
+            color: #c9a96e;
+        }
+
+
+/* =========================================================
+   SERVICES SECTION TITLE
+========================================================= */
+
+.business-services .section-title {
+    margin-bottom: 28px;
+}
+
+    .business-services .section-title > span {
+        display: block;
+        margin-bottom: 8px;
+        color: #b57d2f;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 3px;
+    }
+
+    .business-services .section-title h2 {
+        margin: 0;
+        color: #082844;
+        font-size: 28px;
+        font-weight: 500;
+        line-height: 1.2;
+        letter-spacing: -0.8px;
+    }
+
+        .business-services .section-title h2 span {
+            color: #b57d2f;
+        }
+
+/* =========================================================
+   BOOKING MODAL - FORCE VISIBLE
+========================================================= */
+
+
+.booking-modal-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: rgba(20, 20, 20, 0.58) !important;
+    backdrop-filter: blur(5px);
+    z-index: 999999 !important;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   MODAL BOX
+========================================================= */
+
+.booking-modal {
+    position: relative !important;
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: #ffffff !important;
+    border-radius: 24px;
+    padding: 30px;
+    box-sizing: border-box;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+    animation: bookingModalIn 0.22s ease-out;
+    z-index: 1000000 !important;
+}
+
+
+/* =========================================================
+   MODAL ANIMATION
+========================================================= */
+
+@keyframes bookingModalIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.booking-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+
+.booking-modal-eyebrow {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #b18a4a;
+    margin-bottom: 7px;
+}
+
+
+.booking-modal-header h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+    color: #252525;
+    line-height: 1.2;
+}
+
+
+.booking-modal-header p {
+    margin: 8px 0 0;
+    font-size: 14px;
+    color: #777;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.booking-modal-close {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: #f5f3ef;
+    color: #555;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+
+    .booking-modal-close:hover {
+        background: #ece8e0;
+        color: #222;
+        transform: rotate(90deg);
+    }
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+.booking-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+
+    .booking-field label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #333;
+    }
+
+
+    .booking-field select,
+    .booking-field input {
+        width: 100%;
+        height: 48px;
+        padding: 0 14px;
+        border: 1px solid #ddd8cf;
+        border-radius: 12px;
+        background: #fff;
+        color: #333;
+        font-size: 14px;
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+
+        .booking-field select:focus,
+        .booking-field input:focus {
+            border-color: #b18a4a;
+            box-shadow: 0 0 0 3px rgba(177, 138, 74, 0.12);
+        }
+
+
+/* =========================================================
+   EMPLOYEE OPTIONS
+========================================================= */
+
+.employee-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+
+.employee-option {
+    border: 1px solid #e1ddd5;
+    background: #fff;
+    border-radius: 12px;
+    padding: 13px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+}
+
+
+    .employee-option:hover {
+        border-color: #b18a4a;
+        background: #faf8f4;
+        transform: translateY(-1px);
+    }
+
+
+    .employee-option.selected {
+        border-color: #b18a4a;
+        background: #f8f3e9;
+        box-shadow: 0 0 0 2px rgba(177, 138, 74, 0.12);
+    }
+
+
+.employee-option-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d2d2d;
+}
+
+
+.employee-option-job {
+    display: block;
+    margin-top: 3px;
+    font-size: 12px;
+    color: #888;
+}
+
+
+
+
+
+/* =========================================================
+   EMPTY / LOADING
+========================================================= */
+
+.booking-modal-loading {
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+    font-size: 14px;
+}
+
+
+.booking-modal-empty {
+    text-align: center;
+    padding: 25px 10px 10px;
+}
+
+
+    .booking-modal-empty > div:first-child {
+        font-size: 38px;
+        margin-bottom: 10px;
+    }
+
+
+    .booking-modal-empty h3 {
+        margin: 0 0 8px;
+        font-size: 18px;
+        color: #333;
+    }
+
+
+    .booking-modal-empty p {
+        margin: 0;
+        color: #888;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.booking-error {
+    margin-top: 15px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #fff1f1;
+    color: #b44;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.booking-modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+
+    .booking-modal-actions button {
+        flex: 1;
+        height: 48px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+
+.booking-cancel {
+    border: 1px solid #ddd8cf;
+    background: #fff;
+    color: #555;
+}
+
+
+    .booking-cancel:hover {
+        background: #f7f5f1;
+        border-color: #ccc5ba;
+    }
+
+
+.booking-add {
+    border: none;
+    background: #b18a4a;
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(177, 138, 74, 0.22);
+}
+
+
+    .booking-add:hover {
+        background: #9e793f;
+        transform: translateY(-1px);
+        box-shadow: 0 7px 18px rgba(177, 138, 74, 0.28);
+    }
+
+
+    .booking-add:disabled {
+        background: #d5d0c8;
+        color: #fff;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+    }
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.booking-modal::-webkit-scrollbar {
+    width: 6px;
+}
+
+
+.booking-modal::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+.booking-modal::-webkit-scrollbar-thumb {
+    background: #d5d0c8;
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .booking-modal-overlay {
+        padding: 12px;
+    }
+
+    .booking-modal {
+        padding: 22px;
+        border-radius: 20px;
+        max-height: 94vh;
+    }
+
+    .booking-modal-header h2 {
+        font-size: 22px;
+    }
+
+    .employee-options {
+        grid-template-columns: 1fr;
+    }
+
+    .booking-times {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .booking-modal-actions {
+        flex-direction: column;
+    }
+}
+
+
+
+
+/* Available Time */
+.booking-time-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.booking-time-option {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .booking-time-option:hover {
+        border-color: #c9a45c;
+        background: #faf7f0;
+    }
+
+    .booking-time-option.selected {
+        background: #c9a45c;
+        border-color: #c9a45c;
+        color: #fff;
+        font-weight: 600;
+    }
+
+/* Mobile */
+@media (max-width: 600px) {
+    .booking-time-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+}

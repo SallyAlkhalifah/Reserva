@@ -1,0 +1,738 @@
+/* =========================================================
+   RESERVA — SERVICES MANAGEMENT
+========================================================= */
+
+.services-manage-page {
+    width: 100%;
+    min-height: 100vh;
+    background: #fafaf8;
+    color: #263b4d;
+    padding: 55px 0 100px;
+    box-sizing: border-box;
+}
+
+.services-manage-container {
+    width: calc(100% - 80px);
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.services-loading {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fafaf8;
+    color: #8994a0;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.services-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 38px;
+}
+
+.services-eyebrow {
+    display: block;
+    margin-bottom: 9px;
+    color: #b57d2f;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+.services-header h1 {
+    margin: 0;
+    color: #082844;
+    font-size: 38px;
+    font-weight: 600;
+    letter-spacing: -1.2px;
+    line-height: 1.15;
+}
+
+.services-header p {
+    margin: 10px 0 0;
+    color: #8994a0;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.services-back-button {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 90px;
+    height: 40px;
+    padding: 0 17px;
+    border: 1px solid #e3ddd3;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #263b4d;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .services-back-button:hover {
+        border-color: #c9a96e;
+        color: #b57d2f;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 18px rgba(8, 40, 68, 0.05);
+    }
+
+
+/* =========================================================
+   SUCCESS
+========================================================= */
+
+.services-success {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 14px 17px;
+    border: 1px solid #dce8df;
+    border-radius: 12px;
+    background: #f5faf6;
+    color: #42654c;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   MAIN SECTIONS
+========================================================= */
+
+.services-form-section,
+.existing-services-section {
+    width: 100%;
+    margin-bottom: 25px;
+    padding: 32px;
+    box-sizing: border-box;
+    border: 1px solid #e8e2d9;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(8, 40, 68, 0.045);
+}
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.services-section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 27px;
+}
+
+    .services-section-header span {
+        display: block;
+        margin-bottom: 8px;
+        color: #b57d2f;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 3px;
+    }
+
+    .services-section-header h2 {
+        margin: 0;
+        color: #082844;
+        font-size: 25px;
+        font-weight: 600;
+        letter-spacing: -0.7px;
+    }
+
+    .services-section-header p {
+        margin: 7px 0 0;
+        color: #8994a0;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+
+/* =========================================================
+   ADD SERVICES FORM
+========================================================= */
+
+.service-form {
+    width: 100%;
+}
+
+
+/* =========================================================
+   SERVICE FORM ROW
+========================================================= */
+
+.service-form-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(180px, 1.25fr) minmax(220px, 1.8fr) minmax(120px, 0.8fr) minmax(120px, 0.8fr) 34px;
+    align-items: end;
+    gap: 15px;
+    padding: 20px;
+    margin-bottom: 12px;
+    border: 1px solid #e9e3da;
+    border-radius: 14px;
+    background: #fcfbf9;
+    transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .service-form-row:hover {
+        border-color: #dfd2bf;
+        background: #fff;
+        box-shadow: 0 5px 18px rgba(8, 40, 68, 0.035);
+    }
+
+
+/* =========================================================
+   FORM FIELDS
+========================================================= */
+
+.service-field {
+    min-width: 0;
+}
+
+    .service-field label {
+        display: block;
+        margin-bottom: 7px;
+        color: #263b4d;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.3px;
+    }
+
+    .service-field input {
+        width: 100%;
+        height: 42px;
+        padding: 0 12px;
+        box-sizing: border-box;
+        border: 1px solid #e1dbd2;
+        border-radius: 9px;
+        outline: none;
+        background: #ffffff;
+        color: #263b4d;
+        font-family: inherit;
+        font-size: 12px;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+        .service-field input::placeholder {
+            color: #b2b8bd;
+        }
+
+        .service-field input:hover {
+            border-color: #d6cfc4;
+        }
+
+        .service-field input:focus {
+            border-color: #c49a5b;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(196, 154, 91, 0.10);
+        }
+
+
+/* =========================================================
+   PRICE / DURATION
+========================================================= */
+
+.price-input,
+.duration-input {
+    position: relative;
+    width: 100%;
+}
+
+    .price-input input,
+    .duration-input input {
+        padding-right: 48px;
+    }
+
+    .price-input span,
+    .duration-input span {
+        position: absolute;
+        top: 50%;
+        right: 12px;
+        transform: translateY(-50%);
+        color: #a0a8af;
+        font-size: 9px;
+        font-weight: 800;
+        pointer-events: none;
+    }
+
+
+/* =========================================================
+   REMOVE SERVICE
+========================================================= */
+
+.remove-service-button {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 18px;
+    padding: 0;
+    border: 1px solid #ead8d2;
+    border-radius: 9px;
+    background: #fff8f6;
+    color: #b45d5d;
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+    .remove-service-button:hover {
+        background: #fff0ed;
+        border-color: #dcb8b0;
+        color: #9e4747;
+        transform: scale(1.04);
+    }
+
+
+/* =========================================================
+   ADD ANOTHER SERVICE
+========================================================= */
+
+.add-service-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 5px;
+    padding: 10px 15px;
+    border: 1px dashed #cdbb9f;
+    border-radius: 10px;
+    background: #fffaf2;
+    color: #b57d2f;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+    .add-service-button span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #b57d2f;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1;
+    }
+
+    .add-service-button:hover {
+        background: #fff7e9;
+        border-color: #bfa77f;
+        transform: translateY(-1px);
+    }
+
+
+/* =========================================================
+   FORM FOOTER
+========================================================= */
+
+.services-form-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #eee8df;
+}
+
+    .services-form-footer > span {
+        color: #8994a0;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+
+/* =========================================================
+   SAVE BUTTON
+========================================================= */
+
+.save-services-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 125px;
+    height: 42px;
+    padding: 0 20px;
+    border: 0;
+    border-radius: 10px;
+    background: #082844;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(8, 40, 68, 0.12);
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .save-services-button:hover {
+        background: #0d3556;
+        transform: translateY(-1px);
+        box-shadow: 0 9px 23px rgba(8, 40, 68, 0.16);
+    }
+
+    .save-services-button:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+
+/* =========================================================
+   EXISTING SERVICES
+========================================================= */
+
+.existing-services-section {
+    margin-bottom: 0;
+}
+
+.existing-services-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+
+/* =========================================================
+   EXISTING SERVICE CARD
+========================================================= */
+
+.existing-service-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    column-gap: 20px;
+    row-gap: 16px;
+    min-height: 150px;
+    padding: 22px;
+    box-sizing: border-box;
+    border: 1px solid #e8e2d9;
+    border-radius: 14px;
+    background: #fcfbf9;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .existing-service-card:hover {
+        border-color: #d9c7aa;
+        background: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(8, 40, 68, 0.055);
+    }
+
+
+/* =========================================================
+   EXISTING SERVICE INFO
+========================================================= */
+
+.existing-service-info {
+    min-width: 0;
+}
+
+    .existing-service-info h3 {
+        margin: 0;
+        color: #082844;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.35;
+    }
+
+    .existing-service-info p {
+        margin: 7px 0 0;
+        color: #8994a0;
+        font-size: 11px;
+        line-height: 1.65;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+
+/* =========================================================
+   EXISTING SERVICE DETAILS
+========================================================= */
+
+.existing-service-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+    padding-left: 15px;
+    border-left: 1px solid #eee8df;
+}
+
+    .existing-service-details strong {
+        color: #b57d2f;
+        font-size: 15px;
+        font-weight: 800;
+        white-space: nowrap;
+    }
+
+    .existing-service-details span {
+        color: #8994a0;
+        font-size: 10px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+
+/* =========================================================
+   EXISTING SERVICE ACTIONS
+========================================================= */
+
+.existing-service-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 13px;
+    border-top: 1px solid #eee8df;
+}
+
+    .existing-service-actions button {
+        height: 32px;
+        padding: 0 13px;
+        border: 1px solid #e0d9cf;
+        border-radius: 8px;
+        background: #ffffff;
+        color: #263b4d;
+        font-family: inherit;
+        font-size: 10px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+
+        .existing-service-actions button:hover {
+            border-color: #c9a96e;
+            color: #b57d2f;
+            background: #fffaf2;
+        }
+
+
+    /* =========================================================
+   DELETE BUTTON
+========================================================= */
+
+    .existing-service-actions .delete-service-button {
+        border-color: #ead8d2;
+        background: #fffafa;
+        color: #b45d5d;
+    }
+
+        .existing-service-actions .delete-service-button:hover {
+            border-color: #d9b8b0;
+            background: #fff3f0;
+            color: #9e4747;
+        }
+
+
+/* =========================================================
+   NO SERVICES
+========================================================= */
+
+.no-services {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 130px;
+    border: 1px dashed #ddd6cc;
+    border-radius: 13px;
+    background: #fcfbf9;
+    text-align: center;
+}
+
+    .no-services p {
+        margin: 0;
+        color: #8994a0;
+        font-size: 12px;
+    }
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+
+    .services-manage-container {
+        width: calc(100% - 60px);
+    }
+
+    .service-form-row {
+        grid-template-columns: 1.2fr 1.5fr 0.8fr 0.8fr 34px;
+    }
+
+    .existing-services-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 750px) {
+
+    .services-manage-page {
+        padding: 35px 0 70px;
+    }
+
+    .services-manage-container {
+        width: calc(100% - 44px);
+    }
+
+    .services-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+        .services-header h1 {
+            font-size: 30px;
+        }
+
+    .services-back-button {
+        align-self: flex-start;
+    }
+
+    .services-form-section,
+    .existing-services-section {
+        padding: 24px 20px;
+        border-radius: 15px;
+    }
+
+    .services-section-header {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 22px;
+    }
+
+    .service-form-row {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+        padding: 20px;
+        padding-top: 24px;
+    }
+
+    .remove-service-button {
+        position: absolute;
+        top: 13px;
+        right: 13px;
+        width: 28px;
+        height: 28px;
+        margin: 0;
+    }
+
+    .services-form-footer {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .save-services-button {
+        width: 100%;
+    }
+
+    .add-service-button {
+        width: 100%;
+    }
+
+    .existing-service-card {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+
+    .existing-service-details {
+        align-items: flex-start;
+        padding-left: 0;
+        padding-top: 12px;
+        border-left: 0;
+        border-top: 1px solid #eee8df;
+    }
+
+    .existing-service-actions {
+        grid-column: auto;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 500px) {
+
+    .services-manage-container {
+        width: calc(100% - 32px);
+    }
+
+    .services-header h1 {
+        font-size: 27px;
+    }
+
+    .services-header p {
+        font-size: 12px;
+    }
+
+    .services-form-section,
+    .existing-services-section {
+        padding: 21px 16px;
+    }
+
+    .services-section-header h2 {
+        font-size: 22px;
+    }
+
+    .service-form-row {
+        padding: 17px;
+    }
+
+    .existing-service-card {
+        padding: 18px;
+    }
+}

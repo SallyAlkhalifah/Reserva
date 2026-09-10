@@ -1,0 +1,325 @@
+﻿@inherits LayoutComponentBase
+@implements IDisposable
+
+@using Reserva.Application.DTOs
+@using Reserva.Application.Interfaces
+@using Reserva.Application.Services
+@using Microsoft.JSInterop
+@inject IJSRuntime JS
+@inject NavigationManager Navigation
+@inject CurrentUserService CurrentUserService
+@inject IBookingCartService BookingCartService
+
+@rendermode InteractiveServer
+
+<div class="app-layout">
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="main-header">
+
+        <div class="header-container">
+
+            <!-- LOGO -->
+
+            <a href="/" class="header-logo">
+
+                <img src="/images/reserva-logo2.png"
+                     alt="Reserva" />
+
+            </a>
+
+
+            <!-- NAVIGATION -->
+
+            <nav class="main-nav">
+
+                <a href="/" class="nav-link">
+                    Home
+                </a>
+
+                <a href="/services" class="nav-link">
+                    Services
+                </a>
+
+                <a href="/about" class="nav-link">
+                    About
+                </a>
+
+                <a href="/contact" class="nav-link">
+                    Contact
+                </a>
+
+
+                @if (CurrentUser != null)
+                {
+                    <!-- ================= CART ================= -->
+                    @if (CurrentUser.Role == "User")
+                    {
+                        <a href="/booking-cart" class="header-cart">
+
+                            <i class="bi bi-cart3"></i>
+
+                            @if (BookingCartService.Items.Any())
+                            {
+                                <span class="cart-count">
+                                    @BookingCartService.Items.Count
+                                </span>
+                            }
+
+                        </a>
+                    }
+
+
+                    <!-- ================= ACCOUNT ================= -->
+
+                    <div class="header-account">
+
+                        @if (CurrentUser.Role == "BusinessOwner")
+                        {
+                            <a href="@($"/business/dashboard?ownerId={CurrentUser.Id}")"
+                               class="profile-link"
+                               aria-label="Your profile">
+
+                                <i class="fi fi-ss-user"></i>
+
+                            </a>
+                        }
+                        else if (CurrentUser.Role == "User")
+                        {
+                            <a href="@($"/customer/dashboard?userId={CurrentUser.Id}")"
+                               class="profile-link"
+                               aria-label="Your profile">
+
+                                <i class="fi fi-ss-user"></i>
+
+                            </a>
+                        }
+
+
+                        <!-- ACCOUNT DROPDOWN -->
+
+                        <div class="account-menu">
+
+                            @if (CurrentUser.Role == "BusinessOwner")
+                            {
+                                <a href="@($"/business/dashboard?ownerId={CurrentUser.Id}")">
+                                    Your Profile
+                                </a>
+                            }
+                            else if (CurrentUser.Role == "User")
+                            {
+                                <a href="@($"/customer/dashboard?userId={CurrentUser.Id}")">
+                                    Your Profile
+                                </a>
+                            }
+
+                            <button type="button"
+                                    @onclick="Logout">
+
+                                Log Out
+
+                            </button>
+
+                        </div>
+
+                    </div>
+                }
+                else
+                {
+                    <!-- ================= SIGN IN ================= -->
+
+                    <a href="/login"
+                       class="nav-login">
+
+                        Sign In
+
+                    </a>
+                }
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= PAGE CONTENT ================= -->
+
+    <main class="main-content">
+
+        @Body
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="main-footer">
+
+        <div class="footer-container">
+
+            <!-- BRAND -->
+
+            <div class="footer-brand">
+
+                <a href="/" class="header-logo">
+
+                    <img src="/images/reserva-logo2.png"
+                         alt="Reserva" />
+
+                </a>
+
+                <p>
+                    Simple and reliable appointment booking.
+                </p>
+
+            </div>
+
+
+            <!-- QUICK LINKS -->
+
+            <div class="footer-links">
+
+                <h4>
+                    Quick Links
+                </h4>
+
+                <a href="/">
+                    Home
+                </a>
+
+                <a href="/services">
+                    Services
+                </a>
+
+                <a href="/about">
+                    About
+                </a>
+
+                <a href="/contact">
+                    Contact
+                </a>
+
+            </div>
+
+
+            <!-- ACCOUNT -->
+
+            <div class="footer-links">
+
+                <h4>
+                    Account
+                </h4>
+
+                @if (CurrentUser == null)
+                {
+                    <a href="/login">
+                        Sign In
+                    </a>
+
+                    <a href="/register">
+                        Create Account
+                    </a>
+                }
+                else
+                {
+                    @if (CurrentUser.Role == "BusinessOwner")
+                    {
+                        <a href="@($"/business/dashboard?ownerId={CurrentUser.Id}")">
+                            Your Profile
+                        </a>
+                    }
+                    else if (CurrentUser.Role == "User")
+                    {
+                        <a href="@($"/customer/dashboard?userId={CurrentUser.Id}")">
+                            Your Profile
+                        </a>
+                    }
+
+                    <button type="button"
+                            @onclick="Logout">
+
+                        Log Out
+
+                    </button>
+                }
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOTER BOTTOM -->
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 Reserva. All rights reserved.
+            </span>
+
+        </div>
+
+    </footer>
+
+
+</div>
+
+
+@code {
+
+    private UserDto? CurrentUser;
+
+
+    protected override void OnInitialized()
+    {
+        CurrentUser = CurrentUserService.User;
+
+        CurrentUserService.OnChange += HandleCurrentUserChanged;
+        BookingCartService.OnChange += HandleCartChanged;
+    }
+
+
+
+
+    private void HandleCurrentUserChanged()
+    {
+        CurrentUser = CurrentUserService.User;
+
+        InvokeAsync(StateHasChanged);
+    }
+
+
+    private void HandleCartChanged()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+
+    private void Logout()
+    {
+        CurrentUserService.Logout();
+
+        BookingCartService.Clear();
+
+        CurrentUser = null;
+
+        Navigation.NavigateTo("/");
+    }
+
+
+    public void Dispose()
+    {
+        CurrentUserService.OnChange -= HandleCurrentUserChanged;
+        BookingCartService.OnChange -= HandleCartChanged;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("reservaAnimations.init");
+        }
+    }
+
+}

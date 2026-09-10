@@ -1,0 +1,1182 @@
+﻿@page "/business/{BusinessId:guid}"
+@using Reserva.Application.Services
+@using Reserva.Application.DTOs
+@using Reserva.Application.Interfaces
+@inject CurrentUserService CurrentUserService
+@inject NavigationManager Navigation
+@inject IBookingCartService BookingCartService
+@inject IBusinessService BusinessService
+@inject IEmployeeService EmployeeService
+
+<PageTitle>@(business?.Name ?? "Business Details")</PageTitle>
+
+@if (business == null)
+{
+    <div class="business-loading">
+        <p>Loading...</p>
+    </div>
+}
+else
+{
+    <div class="business-details">
+
+        <!-- =========================================
+             BUSINESS HEADER
+        ========================================== -->
+
+        <section class="business-profile-header">
+
+            <div class="business-banner">
+
+                @if (!string.IsNullOrWhiteSpace(business.BannerUrl))
+                {
+                    <img src="@business.BannerUrl"
+                         alt="@business.Name banner" />
+                }
+                else
+                {
+                    <div class="business-banner-placeholder"></div>
+                }
+
+            </div>
+
+
+            <div class="business-profile-info">
+
+                <div class="business-logo-wrapper">
+
+                    <div class="business-logo">
+
+                        @if (!string.IsNullOrWhiteSpace(business.LogoUrl))
+                        {
+                            <img src="@business.LogoUrl"
+                                 alt="@business.Name logo" />
+                        }
+                        else
+                        {
+                            <div class="business-logo-placeholder">
+                                @GetBusinessInitial()
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <div class="business-info">
+
+                    @if (!string.IsNullOrWhiteSpace(business.Category))
+                    {
+                        <span class="business-category">
+                            @business.Category
+                        </span>
+                    }
+
+                    <h1>
+                        @business.Name
+                    </h1>
+
+                    @if (!string.IsNullOrWhiteSpace(business.Description))
+                    {
+                        <p class="business-description">
+                            @business.Description
+                        </p>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(business.City) ||
+                         !string.IsNullOrWhiteSpace(business.Address))
+                    {
+                        <div class="business-location">
+                            <span>
+                                @business.City
+
+                                @if (!string.IsNullOrWhiteSpace(business.City) &&
+                                     !string.IsNullOrWhiteSpace(business.Address))
+                                {
+                                    <span>, </span>
+                                }
+
+                                @business.Address
+                            </span>
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             CONTACT + OPENING HOURS
+        ========================================== -->
+
+        <section class="business-meta-section">
+
+            <div class="business-contact-card">
+
+                <div class="section-eyebrow">
+                    CONTACT
+                </div>
+
+                <h2>
+                    Get in touch
+                </h2>
+
+                @if (!string.IsNullOrWhiteSpace(business.PhoneNumber))
+                {
+                    <a href="tel:@business.PhoneNumber"
+                       class="contact-item">
+
+                        <span class="contact-icon">
+                            ☎
+                        </span>
+
+                        <div>
+                            <small>Phone</small>
+                            <strong>
+                                @business.PhoneNumber
+                            </strong>
+                        </div>
+
+                    </a>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(business.Email))
+                {
+                    <a href="mailto:@business.Email"
+                       class="contact-item">
+
+                        <span class="contact-icon">
+                            ✉
+                        </span>
+
+                        <div>
+                            <small>Email</small>
+                            <strong>
+                                @business.Email
+                            </strong>
+                        </div>
+
+                    </a>
+                }
+
+            </div>
+
+
+            <div class="business-hours-card">
+
+                <div class="section-eyebrow">
+                    OPENING HOURS
+                </div>
+
+                <h2>
+                    Hours
+                </h2>
+
+                <div class="hours-list">
+
+                    @foreach (var currentDay in orderedDays)
+                    {
+                        var hours = business.WorkingHours?
+                            .FirstOrDefault(w => w.DayOfWeek == currentDay);
+
+                        <div class="hours-row">
+
+                            <span class="hours-day">
+                                @currentDay.ToString().Substring(0, 3)
+                            </span>
+
+                            @if (hours == null || hours.IsClosed)
+                            {
+                                <span class="hours-closed">
+                                    Closed
+                                </span>
+                            }
+                            else
+                            {
+                                <strong class="hours-open">
+                                    @hours.OpenTime?.ToString("hh\\:mm tt")
+                                    <span>–</span>
+                                    @hours.CloseTime?.ToString("hh\\:mm tt")
+                                </strong>
+                            }
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             SERVICES
+        ========================================== -->
+
+        <section class="business-services">
+
+            <div class="section-title">
+
+                <span>
+                    EXPLORE
+                </span>
+
+                <h2>
+                    What we <span>offer</span>
+                </h2>
+
+            </div>
+
+
+            @if (business.Services != null &&
+                 business.Services.Any())
+            {
+                <div class="services-carousel">
+
+                    <button class="services-arrow services-arrow-left"
+                            type="button"
+                            onclick="document.getElementById('servicesSlider').scrollBy({left:-360,behavior:'smooth'})">
+
+                        ←
+
+                    </button>
+
+
+                    <div class="services-slider"
+                         id="servicesSlider">
+
+                        @foreach (var service in business.Services)
+                        {
+                            <article class="service-card">
+
+                                <div class="service-card-top">
+
+                                    <span class="service-number">
+                                        @((business.Services.IndexOf(service) + 1).ToString("00"))
+                                    </span>
+
+                                </div>
+
+
+                                <div class="service-content">
+
+                                    <h3>
+                                        @service.Name
+                                    </h3>
+
+                                    @if (!string.IsNullOrWhiteSpace(service.Description))
+                                    {
+                                        <p>
+                                            @service.Description
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p class="no-description">
+                                            Professional service tailored to your needs.
+                                        </p>
+                                    }
+
+                                </div>
+
+
+                                <div class="service-duration">
+                                    @service.DurationInMinutes min
+                                </div>
+
+
+                                <div class="service-price-row">
+
+                                    <div class="service-price">
+
+                                        <span>
+                                            Starting from
+                                        </span>
+
+                                        <strong>
+                                            @service.Price.ToString("0.##")
+                                            <small>SAR</small>
+                                        </strong>
+
+                                    </div>
+
+
+                                    <!-- IMPORTANT:
+                                         This button opens the booking popup -->
+
+                                    <button type="button"
+                                            class="book-service-button"
+                                            @onclick="() => HandleBookService(service)">
+
+                                        @if (BookingCartService.ContainsService(service.Id))
+                                        {
+                                            <span>Added</span>
+                                            <span>✓</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Book this service</span>
+                                            <span>→</span>
+                                        }
+
+                                    </button>
+
+                                </div>
+
+                            </article>
+                        }
+
+                    </div>
+
+
+                    <button class="services-arrow services-arrow-right"
+                            type="button"
+                            onclick="document.getElementById('servicesSlider').scrollBy({left:360,behavior:'smooth'})">
+
+                        →
+
+                    </button>
+
+                </div>
+            }
+            else
+            {
+                <div class="empty-services">
+                    <p>
+                        No services available.
+                    </p>
+                </div>
+            }
+
+        </section>
+
+
+        <!-- =========================================
+             LOCATION
+        ========================================== -->
+        @if (!string.IsNullOrWhiteSpace(business.GoogleMapsUrl))
+        {
+            <section class="business-services">
+
+                <div class="section-title">
+
+                    <span>
+                        LOCATION
+                    </span>
+
+                    <h2>
+                        Find us <span>here</span>
+                    </h2>
+
+                </div>
+
+
+                <div class="map-card">
+
+                    <iframe src="@GetMapUrl()"
+                            loading="lazy"
+                            allowfullscreen
+                            referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+
+
+                    <div class="map-location-badge">
+
+                        <span class="map-pin">
+                            ●
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                @business.Name
+                            </strong>
+
+                            <small>
+                                @business.City, @business.Address
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <a href="@business.GoogleMapsUrl"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="directions-button">
+
+                    Get Directions
+
+                    <span>
+                        →
+                    </span>
+
+                </a>
+
+            </section>
+        }
+        else
+        {
+            <section class="business-services">
+
+                <div class="section-title">
+
+                    <span>
+                        LOCATION
+                    </span>
+
+                    <h2>
+                        Find us <span>here</span>
+                    </h2>
+
+                </div>
+
+
+                <div class="empty-location">
+
+                    <p>
+                        Location information is not available.
+                    </p>
+
+                </div>
+
+            </section>
+        }
+
+    </div>
+}
+
+
+<!-- =====================================================
+     BOOKING MODAL
+====================================================== -->
+@if (showBookingModal)
+{
+    <div class="booking-modal-overlay"
+         @onclick="CloseBookingModal">
+
+        <div class="booking-modal"
+             @onclick:stopPropagation="true">
+
+            <div class="booking-modal-header">
+
+                <div>
+
+                    <span class="booking-modal-eyebrow">
+                        BOOK YOUR SERVICE
+                    </span>
+
+                    <h2>
+                        @(selectedService?.Name ?? "Select Service")
+                    </h2>
+
+                    <p>
+                        Choose your preferred employee, date and time.
+                    </p>
+
+                </div>
+
+                <button type="button"
+                        class="booking-modal-close"
+                        @onclick="CloseBookingModal">
+                    ×
+                </button>
+
+            </div>
+
+            @if (loadingBookingOptions)
+            {
+                <div class="booking-modal-loading">
+                    <span>Loading employees...</span>
+                </div>
+            }
+            else if (!serviceEmployees.Any())
+            {
+                <div class="booking-modal-empty">
+
+
+                    <h3>
+                        No employees available
+                    </h3>
+
+                    <p>
+                        There are currently no employees available
+                        for this service.
+                    </p>
+
+                    @if (!string.IsNullOrWhiteSpace(bookingError))
+                    {
+                        <div class="booking-error">
+                            @bookingError
+                        </div>
+                    }
+
+                </div>
+            }
+            else
+            {
+                <!-- Your existing booking form goes here -->
+
+                <div class="booking-form">
+
+                    <div class="booking-field">
+
+                        <label>
+                            Employee
+                        </label>
+
+                        <select value="@selectedEmployeeId"
+                                @onchange="EmployeeChanged">
+
+                            <option value="">
+                                Select an employee
+                            </option>
+
+                            @foreach (var employee in serviceEmployees)
+                            {
+                                <option value="@employee.Id">
+                                    @employee.FirstName @employee.LastName
+                                </option>
+                            }
+
+                        </select>
+
+                    </div>
+
+                    <div class="booking-field">
+
+                        <label>
+                            Date
+                        </label>
+
+                        <input type="date"
+                               min="@DateTime.Today.ToString("yyyy-MM-dd")"
+                               @bind="selectedDate"
+                               @bind:after="LoadAvailableTimes" />
+
+                    </div>
+
+                    <div class="booking-field">
+
+                        <label>
+                            Available time
+                        </label>
+
+                        @if (!selectedEmployeeId.HasValue)
+                        {
+                            <div class="booking-field-message">
+                                Select an employee first.
+                            </div>
+                        }
+                        else if (!availableTimes.Any())
+                        {
+                            <div class="booking-field-message">
+                                No available times for this date.
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="booking-time-grid">
+
+                                @foreach (var time in availableTimes)
+                                {
+                                    <button type="button"
+                                            class="booking-time-option @(selectedTime == time ? "selected" : "")"
+                                            @onclick="() => SelectTime(time)">
+
+                                        @time.ToString("hh\\:mm tt")
+
+                                    </button>
+                                }
+
+                            </div>
+                        }
+
+                    </div>
+
+                    @if (!string.IsNullOrWhiteSpace(bookingError))
+                    {
+                        <div class="booking-error">
+                            @bookingError
+                        </div>
+                    }
+
+                    <div class="booking-modal-actions">
+
+                        <button type="button"
+                                class="booking-cancel-button"
+                                @onclick="CloseBookingModal">
+
+                            Cancel
+
+                        </button>
+
+                        <button type="button"
+                                class="booking-confirm-button"
+                                disabled="@(!selectedEmployeeId.HasValue || !selectedTime.HasValue)"
+                                @onclick="AddBookingToCart">
+
+                            Add to Cart
+                            <span>→</span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+}
+
+@code {
+
+    [Parameter]
+    public Guid BusinessId { get; set; }
+
+
+    private BusinessDto? business;
+
+
+    private readonly DayOfWeek[] orderedDays =
+    {
+        DayOfWeek.Monday,
+        DayOfWeek.Tuesday,
+        DayOfWeek.Wednesday,
+        DayOfWeek.Thursday,
+        DayOfWeek.Friday,
+        DayOfWeek.Saturday,
+        DayOfWeek.Sunday
+    };
+
+
+    // =====================================================
+    // BOOKING MODAL
+    // =====================================================
+
+    private bool showBookingModal;
+
+    private ServiceDto? selectedService;
+
+    private List<EmployeeDto> serviceEmployees = new();
+
+    private Guid? selectedEmployeeId;
+
+    private DateTime selectedDate = DateTime.Today;
+
+    private TimeOnly? selectedTime;
+
+    private List<TimeOnly> availableTimes = new();
+
+    private bool loadingBookingOptions;
+
+    private string? bookingError;
+
+
+    // =====================================================
+    // INITIALIZE
+    // =====================================================
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            business =
+                await BusinessService.GetBusinessByIdAsync(BusinessId);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(
+                $"Error loading business: {ex.Message}");
+        }
+    }
+
+
+    // =====================================================
+    // OPEN BOOKING MODAL
+    // =====================================================
+
+    private async Task OpenBookingModal(ServiceDto service)
+    {
+        Console.WriteLine("=================================");
+        Console.WriteLine("BOOK SERVICE CLICKED");
+        Console.WriteLine($"Service: {service.Name}");
+        Console.WriteLine($"Service ID: {service.Id}");
+        Console.WriteLine("=================================");
+
+        // Reset
+        selectedService = service;
+        selectedEmployeeId = null;
+        selectedTime = null;
+        selectedDate = DateTime.Today;
+
+        availableTimes.Clear();
+        serviceEmployees.Clear();
+
+        bookingError = null;
+
+        // IMPORTANT:
+        // Show popup FIRST
+        showBookingModal = true;
+        loadingBookingOptions = true;
+
+        StateHasChanged();
+
+        try
+        {
+            if (business == null)
+            {
+                bookingError = "Business information could not be loaded.";
+                return;
+            }
+
+            Console.WriteLine("Loading employees...");
+
+            var employees =
+                await EmployeeService
+                    .GetEmployeesByBusinessIdAsync(business.Id);
+
+            Console.WriteLine(
+                $"Employees returned: {employees?.Count() ?? 0}");
+
+            if (employees == null)
+            {
+                serviceEmployees = new List<EmployeeDto>();
+                return;
+            }
+
+            serviceEmployees = employees
+                .Where(e =>
+                    e != null &&
+                    e.IsActive &&
+                    e.Services != null &&
+                    e.Services.Any(s =>
+                        s != null &&
+                        s.Id == service.Id))
+                .ToList();
+
+            Console.WriteLine(
+                $"Employees for this service: {serviceEmployees.Count}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("BOOKING MODAL ERROR:");
+            Console.WriteLine(ex);
+
+            bookingError =
+                "Unable to load employees. Please try again.";
+        }
+        finally
+        {
+            loadingBookingOptions = false;
+
+            StateHasChanged();
+
+            Console.WriteLine("BOOKING MODAL READY");
+        }
+    }
+
+
+    // =====================================================
+    // CLOSE MODAL
+    // =====================================================
+
+    private void CloseBookingModal()
+    {
+        showBookingModal = false;
+
+        selectedService = null;
+
+        selectedEmployeeId = null;
+
+        selectedTime = null;
+
+        availableTimes.Clear();
+
+        bookingError = null;
+
+        StateHasChanged();
+    }
+
+
+    // =====================================================
+    // EMPLOYEE CHANGE
+    // =====================================================
+
+    private async Task EmployeeChanged(ChangeEventArgs e)
+    {
+        bookingError = null;
+
+        selectedTime = null;
+
+
+        if (Guid.TryParse(
+                e.Value?.ToString(),
+                out var employeeId))
+        {
+            selectedEmployeeId = employeeId;
+        }
+        else
+        {
+            selectedEmployeeId = null;
+
+            availableTimes.Clear();
+
+            StateHasChanged();
+
+            return;
+        }
+
+
+        await LoadAvailableTimes();
+    }
+
+
+    // =====================================================
+    // LOAD AVAILABLE TIMES
+    // =====================================================
+
+    private Task LoadAvailableTimes()
+    {
+        availableTimes.Clear();
+
+        selectedTime = null;
+
+        bookingError = null;
+
+
+        if (!selectedEmployeeId.HasValue ||
+            selectedService == null)
+        {
+            StateHasChanged();
+
+            return Task.CompletedTask;
+        }
+
+
+        var employee =
+            serviceEmployees.FirstOrDefault(e =>
+                e.Id == selectedEmployeeId.Value);
+
+
+        if (employee == null)
+        {
+            bookingError =
+                "The selected employee could not be found.";
+
+            StateHasChanged();
+
+            return Task.CompletedTask;
+        }
+
+
+        // Check WorkingHours safely
+
+        var workingHour =
+            employee.WorkingHours?
+                .FirstOrDefault(w =>
+                    w.DayOfWeek == selectedDate.DayOfWeek);
+
+
+        if (workingHour == null ||
+            workingHour.IsClosed ||
+            !workingHour.OpenTime.HasValue ||
+            !workingHour.CloseTime.HasValue)
+        {
+            StateHasChanged();
+
+            return Task.CompletedTask;
+        }
+
+
+        var start =
+            workingHour.OpenTime.Value;
+
+        var close =
+            workingHour.CloseTime.Value;
+
+
+        var duration =
+            TimeSpan.FromMinutes(
+                selectedService.DurationInMinutes);
+
+
+        var current = start;
+
+
+        while (current.Add(duration) <= close)
+        {
+            var slotStart =
+                selectedDate.Date
+                    .Add(current.ToTimeSpan());
+
+
+            var slotEnd =
+                slotStart.AddMinutes(
+                    selectedService.DurationInMinutes);
+
+
+            // =============================================
+            // DON'T SHOW PAST TIMES
+            // =============================================
+
+            if (selectedDate.Date == DateTime.Today &&
+                slotStart <= DateTime.Now)
+            {
+                current = current.Add(
+                    TimeSpan.FromMinutes(30));
+
+                continue;
+            }
+
+
+            // =============================================
+            // CHECK APPOINTMENT CONFLICTS
+            // =============================================
+
+            var appointments =
+                employee.Appointments ??
+                new List<AppointmentDto>();
+
+
+            var hasConflict =
+                appointments.Any(a =>
+                {
+                    // Cancelled appointment doesn't block time
+
+                    if (string.Equals(
+                        a.Status,
+                        "Cancelled",
+                        StringComparison.OrdinalIgnoreCase))
+                    {
+                        return false;
+                    }
+
+
+                    var appointmentStart =
+                        a.AppointmentDate;
+
+
+                    var appointmentDuration =
+                        a.Service?.DurationInMinutes
+                        ?? selectedService.DurationInMinutes;
+
+
+                    var appointmentEnd =
+                        appointmentStart.AddMinutes(
+                            appointmentDuration);
+
+
+                    return slotStart < appointmentEnd &&
+                           slotEnd > appointmentStart;
+                });
+
+
+            if (!hasConflict)
+            {
+                availableTimes.Add(current);
+            }
+
+
+            // Generate slots every 30 minutes
+
+            current =
+                current.Add(
+                    TimeSpan.FromMinutes(30));
+        }
+
+
+        StateHasChanged();
+
+        return Task.CompletedTask;
+    }
+
+
+    // =====================================================
+    // SELECT TIME
+    // =====================================================
+
+    private void SelectTime(TimeOnly time)
+    {
+        selectedTime = time;
+
+        bookingError = null;
+
+        StateHasChanged();
+    }
+
+
+    // =====================================================
+    // ADD BOOKING TO CART
+    // =====================================================
+
+    private void AddBookingToCart()
+    {
+        bookingError = null;
+
+
+        if (business == null ||
+            selectedService == null ||
+            !selectedEmployeeId.HasValue ||
+            !selectedTime.HasValue)
+        {
+            bookingError =
+                "Please select an employee, date and time.";
+
+            StateHasChanged();
+
+            return;
+        }
+
+
+        var employee =
+            serviceEmployees.FirstOrDefault(e =>
+                e.Id == selectedEmployeeId.Value);
+
+
+        if (employee == null)
+        {
+            bookingError =
+                "The selected employee is no longer available.";
+
+            StateHasChanged();
+
+            return;
+        }
+
+
+        var appointmentDate =
+            selectedDate.Date
+                .Add(selectedTime.Value.ToTimeSpan());
+
+
+        var item =
+            new BookingCartItemDto
+            {
+                ServiceId =
+                    selectedService.Id,
+
+                BusinessId =
+                    business.Id,
+
+                BusinessName =
+                    business.Name,
+
+                ServiceName =
+                    selectedService.Name,
+
+                Description =
+                    selectedService.Description,
+
+                DurationInMinutes =
+                    selectedService.DurationInMinutes,
+
+                Price =
+                    selectedService.Price,
+
+                EmployeeId =
+                    employee.Id,
+
+                EmployeeName =
+                    $"{employee.FirstName} {employee.LastName}".Trim(),
+
+                AppointmentDate =
+                    appointmentDate
+            };
+
+
+        try
+        {
+            // ADD TO CART
+
+            BookingCartService.AddService(item);
+
+
+            // CLOSE POPUP
+
+            CloseBookingModal();
+
+
+            
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(
+                $"Error adding booking to cart: {ex}");
+
+
+            bookingError =
+                "Something went wrong while adding the booking to your cart.";
+
+            StateHasChanged();
+        }
+    }
+
+
+    // =====================================================
+    // BUSINESS INITIAL
+    // =====================================================
+
+    private string GetBusinessInitial()
+    {
+        if (string.IsNullOrWhiteSpace(business?.Name))
+            return "B";
+
+
+        return business.Name
+            .Substring(0, 1)
+            .ToUpper();
+    }
+
+
+    // =====================================================
+    // GOOGLE MAP
+    // =====================================================
+
+    private string GetMapUrl()
+    {
+        if (business == null)
+            return string.Empty;
+
+
+        if (business.Latitude.HasValue &&
+            business.Longitude.HasValue)
+        {
+            return
+                $"https://www.google.com/maps?q={business.Latitude.Value},{business.Longitude.Value}&output=embed";
+        }
+
+
+        var location =
+            $"{business.Name}, {business.City}, {business.Address}";
+
+
+        return
+            $"https://www.google.com/maps?q={Uri.EscapeDataString(location)}&output=embed";
+    }
+
+    private void HandleBookService(ServiceDto service)
+    {
+        if (CurrentUserService.IsLoggedIn)
+        {
+            _ = OpenBookingModal(service);
+            return;
+        }
+
+        var returnUrl = $"/business/{BusinessId}";
+
+        Navigation.NavigateTo(
+            $"/login?returnUrl={Uri.EscapeDataString(returnUrl)}&message={Uri.EscapeDataString("You need to log in first.")}");
+    }
+}
+

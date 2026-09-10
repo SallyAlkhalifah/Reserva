@@ -1,0 +1,386 @@
+﻿@page "/owner/business/{BusinessId:guid}/services"
+
+@using Reserva.Application.DTOs
+@using Reserva.Application.Interfaces
+
+@inject IBusinessService BusinessService
+@inject NavigationManager Navigation
+
+<PageTitle>Manage Services</PageTitle>
+
+@if (business == null)
+{
+    <div class="services-loading">
+        Loading...
+    </div>
+}
+else
+{
+    <div class="services-manage-page">
+
+        <div class="services-manage-container">
+
+            <!-- HEADER -->
+
+            <div class="services-header">
+
+                <div>
+
+                    <span class="services-eyebrow">
+                        SERVICES
+                    </span>
+
+                    <h1>
+                        Manage your services
+                    </h1>
+
+                    <p>
+                        Add and manage the services offered by
+                        @business.Name.
+                    </p>
+
+                </div>
+
+                <button class="services-back-button"
+                        @onclick="GoBack">
+
+                    ← Back
+
+                </button>
+
+            </div>
+
+
+            <!-- SUCCESS MESSAGE -->
+            @if (!string.IsNullOrWhiteSpace(successMessage))
+            {
+                <div class="services-success">
+                    ✓ @successMessage
+                </div>
+            }
+
+
+            <!-- ADD SERVICES -->
+
+            <section class="services-form-section">
+
+                <div class="services-section-header">
+
+                    <div>
+
+                        <span>
+                            ADD SERVICES
+                        </span>
+
+                        <h2>
+                            What do you offer?
+                        </h2>
+
+                        <p>
+                            Add multiple services at once.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="service-form">
+
+                    @foreach (var service in newServices)
+                    {
+                        <div class="service-form-row">
+
+                            <div class="service-field service-name">
+                                <label>
+                                    Service name
+                                </label>
+
+                                <input @bind="service.Name"
+                                       placeholder="e.g. Haircut" />
+                            </div>
+
+
+                            <div class="service-field service-description">
+                                <label>
+                                    Description
+                                </label>
+
+                                <input @bind="service.Description"
+                                       placeholder="Short description" />
+                            </div>
+
+
+                            <div class="service-field service-price">
+                                <label>
+                                    Price
+                                </label>
+
+                                <div class="price-input">
+
+                                    <input type="number"
+                                           @bind="service.Price"
+                                           min="0"
+                                           step="0.01"
+                                           placeholder="0" />
+
+                                    <span>
+                                        SAR
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="service-field service-duration">
+                                <label>
+                                    Duration
+                                </label>
+
+                                <div class="duration-input">
+
+                                    <input type="number"
+                                           @bind="service.DurationInMinutes"
+                                           min="1"
+                                           placeholder="30" />
+
+                                    <span>
+                                        min
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            @if (newServices.Count > 1)
+                            {
+                                <button type="button"
+                                        class="remove-service-button"
+                                        @onclick="() => RemoveService(service)">
+
+                                    ×
+
+                                </button>
+                            }
+
+                        </div>
+                    }
+
+
+                    <!-- ADD ANOTHER -->
+
+                    <button type="button"
+                            class="add-service-button"
+                            @onclick="AddService">
+
+                        <span>+</span>
+                        Add another service
+
+                    </button>
+
+
+                    <!-- SAVE -->
+
+                    <div class="services-form-footer">
+
+                        <span>
+                            @newServices.Count service(s) ready to save
+                        </span>
+
+                        <button type="button"
+                                class="save-services-button"
+                                @onclick="SaveServices"
+                                disabled="@isSaving">
+
+                            @(isSaving ? "Saving..." : "Save Services")
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- EXISTING SERVICES -->
+
+            <section class="existing-services-section">
+
+                <div class="services-section-header">
+
+                    <div>
+
+                        <span>
+                            YOUR SERVICES
+                        </span>
+
+                        <h2>
+                            Existing services
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                @if (business.Services != null &&
+                     business.Services.Any())
+                {
+                    <div class="existing-services-list">
+
+                        @foreach (var service in business.Services)
+                        {
+                            <div class="existing-service-card">
+
+                                <div class="existing-service-info">
+
+                                    <h3>
+                                        @service.Name
+                                    </h3>
+
+                                    @if (!string.IsNullOrWhiteSpace(service.Description))
+                                    {
+                                        <p>
+                                            @service.Description
+                                        </p>
+                                    }
+
+                                </div>
+
+
+                                <div class="existing-service-details">
+
+                                    <strong>
+                                        @service.Price.ToString("0.##") SAR
+                                    </strong>
+
+                                    <span>
+                                        @service.DurationInMinutes min
+                                    </span>
+
+                                </div>
+
+
+                                <div class="existing-service-actions">
+
+                                    <button>
+                                        Edit
+                                    </button>
+
+                                    <button class="delete-service-button">
+                                        Delete
+                                    </button>
+
+                                </div>
+
+                            </div>
+                        }
+
+                    </div>
+                }
+                else
+                {
+                    <div class="no-services">
+                        <p>
+                            You haven't added any services yet.
+                        </p>
+                    </div>
+                }
+
+            </section>
+
+        </div>
+
+    </div>
+}
+
+
+@code {
+
+    [Parameter]
+    public Guid BusinessId { get; set; }
+
+
+    private BusinessDto? business;
+
+    private List<ServiceDto> newServices = new();
+
+    private bool isSaving;
+
+    private string? successMessage;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        business =
+            await BusinessService.GetBusinessByIdAsync(BusinessId);
+
+        AddService();
+    }
+
+
+    private void AddService()
+    {
+        newServices.Add(new ServiceDto());
+    }
+
+
+    private void RemoveService(ServiceDto service)
+    {
+        if (newServices.Count > 1)
+        {
+            newServices.Remove(service);
+        }
+    }
+
+
+    private async Task SaveServices()
+    {
+        successMessage = null;
+
+        if (newServices.Any(s =>
+            string.IsNullOrWhiteSpace(s.Name) ||
+            s.Price < 0 ||
+            s.DurationInMinutes <= 0))
+        {
+            return;
+        }
+
+        isSaving = true;
+
+        try
+        {
+            foreach (var service in newServices)
+            {
+                service.BusinessId = BusinessId;
+            }
+
+            await BusinessService.AddServicesAsync(
+                BusinessId,
+                newServices);
+
+            successMessage = "Services added successfully.";
+
+            business =
+                await BusinessService.GetBusinessByIdAsync(BusinessId);
+
+            newServices = new List<ServiceDto>();
+
+            AddService();
+        }
+        finally
+        {
+            isSaving = false;
+        }
+    }
+
+
+    private void GoBack()
+    {
+        Navigation.NavigateTo(
+            $"/owner/business/{BusinessId}");
+    }
+}

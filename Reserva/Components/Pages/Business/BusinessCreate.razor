@@ -1,0 +1,914 @@
+﻿@page "/business/create"
+@page "/owner/business/{BusinessId:guid}/edit"
+@using Microsoft.AspNetCore.Components.Forms
+@using System.ComponentModel.DataAnnotations
+@using Reserva.Application.DTOs
+@using Reserva.Application.Interfaces
+
+@inject IBusinessService BusinessService
+@inject NavigationManager Navigation
+
+<PageTitle>
+    @(IsEditMode ? "Edit Business - Reserva" : "Create Business - Reserva")
+</PageTitle>
+
+<div class="business-create-page">
+
+    <div class="business-create-container">
+
+        <!-- HEADER -->
+
+        <div class="business-create-header">
+
+            <span class="business-create-eyebrow">
+                @(IsEditMode ? "BUSINESS SETTINGS" : "NEW BUSINESS")
+            </span>
+
+            <h1>
+                @(IsEditMode ? "Edit your" : "Create your")
+                <span>business.</span>
+            </h1>
+
+            <p>
+                @(IsEditMode
+                    ? "Update your business details, branding, location and working hours."
+                    : "Add your business details to start managing your services, employees and appointments.")
+            </p>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <div class="business-create-card">
+
+            <a href="@($"/business/dashboard?ownerId={OwnerId}")"
+               class="back-button">
+                ← Back to dashboard
+            </a>
+
+
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="create-error">
+                    @errorMessage
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(successMessage))
+            {
+                <div class="create-success">
+                    @successMessage
+                </div>
+            }
+
+
+
+            <EditForm Model="@model"
+                      OnValidSubmit="SaveBusinessAsync">
+
+                <DataAnnotationsValidator />
+
+
+                <!-- BUSINESS INFORMATION -->
+
+                <div class="form-section">
+
+                    <div class="form-section-title">
+
+                        <span>
+                            01
+                        </span>
+
+                        <div>
+                            <h2>Business information</h2>
+
+                            <p>
+                                Tell us about your business.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+                        <div class="form-group full-width">
+
+                            <label>
+                                Business Name
+                            </label>
+
+                            <InputText @bind-Value="model.Name"
+                                       class="form-input"
+                                       placeholder="Enter your business name" />
+
+                            <ValidationMessage For="@(() => model.Name)" />
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Business Type
+                            </label>
+
+                            <InputSelect @bind-Value="model.Category"
+                                         class="business-type-select">
+
+                                <option value="">Select business type</option>
+                                <option value="Fitness">Fitness</option>
+                                <option value="Clinic">Clinic</option>
+                                <option value="Salon / Spa">Salon / Spa</option>
+
+                            </InputSelect>
+                            
+
+                            <ValidationMessage For="@(() => model.Category)" />
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Business Email
+                            </label>
+
+                            <InputText @bind-Value="model.Email"
+                                       type="email"
+                                       class="form-input"
+                                       placeholder="business@example.com" />
+
+                            <ValidationMessage For="@(() => model.Email)" />
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Phone Number
+                            </label>
+
+                            <InputText @bind-Value="model.PhoneNumber"
+                                       class="form-input"
+                                       placeholder="05XXXXXXXX" />
+
+                            <ValidationMessage For="@(() => model.PhoneNumber)" />
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                City
+                            </label>
+
+                            <InputText @bind-Value="model.City"
+                                       class="form-input"
+                                       placeholder="Enter your city" />
+
+                            <ValidationMessage For="@(() => model.City)" />
+
+                        </div>
+
+
+                        <div class="form-group full-width">
+
+                            <label>
+                                Address
+                            </label>
+
+                            <InputText @bind-Value="model.Address"
+                                       class="form-input"
+                                       placeholder="Enter your business address" />
+
+                            <ValidationMessage For="@(() => model.Address)" />
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-section">
+
+                    <div class="form-section-title">
+
+                        <span>
+                            02
+                        </span>
+
+                        <div>
+                            <h2>About your business</h2>
+
+                            <p>
+                                Give customers a short description.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Description
+                        </label>
+
+                        <InputTextArea @bind-Value="model.Description"
+                                       class="form-textarea"
+                                       placeholder="Tell customers about your business..." />
+
+                    </div>
+
+                </div>
+                <!-- BUSINESS HOURS -->
+
+                <div class="form-section">
+
+                    <div class="form-section-title">
+
+                        <span>03</span>
+
+                        <div>
+                            <h2>Business hours</h2>
+
+                            <p>
+                                Set your regular opening hours.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="working-hours">
+
+                        @foreach (var hour in workingHours)
+                        {
+                            <div class="working-hour-row">
+
+                                <div class="working-day">
+                                    <strong>@hour.DayOfWeek</strong>
+                                </div>
+
+
+                                <div class="working-status">
+
+                                    <label class="switch">
+
+                                        <input type="checkbox"
+                                               @bind="hour.IsOpen" />
+
+                                        <span class="slider"></span>
+
+                                    </label>
+
+                                    <span class="status-text">
+                                        @(hour.IsOpen ? "Open" : "Closed")
+                                    </span>
+
+                                </div>
+
+
+                                @if (hour.IsOpen)
+                                {
+                                    <div class="working-time">
+
+                                        <select class="time-input"
+                                                @bind="hour.OpenTime">
+                                            @foreach (var time in timeOptions)
+                                            {
+                                                <option value="@time">@time</option>
+                                            }
+                                        </select>
+
+                                        <span>—</span>
+
+                                        <select class="time-input"
+                                                @bind="hour.CloseTime">
+                                            @foreach (var time in timeOptions)
+                                            {
+                                                <option value="@time">@time</option>
+                                            }
+                                        </select>
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="closed-label">
+                                        Closed
+                                    </div>
+                                }
+
+                            </div>
+                        }
+
+                    </div>
+
+
+                    <button type="button"
+                            class="apply-hours-button"
+                            @onclick="ApplyMondayToAll">
+
+                        Apply Monday's hours to all days
+
+                    </button>
+
+                </div>
+
+                <!-- BUSINESS BRANDING -->
+
+                <div class="form-section">
+
+                    <div class="form-section-title">
+
+                        <span>04</span>
+
+                        <div>
+                            <h2>Business branding</h2>
+
+                            <p>
+                                Add your logo and banner to personalize your business.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="branding-grid">
+
+                        <!-- LOGO -->
+                        <div class="upload-group">
+                            <label class="upload-label">
+                                Business Logo
+                            </label>
+
+                            <!-- تحويل المربع إلى label وتربيطه بدلاً من div -->
+                            <label class="upload-box logo-upload">
+
+                                @if (!string.IsNullOrEmpty(model.LogoUrl))
+                                {
+                                    <img src="@model.LogoUrl"
+                                         alt="Business Logo"
+                                         class="upload-preview logo-preview" />
+                                }
+                                else
+                                {
+                                    <div class="upload-placeholder">
+                                        <span class="upload-icon">↑</span>
+                                        <strong>Upload logo</strong>
+                                        <small>PNG, JPG or WEBP</small>
+                                    </div>
+                                }
+
+                                <InputFile OnChange="UploadLogo"
+                                           accept="image/png,image/jpeg,image/webp"
+                                           class="hidden-file-input" />
+
+                            </label>
+                        </div>
+
+
+                        <!-- BANNER -->
+
+                        <div class="upload-group">
+
+                            <label class="upload-label">
+                                Business Banner
+                            </label>
+
+                            <label class="upload-box banner-upload">
+
+                                @if (!string.IsNullOrEmpty(model.BannerUrl))
+                                {
+                                    <img src="@model.BannerUrl"
+                                         alt="Business Banner"
+                                         class="upload-preview banner-preview" />
+                                }
+                                else
+                                {
+                                    <div class="upload-placeholder">
+
+                                        <span class="upload-icon">↑</span>
+
+                                        <strong>Upload banner</strong>
+
+                                        <small>
+                                            PNG, JPG or WEBP
+                                        </small>
+
+                                    </div>
+                                }
+
+                                <InputFile OnChange="UploadBanner"
+                                           accept="image/png,image/jpeg,image/webp"
+                                           class="hidden-file-input" />
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- BUSINESS LOCATION -->
+
+                <div class="form-section">
+
+                    <div class="form-section-title">
+
+                        <span>05</span>
+
+                        <div>
+                            <h2>Business location</h2>
+
+                            <p>
+                                Add your Google Maps location.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Google Maps Link
+                        </label>
+
+                        <InputText @bind-Value="model.GoogleMapsUrl"
+                                   class="form-input"
+                                   placeholder="Paste your Google Maps link" />
+
+                        <small class="location-help">
+                            Open your business location in Google Maps, copy the link,
+                            and paste it here.
+                        </small>
+
+                    </div>
+
+                </div>
+
+                    
+                    
+
+            
+        
+
+
+                <!-- SUBMIT -->
+
+                <div class="form-actions">
+
+                    <a href="@($"/business/dashboard?ownerId={OwnerId}")"
+                       class="cancel-button">
+                        Cancel
+                    </a>
+
+
+                    <button type="submit"
+                            class="create-business-button"
+                            disabled="@isSubmitting">
+
+                        @if (isSubmitting)
+                        {
+                            <span>@(IsEditMode ? "Saving..." : "Creating...")</span>
+                        }
+                        else
+                        {
+                            <span>@(IsEditMode ? "Save Changes" : "Create Business")</span>
+                            <span>→</span>
+                        }
+
+                    </button>
+
+                </div>
+
+          </EditForm>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@code {
+
+    [Parameter]
+    public Guid BusinessId { get; set; }
+
+    [SupplyParameterFromQuery]
+    public Guid OwnerId { get; set; }
+
+    private CreateBusinessModel model = new();
+
+    private string? errorMessage;
+    private string? successMessage;
+
+    private bool isSubmitting;
+
+    private Guid businessId;
+
+    private List<WorkingHourModel> workingHours = new();
+
+    private bool IsEditMode => BusinessId != Guid.Empty;
+
+    private async Task SaveBusinessAsync()
+    {
+        try
+        {
+            isSubmitting = true;
+
+            errorMessage = null;
+            successMessage = null;
+
+            if (IsEditMode)
+            {
+                var dto = new UpdateBusinessDto
+                {
+                    Id = BusinessId,
+                    OwnerId = OwnerId,
+
+                    Name = model.Name,
+                    Category = model.Category,
+                    Email = model.Email,
+                    PhoneNumber = model.PhoneNumber,
+
+                    City = model.City,
+                    Address = model.Address,
+                    Description = model.Description,
+
+                    LogoUrl = model.LogoUrl,
+                    BannerUrl = model.BannerUrl,
+
+                    GoogleMapsUrl = model.GoogleMapsUrl,
+                    Latitude = model.Latitude,
+                    Longitude = model.Longitude,
+
+                    WorkingHours = workingHours
+                        .Select(x => new BusinessWorkingHourDto
+                        {
+                            DayOfWeek = x.DayOfWeek,
+
+                            IsClosed = !x.IsOpen,
+
+                            OpenTime = x.IsOpen
+                                ? TimeOnly.Parse(x.OpenTime)
+                                : null,
+
+                            CloseTime = x.IsOpen
+                                ? TimeOnly.Parse(x.CloseTime)
+                                : null
+                        })
+                        .ToList()
+                };
+
+                await BusinessService.UpdateBusinessAsync(dto);
+
+                successMessage = "Business updated successfully.";
+            }
+            else
+            {
+                var dto = new CreateBusinessDto
+                {
+                    Name = model.Name,
+                    Category = model.Category,
+                    Email = model.Email,
+                    PhoneNumber = model.PhoneNumber,
+
+                    City = model.City,
+                    Address = model.Address,
+                    Description = model.Description,
+
+                    LogoUrl = model.LogoUrl,
+                    BannerUrl = model.BannerUrl,
+
+                    GoogleMapsUrl = model.GoogleMapsUrl,
+                    Latitude = model.Latitude,
+                    Longitude = model.Longitude,
+
+                    OwnerId = OwnerId,
+
+                    WorkingHours = workingHours
+                        .Select(x => new BusinessWorkingHourDto
+                        {
+                            DayOfWeek = x.DayOfWeek,
+
+                            IsClosed = !x.IsOpen,
+
+                            OpenTime = x.IsOpen
+                                ? TimeOnly.Parse(x.OpenTime)
+                                : null,
+
+                            CloseTime = x.IsOpen
+                                ? TimeOnly.Parse(x.CloseTime)
+                                : null
+                        })
+                        .ToList()
+                };
+
+                var createdBusinessId =
+                    await BusinessService.CreateBusinessAsync(dto);
+
+                Navigation.NavigateTo(
+                    $"/business/{createdBusinessId}");
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+
+
+    private class CreateBusinessModel
+    {
+        [Required(ErrorMessage = "Business name is required.")]
+        public string Name { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Business type is required.")]
+        public string Category { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Business email is required.")]
+        [EmailAddress(ErrorMessage = "Please enter a valid email.")]
+        public string Email { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Phone number is required.")]
+        public string PhoneNumber { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "City is required.")]
+        public string City { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Address is required.")]
+        public string Address { get; set; } = string.Empty;
+
+        public string? Description { get; set; }
+
+        public string? LogoUrl { get; set; }
+
+        public string? BannerUrl { get; set; }
+
+        public string? GoogleMapsUrl { get; set; }
+
+        public double? Latitude { get; set; }
+
+        public double? Longitude { get; set; }
+    }
+    private async Task UploadLogo(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+
+        if (file == null)
+            return;
+
+        var extension = Path.GetExtension(file.Name);
+
+        var fileName = $"{businessId}{extension}";
+
+        var folder = Path.Combine(
+            "wwwroot",
+            "uploads",
+            "businesses",
+            "logos");
+
+        Directory.CreateDirectory(folder);
+
+        var filePath = Path.Combine(folder, fileName);
+
+        await using var stream = file.OpenReadStream(5 * 1024 * 1024);
+
+        await using var fileStream = new FileStream(
+            filePath,
+            FileMode.Create);
+
+        await stream.CopyToAsync(fileStream);
+
+        model.LogoUrl =
+            $"/uploads/businesses/logos/{fileName}";
+    }
+    private async Task UploadBanner(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+
+        if (file == null)
+            return;
+
+        var extension = Path.GetExtension(file.Name);
+
+        var fileName = $"{businessId}{extension}";
+
+        var folder = Path.Combine(
+            "wwwroot",
+            "uploads",
+            "businesses",
+            "banners");
+
+        Directory.CreateDirectory(folder);
+
+        var filePath = Path.Combine(folder, fileName);
+
+        await using var stream = file.OpenReadStream(10 * 1024 * 1024);
+
+        await using var fileStream = new FileStream(
+            filePath,
+            FileMode.Create);
+
+        await stream.CopyToAsync(fileStream);
+
+        model.BannerUrl =
+            $"/uploads/businesses/banners/{fileName}";
+    }
+    private class WorkingHourModel
+    {
+        public DayOfWeek DayOfWeek { get; set; }
+
+        public bool IsOpen { get; set; }
+
+        public string OpenTime { get; set; } = "09:00 AM";
+
+        public string CloseTime { get; set; } = "10:00 PM";
+    }
+    private List<string> timeOptions = new()
+    {
+        "12:00 AM",
+        "12:30 AM",
+        "01:00 AM",
+        "01:30 AM",
+        "02:00 AM",
+        "02:30 AM",
+        "03:00 AM",
+        "03:30 AM",
+        "04:00 AM",
+        "04:30 AM",
+        "05:00 AM",
+        "05:30 AM",
+        "06:00 AM",
+        "06:30 AM",
+        "07:00 AM",
+        "07:30 AM",
+        "08:00 AM",
+        "08:30 AM",
+        "09:00 AM",
+        "09:30 AM",
+        "10:00 AM",
+        "10:30 AM",
+        "11:00 AM",
+        "11:30 AM",
+        "12:00 PM",
+        "12:30 PM",
+        "01:00 PM",
+        "01:30 PM",
+        "02:00 PM",
+        "02:30 PM",
+        "03:00 PM",
+        "03:30 PM",
+        "04:00 PM",
+        "04:30 PM",
+        "05:00 PM",
+        "05:30 PM",
+        "06:00 PM",
+        "06:30 PM",
+        "07:00 PM",
+        "07:30 PM",
+        "08:00 PM",
+        "08:30 PM",
+        "09:00 PM",
+        "09:30 PM",
+        "10:00 PM",
+        "10:30 PM",
+        "11:00 PM",
+        "11:30 PM"
+    };
+    private void InitializeWorkingHours()
+    {
+        var days = new[]
+        {
+        DayOfWeek.Monday,
+        DayOfWeek.Tuesday,
+        DayOfWeek.Wednesday,
+        DayOfWeek.Thursday,
+        DayOfWeek.Friday,
+        DayOfWeek.Saturday,
+        DayOfWeek.Sunday
+    };
+
+        workingHours = days
+            .Select(day => new WorkingHourModel
+            {
+                DayOfWeek = day,
+                IsOpen = true,
+                OpenTime = "09:00 AM",
+                CloseTime = "10:00 PM"
+            })
+            .ToList();
+
+        var friday = workingHours
+            .First(x => x.DayOfWeek == DayOfWeek.Friday);
+
+        friday.IsOpen = false;
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        InitializeWorkingHours();
+
+        if (IsEditMode)
+        {
+            await LoadBusinessAsync();
+        }
+    }
+
+    
+    private void ApplyMondayToAll()
+    {
+        var monday = workingHours
+            .First(x => x.DayOfWeek == DayOfWeek.Monday);
+
+        foreach (var hour in workingHours)
+        {
+            if (hour.DayOfWeek == DayOfWeek.Monday)
+                continue;
+
+            hour.IsOpen = monday.IsOpen;
+            hour.OpenTime = monday.OpenTime;
+            hour.CloseTime = monday.CloseTime;
+        }
+    }
+
+
+    private async Task LoadBusinessAsync()
+    {
+        try
+        {
+            var business = await BusinessService.GetBusinessByIdAsync(BusinessId);
+
+            if (business == null)
+            {
+                errorMessage = "Business not found.";
+                return;
+            }
+
+            businessId = business.Id;
+
+            model.Name = business.Name;
+            model.Category = business.Category;
+            model.Email = business.Email;
+            model.PhoneNumber = business.PhoneNumber;
+            model.City = business.City;
+            model.Address = business.Address;
+            model.Description = business.Description;
+
+            model.LogoUrl = business.LogoUrl;
+            model.BannerUrl = business.BannerUrl;
+
+            model.GoogleMapsUrl = business.GoogleMapsUrl;
+            model.Latitude = business.Latitude;
+            model.Longitude = business.Longitude;
+
+            OwnerId = business.OwnerId;
+
+            if (business.WorkingHours != null &&
+                business.WorkingHours.Any())
+            {
+                foreach (var savedHour in business.WorkingHours)
+                {
+                    var hour = workingHours.FirstOrDefault(
+                        x => x.DayOfWeek == savedHour.DayOfWeek);
+
+                    if (hour == null)
+                        continue;
+
+                    hour.IsOpen = !savedHour.IsClosed;
+
+                    if (savedHour.OpenTime.HasValue)
+                    {
+                        hour.OpenTime =
+                            savedHour.OpenTime.Value.ToString("hh:mm tt");
+                    }
+
+                    if (savedHour.CloseTime.HasValue)
+                    {
+                        hour.CloseTime =
+                            savedHour.CloseTime.Value.ToString("hh:mm tt");
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.ToString();
+        }
+    }
+
+}

@@ -1,0 +1,613 @@
+/* =========================================================
+   RESERVA ABOUT PAGE
+   Same Typography / Style as Home
+========================================================= */
+
+.about-page {
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    background: #ffffff;
+    color: #092846;
+    font-family: inherit;
+}
+
+
+/* =========================================================
+   COMMON
+========================================================= */
+
+.about-container {
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+.about-eyebrow,
+.section-label {
+    display: block;
+    width: fit-content;
+    margin: 0 0 14px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: #c58d3b;
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: 5px;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.about-hero {
+    position: relative;
+    width: 100%;
+    min-height: 470px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    background: #092846;
+    color: #ffffff;
+}
+
+    .about-hero::before {
+        content: "";
+        position: absolute;
+        width: 420px;
+        height: 420px;
+        right: -120px;
+        bottom: -180px;
+        border: 1px solid rgba(215, 163, 84, 0.18);
+        border-radius: 50%;
+    }
+
+.about-hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 70px 40px;
+    box-sizing: border-box;
+}
+
+.about-hero .about-eyebrow {
+    margin-bottom: 20px;
+}
+
+.about-hero h1 {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 0 24px;
+    padding: 0;
+    color: #ffffff;
+    font-size: 58px;
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+}
+
+    .about-hero h1 span {
+        color: #c58d3b;
+    }
+
+.about-hero p {
+    width: 100%;
+    max-width: 570px;
+    margin: 0;
+    padding: 0;
+    color: #b8c5d2;
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   GENERAL SECTION
+========================================================= */
+
+.about-section {
+    width: 100%;
+    padding: 100px 0;
+    background: #ffffff;
+    box-sizing: border-box;
+}
+
+.about-light {
+    background: #f8f5ef;
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.about-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 100px;
+    align-items: start;
+}
+
+.about-heading h2,
+.section-header h2 {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    color: #092846;
+    font-size: 43px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+    .about-heading h2 span,
+    .section-header h2 span {
+        color: #c58d3b;
+    }
+
+.about-text {
+    padding-top: 3px;
+}
+
+    .about-text p {
+        margin: 0 0 20px;
+        padding: 0;
+        color: #758596;
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+        .about-text p:last-child {
+            margin-bottom: 0;
+        }
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.section-header {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 0 50px;
+    padding: 0;
+}
+
+    .section-header .section-label {
+        margin-bottom: 14px;
+    }
+
+
+/* =========================================================
+   FEATURES / WHAT WE OFFER
+========================================================= */
+
+.about-cards {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.about-card {
+    position: relative;
+    min-height: 250px;
+    padding: 30px 25px;
+    box-sizing: border-box;
+    background: #ffffff;
+    border: 1px solid #e5ebef;
+    border-radius: 12px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+    .about-card:hover {
+        transform: translateY(-5px);
+        border-color: #dce4ea;
+        box-shadow: 0 18px 40px rgba(9, 40, 70, 0.07);
+    }
+
+.about-card-icon {
+    width: 58px;
+    height: 58px;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: #f8f0e5;
+    color: #c58d3b;
+    font-size: 25px;
+}
+
+.about-card h3 {
+    margin: 0 0 10px;
+    padding: 0;
+    color: #092846;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.about-card p {
+    margin: 0;
+    padding: 0;
+    color: #758596;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   HOW IT WORKS
+========================================================= */
+
+.steps-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 45px;
+}
+
+.about-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 22px;
+}
+
+.step-number {
+    flex-shrink: 0;
+    color: #c58d3b;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    line-height: 1.5;
+}
+
+.about-step h3 {
+    margin: 0 0 10px;
+    padding: 0;
+    color: #092846;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.about-step p {
+    margin: 0;
+    padding: 0;
+    color: #758596;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   WHY RESERVA
+========================================================= */
+
+.about-dark {
+    background: #092846;
+    color: #ffffff;
+}
+
+.why-reserva {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 100px;
+    align-items: center;
+}
+
+.section-label-light {
+    color: #d7a354;
+}
+
+.why-reserva h2 {
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    font-size: 43px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+    .why-reserva h2 span {
+        color: #d7a354;
+    }
+
+.why-text {
+    max-width: 550px;
+}
+
+    .why-text p {
+        margin: 0 0 22px;
+        padding: 0;
+        color: #b8c5d2;
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+        .why-text p:last-child {
+            margin-bottom: 0;
+        }
+
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.about-cta {
+    width: 100%;
+    padding: 90px 40px;
+    background: #ffffff;
+    box-sizing: border-box;
+}
+
+.about-cta-content {
+    position: relative;
+    width: 100%;
+    max-width: 1250px;
+    min-height: 330px;
+    margin: 0 auto;
+    padding: 50px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    background: #092846;
+    border-radius: 30px;
+    box-shadow: 0 25px 55px rgba(9, 40, 70, 0.18);
+    text-align: center;
+}
+
+
+    /* Decorative Lines */
+
+    .about-cta-content::before,
+    .about-cta-content::after {
+        content: "";
+        position: absolute;
+        top: 22px;
+        bottom: 22px;
+        width: 230px;
+        opacity: 0.12;
+        background: repeating-linear-gradient( to bottom, #ffffff 0, #ffffff 36px, transparent 36px, transparent 71px );
+        pointer-events: none;
+    }
+
+    .about-cta-content::before {
+        left: -20px;
+        border-radius: 20px;
+    }
+
+    .about-cta-content::after {
+        right: -20px;
+        border-radius: 20px;
+    }
+
+
+    /* CTA Eyebrow */
+
+    .about-cta-content .about-eyebrow {
+        position: relative;
+        z-index: 2;
+        margin-bottom: 15px;
+    }
+
+
+    /* CTA Heading */
+
+    .about-cta-content h2 {
+        position: relative;
+        z-index: 2;
+        max-width: 850px;
+        margin: 0 0 16px;
+        padding: 0;
+        color: #ffffff;
+        font-size: 42px;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: -1px;
+    }
+
+
+    /* CTA Description */
+
+    .about-cta-content p {
+        position: relative;
+        z-index: 2;
+        margin: 0 0 28px;
+        padding: 0;
+        color: #b8c5d2;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+
+/* CTA Button */
+
+.about-cta-button {
+    position: relative;
+    z-index: 2;
+    height: 54px;
+    padding: 0 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    border: none;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #092846;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .about-cta-button:hover {
+        background: #f8f0e5;
+        color: #092846;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .about-cta-button i {
+        color: #c58d3b;
+        font-size: 18px;
+    }
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .about-container {
+        padding: 0 30px;
+    }
+
+    .about-hero-content {
+        padding: 65px 30px;
+    }
+
+    .about-intro {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .about-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .steps-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .why-reserva {
+        grid-template-columns: 1fr;
+        gap: 45px;
+    }
+
+    .why-text {
+        max-width: 700px;
+    }
+
+    .about-cta {
+        padding: 70px 30px;
+    }
+
+    .about-cta-content {
+        padding: 50px 50px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .about-container {
+        padding: 0 20px;
+    }
+
+    .about-hero {
+        min-height: 400px;
+    }
+
+    .about-hero-content {
+        padding: 55px 20px;
+    }
+
+    .about-hero h1 {
+        font-size: 48px;
+        letter-spacing: -1px;
+    }
+
+    .about-hero p {
+        font-size: 16px;
+    }
+
+    .about-section {
+        padding: 75px 0;
+    }
+
+    .about-heading h2,
+    .section-header h2 {
+        font-size: 34px;
+    }
+
+    .about-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .about-card {
+        min-height: auto;
+    }
+
+    .why-reserva h2 {
+        font-size: 34px;
+    }
+
+    .about-cta {
+        padding: 60px 20px;
+    }
+
+    .about-cta-content {
+        min-height: 350px;
+        padding: 45px 25px;
+        border-radius: 24px;
+    }
+
+        .about-cta-content::before,
+        .about-cta-content::after {
+            width: 120px;
+        }
+
+        .about-cta-content h2 {
+            font-size: 34px;
+        }
+
+        .about-cta-content p {
+            font-size: 14px;
+        }
+
+    .about-cta-button {
+        height: 52px;
+        padding: 0 24px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .about-card,
+    .about-cta-button {
+        transition: none;
+    }
+
+        .about-card:hover {
+            transform: none;
+        }
+}

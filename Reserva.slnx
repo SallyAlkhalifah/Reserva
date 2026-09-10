@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Reserva.Application/Reserva.Application.csproj" Id="537e319f-d085-46a6-bd18-db25ecbca570" />
+  <Project Path="Reserva.Domain/Reserva.Domain.csproj" />
+  <Project Path="Reserva.Infrastructure/Reserva.Infrastructure.csproj" Id="89935eca-8031-4c8a-8862-88bf2dc858cb" />
+  <Project Path="Reserva/Reserva.csproj" />
+</Solution>

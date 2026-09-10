@@ -1,0 +1,232 @@
+﻿@page "/owner/business/employee/list/{BusinessId:guid}"
+
+@using Reserva.Application.DTOs
+@using Reserva.Application.Interfaces
+
+@inject IBusinessService BusinessService
+@inject NavigationManager Navigation
+
+<PageTitle>Manage Employees</PageTitle>
+
+@if (business == null)
+{
+    <div class="employees-loading">
+        Loading...
+    </div>
+}
+else
+{
+    <div class="employees-manage-page">
+
+        <div class="employees-manage-container">
+
+            <!-- HEADER -->
+            <div class="employees-header">
+
+                <div>
+                    <span class="employees-eyebrow">
+                        EMPLOYEES
+                    </span>
+
+                    <h1>
+                        Manage your <span>employee</span>
+
+                    </h1>
+
+
+                    <p>
+                        Add and manage the employees working at
+                        @business.Name.
+                    </p>
+                </div>
+
+                <button class="employees-back-button"
+                        @onclick="GoBack">
+                    ← Back
+                </button>
+
+            </div>
+
+
+            <!-- ADD EMPLOYEE -->
+            <section class="employees-add-section">
+
+                <div class="employees-section-content">
+
+                    <div>
+                        <span class="employees-section-label">
+                            TEAM
+                        </span>
+
+                        <h2>
+                            Build your team
+                        </h2>
+
+                        <p>
+                            Create employee accounts and assign
+                            their services and working hours.
+                        </p>
+                    </div>
+
+                    <button class="add-employee-button"
+                            @onclick="GoToCreateEmployee">
+
+                        <span>+</span>
+                        Add Employee
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- EXISTING EMPLOYEES -->
+            <section class="existing-employees-section">
+
+                <div class="employees-section-header">
+
+                    <div>
+                        <span>
+                            YOUR TEAM
+                        </span>
+
+                        <h2>
+                            Existing employees
+                        </h2>
+                    </div>
+
+                    @if (business.Employees != null &&
+                         business.Employees.Any())
+                    {
+                        <span class="employee-count">
+                            @business.Employees.Count employee(s)
+                        </span>
+                    }
+
+                </div>
+
+
+                @if (business.Employees != null &&
+                     business.Employees.Any())
+                {
+                    <div class="employees-list">
+
+                        @foreach (var employee in business.Employees)
+                        {
+                            <div class="employee-card">
+
+                                <div class="employee-avatar">
+                                    @GetInitial(employee)
+                                </div>
+
+                                <div class="employee-info">
+
+                                    <h3>
+                                        @employee.FirstName
+                                        @employee.LastName
+                                    </h3>
+
+                                    @if (!string.IsNullOrWhiteSpace(employee.JobTitle))
+                                    {
+                                        <p>
+                                            @employee.JobTitle
+                                        </p>
+                                    }
+
+                                </div>
+
+                                <div class="employee-status">
+                                    @(employee.IsActive ? "Active" : "Inactive")
+                                </div>
+                                <button type="button"
+                                        class="employee-edit-button"
+                                        @onclick="() => EditEmployee(employee.Id)">
+                                    Edit
+                                </button>
+
+                            </div>
+                        }
+
+                    </div>
+                }
+                else
+                {
+                    <div class="no-employees">
+
+                        <div class="no-employees-icon">
+                            +
+                        </div>
+
+                        <h3>
+                            No employees yet
+                        </h3>
+
+                        <p>
+                            You haven't added any employees to
+                            @business.Name yet.
+                        </p>
+
+                        <button class="empty-add-employee-button"
+                                @onclick="GoToCreateEmployee">
+                            Add your first employee
+                        </button>
+
+                    </div>
+                }
+
+            </section>
+
+        </div>
+
+    </div>
+}
+
+
+@code {
+
+    [Parameter]
+    public Guid BusinessId { get; set; }
+
+    private BusinessDto? business;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        business =
+            await BusinessService.GetBusinessByIdAsync(BusinessId);
+    }
+
+
+    private void GoToCreateEmployee()
+    {
+        Navigation.NavigateTo(
+            $"/owner/business/employee/create/{BusinessId}"
+        );
+    }
+
+
+    private void GoBack()
+    {
+        Navigation.NavigateTo(
+            $"/owner/business/{BusinessId}"
+        );
+    }
+    private void EditEmployee(Guid employeeId)
+    {
+        Navigation.NavigateTo($"/employee/edit/{employeeId}");
+    }
+
+
+    private string GetInitial(EmployeeDto employee)
+    {
+        if (!string.IsNullOrWhiteSpace(employee.FirstName))
+        {
+            return employee.FirstName
+                .Substring(0, 1)
+                .ToUpper();
+        }
+
+        return "E";
+    }
+}

@@ -1,0 +1,563 @@
+﻿@page "/"
+
+@using Reserva.Application.DTOs
+@using Reserva.Application.Interfaces
+
+@inject IBusinessService BusinessService
+@inject IJSRuntime JS
+@inject NavigationManager Navigation
+
+<PageTitle>Reserva - Book Your Time</PageTitle>
+
+
+<div class="home-page">
+
+    <!-- =========================================
+         HERO
+    ========================================= -->
+    <section class="hero-section">
+
+        <div class="hero-container">
+
+            <!-- HERO CONTENT -->
+            <div class="hero-content scroll-reveal">
+
+                <span class="hero-eyebrow">
+                    APPOINTMENT BOOKING
+                </span>
+
+                <h1>
+                    Your time,
+                    <span>your way.</span>
+                </h1>
+
+                <p>
+                    Discover trusted businesses, explore their services,
+                    and book your appointment easily — all in one place.
+                </p>
+
+                <div class="hero-actions">
+
+                    <a href="/services"
+                       class="hero-primary-button">
+
+                        Find an Appointment
+
+                        <span>→</span>
+
+                    </a>
+
+                    <a href="/register"
+                       class="hero-secondary-button">
+
+                        Get Started
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- HERO VISUAL -->
+            <div class="hero-visual scroll-reveal delay-2">
+
+                <!-- MAIN APPOINTMENT CARD -->
+                <div class="hero-card main-card">
+
+                    <div class="hero-card-header">
+
+                        <div class="hero-icon">
+                            <span>✓</span>
+                        </div>
+
+                        <div>
+
+                            <small>
+                                YOUR APPOINTMENT
+                            </small>
+
+                            <strong>
+                                Confirmed
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="appointment-preview">
+
+                        <div class="preview-date">
+
+                            <span>
+                                MON
+                            </span>
+
+                            <strong>
+                                18
+                            </strong>
+
+                        </div>
+
+
+                        <div class="preview-info">
+
+                            <strong>
+                                Hair Styling
+                            </strong>
+
+                            <span>
+                                10:30 AM
+                            </span>
+
+                            <small>
+                                Reserva Beauty
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="confirmed-badge">
+
+                        Appointment confirmed
+
+                    </div>
+
+                </div>
+
+
+                <!-- FLOATING CARD TOP -->
+                <div class="floating-card floating-card-top">
+
+                    <span class="floating-icon">
+                        ★
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Trusted
+                        </strong>
+
+                        <small>
+                            Businesses
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FLOATING CARD BOTTOM -->
+                <div class="floating-card floating-card-bottom">
+
+                    <span class="floating-icon">
+                        ⌁
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Easy
+                        </strong>
+
+                        <small>
+                            Booking
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         WHY RESERVA
+    ========================================= -->
+    <section class="why-section">
+
+        <div class="section-container">
+
+            <span class="section-eyebrow scroll-reveal">
+                WHY RESERVA
+            </span>
+
+
+            <div class="section-heading why-heading scroll-reveal">
+
+                <h2>
+                    Everything you need to
+                    <span>book with confidence.</span>
+                </h2>
+
+                <p>
+                    Reserva makes appointment booking simple, fast,
+                    and convenient for everyone.
+                </p>
+
+            </div>
+
+
+            <!-- FEATURES -->
+            <div class="features-grid">
+
+
+                <!-- FEATURE 01 -->
+                <div class="feature-card scroll-reveal delay-1">
+
+                    <div class="feature-number">
+                        01
+                    </div>
+
+                    <div class="feature-icon">
+                        <span>⌕</span>
+                    </div>
+
+                    <div class="feature-content">
+
+                        <h3>
+                            Discover
+                        </h3>
+
+                        <p>
+                            Find businesses and services that match
+                            what you're looking for.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FEATURE 02 -->
+                <div class="feature-card scroll-reveal delay-2">
+
+                    <div class="feature-number">
+                        02
+                    </div>
+
+                    <div class="feature-icon">
+                        <span>✓</span>
+                    </div>
+
+                    <div class="feature-content">
+
+                        <h3>
+                            Book Easily
+                        </h3>
+
+                        <p>
+                            Choose your preferred service, date,
+                            and time in just a few clicks.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FEATURE 03 -->
+                <div class="feature-card scroll-reveal delay-3">
+
+                    <div class="feature-number">
+                        03
+                    </div>
+
+                    <div class="feature-icon">
+                        <span>★</span>
+                    </div>
+
+                    <div class="feature-content">
+
+                        <h3>
+                            Enjoy
+                        </h3>
+
+                        <p>
+                            Keep track of your appointments and
+                            enjoy a smoother experience.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+     CATEGORIES
+========================================= -->
+    <section class="categories-section">
+
+        <div class="section-container">
+
+            <!-- CATEGORIES HEADER -->
+            <div class="categories-heading scroll-reveal">
+
+                <div class="categories-heading-content">
+
+                    <span class="section-eyebrow">
+                        EXPLORE
+                    </span>
+
+                    <h2>
+                        Browse by <span>category.</span>
+                    </h2>
+
+                    <p>
+                        Find the right place for your next appointment.
+                    </p>
+
+                </div>
+
+                <a href="/services"
+                   class="view-all-link">
+
+                    <span>
+                        View all
+                    </span>
+
+                    <span class="view-all-arrow">
+                        →
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <!-- CATEGORIES GRID -->
+            <div class="categories-grid">
+
+                @for (int i = 0; i < Categories.Count; i++)
+                {
+                    var category = Categories[i];
+
+                    <a href="@($"/services?category={Uri.EscapeDataString(category)}")"
+                       class="@($"category-card scroll-reveal delay-{i + 1}")">
+
+                        <!-- IMAGE -->
+                        <div class="category-image-wrapper">
+
+                            <img src="@GetCategoryImage(category)"
+                                 alt="@GetCategoryName(category)"
+                                 class="category-image" />
+
+                            <!-- BOTTOM GRADIENT -->
+                            <div class="category-gradient"></div>
+
+
+                            <!-- CONTENT ON IMAGE -->
+                            <div class="category-overlay-content">
+
+                                <div class="category-text">
+
+                                    <h3>
+                                        @GetCategoryName(category)
+                                    </h3>
+
+                                    <p>
+                                        @GetCategoryDescription(category)
+                                    </p>
+
+                                </div>
+
+
+                                <div class="category-image-arrow">
+                                    →
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+                }
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         CTA
+    ========================================= -->
+    <section class="home-cta">
+
+        <div class="cta-container">
+
+            <div class="cta-content scroll-reveal">
+
+                <h2>
+                    Your next appointment is just a click away.
+                </h2>
+
+                <p>
+                    Discover, choose, and book with Reserva.
+                </p>
+
+                <a href="/services"
+                   class="cta-button">
+
+                    Start Booking
+
+                    <span>
+                        →
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+</div>
+
+
+
+@code {
+
+    private List<BusinessDto> businesses = new();
+
+
+    private List<string> Categories { get; } = new()
+    {
+        "clinics",
+        "beauty",
+        "fitness"
+    };
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        businesses = await BusinessService.GetAllBusinessesAsync();
+    }
+
+
+
+    /* =========================================
+       CATEGORY ICON
+    ========================================= */
+
+    private string GetCategoryIcon(string category)
+    {
+        return category.ToLowerInvariant() switch
+        {
+            "clinic" or "clinics"
+                => "✚",
+
+            "beauty" or "salon" or "salons" or "spa"
+                => "✦",
+
+            "fitness" or "gym"
+                => "◎",
+
+            _ => "◇"
+        };
+    }
+
+
+
+    /* =========================================
+       CATEGORY NAME
+    ========================================= */
+
+    private string GetCategoryName(string category)
+    {
+        return category.ToLowerInvariant() switch
+        {
+            "clinic" or "clinics"
+                => "Clinics",
+
+            "beauty" or "salon" or "salons" or "spa"
+                => "Beauty & Salons",
+
+            "fitness" or "gym"
+                => "Fitness",
+
+            _ => category
+        };
+    }
+
+
+
+    /* =========================================
+       CATEGORY DESCRIPTION
+    ========================================= */
+
+    private string GetCategoryDescription(string category)
+    {
+        return category.ToLowerInvariant() switch
+        {
+            "clinic" or "clinics"
+                => "Healthcare & wellness",
+
+            "beauty" or "salon" or "salons" or "spa"
+                => "Salons, spas & beauty services",
+
+            "fitness" or "gym"
+                => "Gyms & personal training",
+
+            _ => "Discover businesses & services"
+        };
+    }
+
+
+
+    /* =========================================
+       CATEGORY IMAGE
+    ========================================= */
+
+    private string GetCategoryImage(string category)
+    {
+        return category.ToLowerInvariant() switch
+        {
+            "clinic" or "clinics"
+                => "/images/categories/clinics.jpg",
+
+            "beauty" or "salon" or "salons" or "spa"
+                => "/images/categories/beauty.jpg",
+
+            "fitness" or "gym"
+                => "/images/categories/fitness.jpg",
+
+            _ => "/images/categories/default.jpg"
+        };
+    }
+
+
+
+    /* =========================================
+       ANIMATIONS
+    ========================================= */
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("reservaAnimations.init");
+        }
+    }
+
+}

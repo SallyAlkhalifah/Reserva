@@ -1,0 +1,744 @@
+/* CSS for BusinessCreate component */
+.business-create-page {
+    min-height: calc(100vh - 80px);
+    padding: 80px 24px 100px;
+    background: radial-gradient(circle at 10% 10%, rgba(197, 141, 59, 0.07), transparent 30%), radial-gradient(circle at 90% 85%, rgba(9, 40, 70, 0.05), transparent 30%), #fafaf8;
+    box-sizing: border-box;
+}
+
+.business-create-container {
+    width: 100%;
+    max-width: 920px;
+    margin: 0 auto;
+}
+
+.business-create-header {
+    max-width: 680px;
+    margin: 0 auto 45px;
+    text-align: center;
+}
+
+.business-create-eyebrow {
+    display: inline-flex;
+    margin-bottom: 18px;
+    color: #b57d2f;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 4px;
+}
+
+.business-create-header h1 {
+    margin: 0;
+    color: #082844;
+    font-size: clamp(42px, 6vw, 60px);
+    font-weight: 700;
+    letter-spacing: -2.5px;
+    line-height: 1.05;
+}
+
+    .business-create-header h1 span {
+        color: #b57d2f;
+        font-style: italic;
+        font-weight: 500;
+    }
+
+.business-create-header p {
+    max-width: 550px;
+    margin: 20px auto 0;
+    color: #718092;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+
+/* CARD */
+
+.business-create-card {
+    padding: 42px;
+    border: 1px solid #e7e3dc;
+    border-radius: 26px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 30px 80px rgba(8, 40, 68, 0.07), 0 4px 20px rgba(8, 40, 68, 0.03);
+}
+
+
+/* BACK */
+
+.back-button {
+    display: inline-flex;
+    margin-bottom: 35px;
+    color: #7a8794;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+    .back-button:hover {
+        color: #082844;
+    }
+
+
+/* SECTIONS */
+
+.form-section {
+    padding-bottom: 35px;
+    margin-bottom: 35px;
+    border-bottom: 1px solid #eeeae4;
+}
+
+.form-section-title {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 28px;
+}
+
+    .form-section-title > span {
+        color: #b57d2f;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 2px;
+    }
+
+    .form-section-title h2 {
+        margin: 0;
+        color: #082844;
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .form-section-title p {
+        margin: 5px 0 0;
+        color: #8994a0;
+        font-size: 13px;
+    }
+
+
+/* GRID */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 9px;
+    color: #263b4d;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* INPUTS */
+
+::deep input.form-input,
+::deep textarea.form-textarea {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #e2dfda;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #263b4d;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+::deep input.form-input {
+    height: 48px;
+    padding: 0 15px;
+}
+
+::deep textarea.form-textarea {
+    min-height: 130px;
+    padding: 14px 15px;
+    resize: vertical;
+}
+
+    ::deep input.form-input::placeholder,
+    ::deep textarea.form-textarea::placeholder {
+        color: #aab2ba;
+        font-size: 13px;
+    }
+
+    ::deep input.form-input:hover,
+    ::deep textarea.form-textarea:hover {
+        border-color: #d4cfc7;
+    }
+
+    ::deep input.form-input:focus,
+    ::deep textarea.form-textarea:focus {
+        border-color: #c49a5b;
+        box-shadow: 0 0 0 3px rgba(197, 141, 59, 0.10);
+    }
+
+
+/* VALIDATION */
+
+::deep .validation-message {
+    margin-top: 6px;
+    color: #a82b2b;
+    font-size: 12px;
+}
+
+
+/* ERROR */
+
+.create-error {
+    margin-bottom: 25px;
+    padding: 13px 16px;
+    border: 1px solid #f0cccc;
+    border-radius: 11px;
+    background: #fff7f7;
+    color: #a82b2b;
+    font-size: 13px;
+}
+
+
+/* ACTIONS */
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+}
+
+.cancel-button {
+    padding: 0 22px;
+    height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #7a8794;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+    .cancel-button:hover {
+        color: #082844;
+    }
+
+.create-business-button {
+    height: 50px;
+    padding: 0 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #082844;
+    color: white;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .create-business-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(8, 40, 68, 0.18);
+    }
+
+    .create-business-button:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .business-create-page {
+        padding: 55px 18px 80px;
+    }
+
+    .business-create-card {
+        padding: 30px 22px;
+        border-radius: 20px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: auto;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .cancel-button {
+        width: 100%;
+    }
+
+    .create-business-button {
+        width: 100%;
+    }
+}
+/* =========================================================
+   BUSINESS TYPE
+========================================================= */
+
+::deep .business-type-select {
+    display: block;
+    width: 100%;
+    height: 48px;
+    padding: 0 42px 0 15px;
+    box-sizing: border-box;
+    border: 1px solid #e2dfda;
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #263b4d;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+    ::deep .business-type-select:hover {
+        border-color: #d4cfc7;
+    }
+
+    ::deep .business-type-select:focus {
+        border-color: #c49a5b;
+        box-shadow: 0 0 0 3px rgba(197, 141, 59, 0.10);
+    }
+/* =========================================================
+   BUSINESS BRANDING
+========================================================= */
+.upload-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 190px;
+    box-sizing: border-box;
+    border: 1px dashed #d8d2c9;
+    border-radius: 14px;
+    background: #fcfcfb;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.branding-upload-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.upload-group {
+    width: 100%;
+}
+
+.upload-label {
+    display: block;
+    margin-bottom: 9px;
+    color: #263b4d;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* UPLOAD CARD */
+
+.image-upload-card {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    border: 1px dashed #d8d1c7;
+    border-radius: 14px;
+    background: #faf9f7;
+    cursor: pointer;
+    transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+    .image-upload-card:hover {
+        border-color: #c49a5b;
+        background: #fffdf9;
+        box-shadow: 0 8px 25px rgba(8, 40, 68, 0.05);
+    }
+
+
+/* LOGO */
+
+.logo-upload {
+    height: 180px;
+}
+
+
+/* BANNER */
+
+.banner-upload {
+    height: 220px;
+}
+
+
+/* PLACEHOLDER */
+
+.upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 7px;
+}
+
+.upload-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+    border: 1px solid #eadbc5;
+    border-radius: 12px;
+    background: #fffaf2;
+    color: #b57d2f;
+    font-size: 20px;
+}
+
+.upload-placeholder strong {
+    color: #263b4d;
+    font-size: 13px;
+}
+
+.upload-placeholder span {
+    color: #a0a8af;
+    font-size: 11px;
+}
+
+
+/* FILE INPUT */
+
+
+
+/* IMAGE PREVIEW */
+
+.upload-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.logo-preview {
+    object-fit: contain;
+    padding: 25px;
+    box-sizing: border-box;
+}
+
+
+/* HOVER */
+
+.upload-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(8, 40, 68, 0.68);
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.image-upload-card:hover .upload-overlay {
+    opacity: 1;
+}
+/* =========================================================
+   GOOGLE MAP
+========================================================= */
+
+.map-container {
+    width: 100%;
+    margin-top: 5px;
+}
+
+.business-map {
+    width: 100%;
+    height: 400px;
+    border: 1px solid #e2dfda;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #f4f3f0;
+    box-shadow: 0 8px 25px rgba(8, 40, 68, 0.04);
+}
+
+.selected-location {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 14px;
+    padding: 13px 16px;
+    border: 1px solid #e6dccb;
+    border-radius: 11px;
+    background: #fffaf2;
+}
+
+.location-check {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #b57d2f;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.selected-location div {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.selected-location strong {
+    color: #263b4d;
+    font-size: 13px;
+}
+
+.selected-location small {
+    color: #8994a0;
+    font-size: 11px;
+}
+
+@media (max-width: 700px) {
+
+    .business-map {
+        height: 320px;
+    }
+}
+
+::deep .hidden-file-input,
+::deep input[type="file"] {
+    display: none !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    pointer-events: none !important;
+}
+
+.upload-box {
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* ============================= */
+/* BUSINESS WORKING HOURS */
+/* ============================= */
+
+.working-hours {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.working-hour-row {
+    display: grid;
+    grid-template-columns: 130px 120px 1fr;
+    align-items: center;
+    gap: 20px;
+    padding: 18px 20px;
+    border: 1px solid #e8e8e8;
+    border-radius: 14px;
+    background: #fff;
+}
+
+.working-day strong {
+    font-size: 15px;
+    font-weight: 600;
+    color: #222;
+}
+
+/* Open / Closed */
+
+.working-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Switch */
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 42px;
+    height: 24px;
+}
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+.slider {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+    background-color: #d6d6d6;
+    border-radius: 30px;
+    transition: 0.2s;
+}
+
+    .slider::before {
+        content: "";
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        left: 3px;
+        top: 3px;
+        background: white;
+        border-radius: 50%;
+        transition: 0.2s;
+    }
+
+.switch input:checked + .slider {
+    background-color: #111;
+}
+
+    .switch input:checked + .slider::before {
+        transform: translateX(18px);
+    }
+
+/* Time selectors */
+
+.working-time {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.time-input {
+    width: 145px;
+    height: 44px;
+    padding: 0 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    color: #222;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+    .time-input:hover {
+        border-color: #aaa;
+    }
+
+    .time-input:focus {
+        border-color: #111;
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+    }
+
+.working-time > span {
+    color: #999;
+    font-weight: 500;
+}
+
+/* Closed */
+
+.closed-label {
+    font-size: 14px;
+    color: #999;
+    font-weight: 500;
+}
+
+/* Apply button */
+
+.apply-hours-button {
+    margin-top: 18px;
+    padding: 11px 18px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    color: #222;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+    .apply-hours-button:hover {
+        background: #111;
+        color: #fff;
+        border-color: #111;
+    }
+
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 768px) {
+
+    .working-hour-row {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .working-time {
+        width: 100%;
+    }
+
+    .time-input {
+        flex: 1;
+        width: 100%;
+    }
+}
+.create-success {
+    margin-bottom: 24px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    background: #edf8f2;
+    border: 1px solid #b9dfca;
+    color: #276749;
+    font-size: 14px;
+    font-weight: 600;
+}

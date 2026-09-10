@@ -1,0 +1,382 @@
+﻿@page "/owner/business/{BusinessId:guid}"
+
+@using Reserva.Application.DTOs
+@using Reserva.Application.Interfaces
+
+@inject IBusinessService BusinessService
+@inject NavigationManager Navigation
+
+<PageTitle>
+    @(business?.Name ?? "Manage Business")
+</PageTitle>
+
+@if (business == null)
+{
+    <div class="business-manage-loading">
+        Loading business...
+    </div>
+}
+else
+{
+    <div class="business-manage-page">
+
+        <div class="business-manage-container">
+
+            <!-- HEADER -->
+            <div class="manage-header">
+
+                <div class="manage-header-info">
+
+                    <span class="manage-eyebrow">
+                        BUSINESS MANAGEMENT
+                    </span>
+
+                    <h1>
+                        @business.Name
+                    </h1>
+
+                    <p>
+                        Manage your business, services, employees and public profile.
+                    </p>
+
+                </div>
+
+                <a href="@($"/business/{business.Id}")"
+                   class="view-profile-button">
+
+                    View Public Profile
+                    <span>→</span>
+
+                </a>
+
+            </div>
+
+
+            <!-- BUSINESS OVERVIEW -->
+            <section class="manage-section">
+
+                <div class="manage-section-header">
+
+                    <div>
+                        <span class="manage-section-eyebrow">
+                            BUSINESS
+                        </span>
+
+                        <h2>
+                            Business information
+                        </h2>
+
+                        <p>
+                            Manage your business details and branding.
+                        </p>
+                    </div>
+
+                    <button class="manage-action-button"
+                            @onclick="EditBusiness">
+                        Edit
+                    </button>
+
+                </div>
+
+
+                <div class="business-overview-card">
+
+                    <div class="manage-logo">
+
+                        @if (!string.IsNullOrWhiteSpace(business.LogoUrl))
+                        {
+                            <img src="@business.LogoUrl"
+                                 alt="@business.Name" />
+                        }
+                        else
+                        {
+                            <span>
+                                @GetInitial()
+                            </span>
+                        }
+
+                    </div>
+
+
+                    <div class="business-overview-info">
+
+                        <span class="business-category">
+                            @business.Category
+                        </span>
+
+                        <h3>
+                            @business.Name
+                        </h3>
+
+                        @if (!string.IsNullOrWhiteSpace(business.Description))
+                        {
+                            <p>
+                                @business.Description
+                            </p>
+                        }
+
+                        <div class="business-location">
+                            
+                            @business.City, @business.Address
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- QUICK MANAGEMENT -->
+            <section class="manage-section">
+
+                <div class="manage-section-header">
+
+                    <div>
+                        <span class="manage-section-eyebrow">
+                            MANAGEMENT
+                        </span>
+
+                        <h2>
+                            Manage your business
+                        </h2>
+
+                        <p>
+                            Everything you need to run your business.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="management-grid">
+
+
+                    <!-- SERVICES -->
+                    <div class="management-card">
+
+                        <div class="management-card-icon">
+                            ✦
+                        </div>
+
+                        <div>
+
+                            <span class="management-card-label">
+                                SERVICES
+                            </span>
+
+                            <h3>
+                                Services
+                            </h3>
+
+                            <p>
+                                Add and manage the services you offer.
+                            </p>
+
+                        </div>
+
+                        <div class="management-card-footer">
+
+                            <span>
+                                @(business.Services?.Count ?? 0) services
+                            </span>
+
+                            <button @onclick="ManageServices">
+                                Manage →
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- EMPLOYEES -->
+                    <div class="management-card">
+
+                        <div class="management-card-icon">
+                            ◇
+                        </div>
+
+                        <div>
+
+                            <span class="management-card-label">
+                                TEAM
+                            </span>
+
+                            <h3>
+                                Employees
+                            </h3>
+
+                            <p>
+                                Manage employees and their roles.
+                            </p>
+
+                        </div>
+
+                        <div class="management-card-footer">
+
+                            <span>
+                                @(business.Employees?.Count ?? 0) employees
+                            </span>
+
+                            <button type="button"
+                                    class="add-employee-button"
+                                    @onclick="GoToEmployee">
+                                Manage →
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    
+
+
+                    <!-- APPOINTMENTS -->
+                    <div class="management-card">
+
+                        <div class="management-card-icon">
+                            ◉
+                        </div>
+
+                        <div>
+
+                            <span class="management-card-label">
+                                BOOKINGS
+                            </span>
+
+                            <h3>
+                                Appointments
+                            </h3>
+
+                            <p>
+                                View and manage customer appointments.
+                            </p>
+
+                        </div>
+
+                        <div class="management-card-footer">
+
+                            <span>
+                                View bookings
+                            </span>
+
+                            <button type="button"
+                                    @onclick="ManageAppointments">
+                                Manage →
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- PUBLIC PROFILE -->
+            <section class="manage-section">
+
+                <div class="public-profile-card">
+
+                    <div>
+
+                        <span class="manage-section-eyebrow">
+                            CUSTOMER VIEW
+                        </span>
+
+                        <h2>
+                            Your public business profile
+                        </h2>
+
+                        <p>
+                            This is the page your customers will see when
+                            they visit your business.
+                        </p>
+
+                    </div>
+
+                    <a href="@($"/business/{business.Id}")"
+                       class="view-profile-button">
+
+                        Preview Profile
+                        <span>→</span>
+
+                    </a>
+
+                </div>
+
+            </section>
+
+
+            <!-- BACK -->
+            <div class="manage-back">
+
+                <button @onclick="GoBack">
+                    ← Back to Dashboard
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+}
+
+
+@code {
+
+    [Parameter]
+    public Guid BusinessId { get; set; }
+
+    private BusinessDto? business;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        business =
+            await BusinessService.GetBusinessByIdAsync(BusinessId);
+    }
+
+
+    private string GetInitial()
+    {
+        if (string.IsNullOrWhiteSpace(business?.Name))
+            return "B";
+
+        return business.Name
+            .Substring(0, 1)
+            .ToUpper();
+    }
+
+
+    private void GoBack()
+    {
+        Navigation.NavigateTo("/business/dashboard");
+    }
+
+    private void EditBusiness()
+    {
+        Navigation.NavigateTo(
+            $"/owner/business/{business!.Id}/edit");
+    }
+
+    private void ManageServices()
+    {
+        Navigation.NavigateTo(
+            $"/owner/business/{BusinessId}/services");
+    }
+    private void GoToEmployee()
+    {
+        Navigation.NavigateTo(
+            $"/owner/business/employee/list/{BusinessId}");
+    }
+    private void ManageAppointments()
+    {
+        Navigation.NavigateTo(
+            $"/owner/business/{BusinessId}/appointments");
+    }
+}

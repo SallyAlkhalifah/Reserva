@@ -1,0 +1,375 @@
+﻿@page "/booking"
+
+@using Reserva.Application.Interfaces
+@using Reserva.Application.Services
+
+@inject IBookingCartService BookingCartService
+@inject IAppointmentService AppointmentService
+@inject CurrentUserService CurrentUserService
+@inject NavigationManager Navigation
+
+<PageTitle>Reserva - Confirm Booking</PageTitle>
+
+<div class="booking-page">
+
+    <div class="booking-container">
+
+        <div class="booking-header">
+            <span class="booking-eyebrow">CONFIRM YOUR BOOKING</span>
+
+            <h1>
+                Review your
+                <span>booking.</span>
+            </h1>
+
+            <p>
+                Check your appointment details before confirming your booking.
+            </p>
+        </div>
+
+
+        @if (!BookingCartService.Items.Any())
+        {
+            <div class="booking-empty">
+
+                <div class="booking-empty-icon">
+                    🛒
+                </div>
+
+                <h2>Your booking cart is empty</h2>
+
+                <p>
+                    Please choose a service before continuing.
+                </p>
+
+                <button type="button"
+                        class="booking-back-button"
+                        @onclick="GoToServices">
+                    Browse Services
+                    <span>→</span>
+                </button>
+
+            </div>
+        }
+        else
+        {
+            <div class="booking-layout">
+
+                <!-- ========================================= -->
+                <!-- BOOKING ITEMS -->
+                <!-- ========================================= -->
+
+                <div class="booking-items">
+
+                    <div class="booking-section-title">
+                        <span>YOUR APPOINTMENTS</span>
+                        <h2>Booking details</h2>
+                    </div>
+
+
+                    @foreach (var item in BookingCartService.Items)
+                    {
+                        <article class="booking-card">
+
+                            <div class="booking-card-top">
+
+                                <div>
+                                    <span class="booking-business">
+                                        @item.BusinessName
+                                    </span>
+
+                                    <h3>
+                                        @item.ServiceName
+                                    </h3>
+                                </div>
+
+                                <div class="booking-price">
+                                    @item.Price.ToString("0.##") SAR
+                                </div>
+
+                            </div>
+
+
+                            <div class="booking-details">
+
+                                <div class="booking-detail">
+
+                                    <span class="detail-label">
+                                        EMPLOYEE
+                                    </span>
+
+                                    <strong>
+                                        @item.EmployeeName
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="booking-detail">
+
+                                    <span class="detail-label">
+                                        DATE
+                                    </span>
+
+                                    <strong>
+                                        @item.AppointmentDate.ToString("ddd, dd MMM yyyy")
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="booking-detail">
+
+                                    <span class="detail-label">
+                                        TIME
+                                    </span>
+
+                                    <strong>
+                                        @item.AppointmentDate.ToString("hh:mm tt")
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="booking-detail">
+
+                                    <span class="detail-label">
+                                        DURATION
+                                    </span>
+
+                                    <strong>
+                                        @item.DurationInMinutes min
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+                    }
+
+                </div>
+
+
+                <!-- ========================================= -->
+                <!-- SUMMARY -->
+                <!-- ========================================= -->
+
+                <aside class="booking-summary">
+
+                    <span class="booking-summary-label">
+                        BOOKING SUMMARY
+                    </span>
+
+                    <h2>
+                        Almost there.
+                    </h2>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Services
+                        </span>
+
+                        <strong>
+                            @BookingCartService.Items.Count
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-divider"></div>
+
+
+                    @foreach (var item in BookingCartService.Items)
+                    {
+                        <div class="summary-service">
+
+                            <span>
+                                @item.ServiceName
+                            </span>
+
+                            <strong>
+                                @item.Price.ToString("0.##")
+                                SAR
+                            </strong>
+
+                        </div>
+                    }
+
+
+                    <div class="summary-divider"></div>
+
+
+                    <div class="summary-total">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <strong>
+                            @BookingCartService.GetTotal().ToString("0.##")
+                            SAR
+                        </strong>
+
+                    </div>
+
+
+                    @if (!string.IsNullOrWhiteSpace(errorMessage))
+                    {
+                        <div class="booking-error">
+                            @errorMessage
+                        </div>
+                    }
+
+
+                    <button type="button"
+                            class="confirm-booking-button"
+                            disabled="@isConfirming"
+                            @onclick="ConfirmBooking">
+
+                        @if (isConfirming)
+                        {
+                            <span>
+                                Confirming...
+                            </span>
+                        }
+                        else
+                        {
+                            <span>
+                                Confirm Booking
+                            </span>
+
+                            <span>→</span>
+                        }
+
+                    </button>
+
+
+                    <button type="button"
+                            class="back-to-cart-button"
+                            @onclick="BackToCart">
+
+                        ← Back to Cart
+
+                    </button>
+
+                </aside>
+
+            </div>
+        }
+
+    </div>
+
+</div>
+
+
+@code {
+
+    private bool isConfirming;
+
+    private string? errorMessage;
+
+
+    // =========================================
+    // CONFIRM BOOKING
+    // =========================================
+
+    private async Task ConfirmBooking()
+    {
+        if (isConfirming)
+            return;
+
+        errorMessage = null;
+
+        // -----------------------------------------
+        // CHECK LOGIN
+        // -----------------------------------------
+
+        if (!CurrentUserService.IsLoggedIn ||
+            CurrentUserService.User == null)
+        {
+            Navigation.NavigateTo(
+                "/login?returnUrl=%2Fbooking&message=You%20need%20to%20log%20in%20first."
+            );
+
+            return;
+        }
+
+
+        // -----------------------------------------
+        // CHECK CART
+        // -----------------------------------------
+
+        if (!BookingCartService.Items.Any())
+        {
+            errorMessage = "Your booking cart is empty.";
+            return;
+        }
+
+
+        try
+        {
+            isConfirming = true;
+
+
+            var customerId =
+                CurrentUserService.User.Id;
+
+
+            // -----------------------------------------
+            // CREATE EACH APPOINTMENT
+            // -----------------------------------------
+
+            foreach (var item in BookingCartService.Items)
+            {
+                await AppointmentService.CreateAppointmentAsync(
+                    customerId,
+                    item
+                );
+            }
+
+
+            // -----------------------------------------
+            // CLEAR CART
+            // -----------------------------------------
+
+            BookingCartService.Clear();
+
+
+            // -----------------------------------------
+            // SUCCESS
+            // -----------------------------------------
+
+            Navigation.NavigateTo(
+                "/booking-success"
+            );
+        }
+        catch (Exception ex)
+        {
+            errorMessage =
+                ex.Message;
+        }
+        finally
+        {
+            isConfirming = false;
+        }
+    }
+
+
+    // =========================================
+    // NAVIGATION
+    // =========================================
+
+    private void BackToCart()
+    {
+        Navigation.NavigateTo("/booking-cart");
+    }
+
+
+    private void GoToServices()
+    {
+        Navigation.NavigateTo("/services");
+    }
+}

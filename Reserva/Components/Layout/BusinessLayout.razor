@@ -1,0 +1,59 @@
+﻿@inherits LayoutComponentBase
+
+<div class="business-layout">
+
+    <aside class="business-sidebar">
+
+        <!-- Logo -->
+        <div class="business-logo">
+            <img src="images/reserva-logo.png" alt="Reserva" />
+        </div>
+
+        <!-- Navigation -->
+        <nav class="business-nav">
+
+            <NavLink href="/" Match="NavLinkMatch.All">
+                <span class="business-nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </NavLink>
+
+            <NavLink href="/business/appointments">
+                <span class="business-nav-icon">◷</span>
+                <span>Appointments</span>
+            </NavLink>
+
+            <NavLink href="/business/services">
+                <span class="business-nav-icon">✂</span>
+                <span>Services</span>
+            </NavLink>
+
+            <NavLink href="/business/employees">
+                <span class="business-nav-icon">♙</span>
+                <span>Employees</span>
+            </NavLink>
+
+            <NavLink href="/business/settings">
+                <span class="business-nav-icon">⚙</span>
+                <span>Settings</span>
+            </NavLink>
+
+        </nav>
+
+        <!-- Bottom -->
+        <div class="business-sidebar-bottom">
+
+            <a href="/" class="business-back">
+                <span class="business-back-icon">←</span>
+                <span>Back to Home</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+    <!-- Page Content -->
+    <main class="business-content">
+        @Body
+    </main>
+
+</div>

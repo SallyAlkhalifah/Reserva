@@ -1,0 +1,672 @@
+/* =========================================================
+   BUSINESS MANAGEMENT PAGE
+   Reserva Theme
+   Navy + Gold + Cream
+========================================================= */
+
+.business-manage-page {
+    min-height: calc(100vh - 80px);
+    padding: 80px 24px 100px;
+    background: radial-gradient( circle at 10% 10%, rgba(197, 141, 59, 0.07), transparent 30% ), radial-gradient( circle at 90% 85%, rgba(9, 40, 70, 0.05), transparent 30% ), #fafaf8;
+    box-sizing: border-box;
+}
+
+.business-manage-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.business-manage-loading {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #718092;
+    background: #fafaf8;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.manage-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 65px;
+}
+
+.manage-header-info {
+    max-width: 700px;
+}
+
+.manage-eyebrow {
+    display: inline-flex;
+    margin-bottom: 18px;
+    color: #b57d2f;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 4px;
+}
+
+.manage-header h1 {
+    margin: 0;
+    color: #082844;
+    font-size: clamp(42px, 6vw, 60px);
+    font-weight: 700;
+    letter-spacing: -2.5px;
+    line-height: 1.05;
+}
+
+.manage-header p {
+    max-width: 620px;
+    margin: 20px 0 0;
+    color: #718092;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.view-profile-button {
+    min-width: 190px;
+    height: 48px;
+    padding: 0 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    box-sizing: border-box;
+    border: 1px solid #082844;
+    border-radius: 10px;
+    background: #082844;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+    .view-profile-button span {
+        color: #d8b274;
+        font-size: 16px;
+        transition: transform 0.2s ease;
+    }
+
+    .view-profile-button:hover {
+        transform: translateY(-2px);
+        background: #0b3152;
+        box-shadow: 0 10px 25px rgba(8, 40, 68, 0.18);
+    }
+
+        .view-profile-button:hover span {
+            transform: translateX(3px);
+        }
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.manage-section {
+    margin-bottom: 65px;
+}
+
+.manage-section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 28px;
+}
+
+.manage-section-eyebrow {
+    display: block;
+    margin-bottom: 9px;
+    color: #b57d2f;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+}
+
+.manage-section-header h2 {
+    margin: 0;
+    color: #082844;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.manage-section-header p {
+    margin: 7px 0 0;
+    color: #8994a0;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   EDIT BUTTON
+========================================================= */
+
+.manage-action-button {
+    height: 40px;
+    padding: 0 18px;
+    border: 1px solid #ded8cf;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #263b4d;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+    .manage-action-button:hover {
+        border-color: #c49a5b;
+        background: #fffaf2;
+        color: #082844;
+    }
+
+
+/* =========================================================
+   BUSINESS OVERVIEW CARD
+========================================================= */
+
+.business-overview-card {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    padding: 30px;
+    border: 1px solid #e7e3dc;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 20px 55px rgba(8, 40, 68, 0.055), 0 3px 15px rgba(8, 40, 68, 0.025);
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   BUSINESS LOGO
+========================================================= */
+
+.manage-logo {
+    flex-shrink: 0;
+    width: 115px;
+    height: 115px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid #e8dfd3;
+    border-radius: 18px;
+    background: radial-gradient( circle at 30% 20%, rgba(197, 141, 59, 0.08), transparent 60% ), #fffaf2;
+    color: #b57d2f;
+    font-size: 38px;
+    font-weight: 600;
+}
+
+    .manage-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        padding: 12px;
+        box-sizing: border-box;
+    }
+
+
+/* =========================================================
+   BUSINESS INFO
+========================================================= */
+
+.business-overview-info {
+    min-width: 0;
+}
+
+.business-category {
+    display: inline-flex;
+    margin-bottom: 7px;
+    color: #b57d2f;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.business-overview-info h3 {
+    margin: 0;
+    color: #082844;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.business-overview-info p {
+    max-width: 720px;
+    margin: 9px 0 12px;
+    color: #718092;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.business-location {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #8994a0;
+    font-size: 12px;
+}
+
+    .business-location:first-letter {
+        color: #b57d2f;
+    }
+
+
+/* =========================================================
+   MANAGEMENT GRID
+========================================================= */
+
+.management-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+
+/* =========================================================
+   MANAGEMENT CARD
+========================================================= */
+
+.management-card {
+    min-height: 245px;
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    border: 1px solid #e7e3dc;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 15px 40px rgba(8, 40, 68, 0.045), 0 2px 10px rgba(8, 40, 68, 0.02);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+    .management-card:hover {
+        transform: translateY(-4px);
+        border-color: #dfd0bb;
+        box-shadow: 0 20px 50px rgba(8, 40, 68, 0.08), 0 4px 15px rgba(8, 40, 68, 0.035);
+    }
+
+
+/* =========================================================
+   MANAGEMENT ICON
+========================================================= */
+
+.management-card-icon {
+    width: 43px;
+    height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+    border: 1px solid #eadbc5;
+    border-radius: 12px;
+    background: #fffaf2;
+    color: #b57d2f;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   MANAGEMENT CARD TEXT
+========================================================= */
+
+.management-card-label {
+    display: block;
+    margin-bottom: 7px;
+    color: #b57d2f;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.management-card h3 {
+    margin: 0;
+    color: #082844;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.management-card p {
+    max-width: 360px;
+    margin: 8px 0 0;
+    color: #8994a0;
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   MANAGEMENT CARD FOOTER
+========================================================= */
+
+.management-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: auto;
+    padding-top: 25px;
+}
+
+    .management-card-footer > span {
+        color: #9aa2aa;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .management-card-footer button {
+        padding: 0;
+        border: none;
+        background: transparent;
+        color: #082844;
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+        .management-card-footer button:hover {
+            color: #b57d2f;
+            transform: translateX(3px);
+        }
+
+
+/* =========================================================
+   PUBLIC PROFILE
+========================================================= */
+
+.public-profile-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 35px;
+    padding: 34px 36px;
+    border: 1px solid #dfd2c0;
+    border-radius: 20px;
+    background: radial-gradient( circle at 90% 20%, rgba(197, 141, 59, 0.10), transparent 35% ), #fffaf2;
+    box-shadow: 0 15px 40px rgba(8, 40, 68, 0.04);
+}
+
+    .public-profile-card h2 {
+        margin: 0;
+        color: #082844;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: -0.4px;
+    }
+
+    .public-profile-card p {
+        max-width: 650px;
+        margin: 9px 0 0;
+        color: #718092;
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    .public-profile-card .view-profile-button {
+        flex-shrink: 0;
+    }
+
+
+/* =========================================================
+   BACK TO DASHBOARD
+========================================================= */
+
+.manage-back {
+    margin-top: 10px;
+    padding-top: 5px;
+}
+
+    .manage-back button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0;
+        border: none;
+        background: transparent;
+        color: #7a8794;
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+        .manage-back button:hover {
+            color: #082844;
+            transform: translateX(-3px);
+        }
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .business-manage-page {
+        padding: 60px 22px 80px;
+    }
+
+    .manage-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 25px;
+        margin-bottom: 50px;
+    }
+
+    .manage-header-info {
+        max-width: 100%;
+    }
+
+    .view-profile-button {
+        width: auto;
+    }
+
+    .management-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .public-profile-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+        .public-profile-card .view-profile-button {
+            width: auto;
+        }
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .business-manage-page {
+        padding: 50px 18px 70px;
+    }
+
+    .manage-header {
+        margin-bottom: 45px;
+    }
+
+    .manage-eyebrow {
+        margin-bottom: 14px;
+        font-size: 10px;
+        letter-spacing: 3px;
+    }
+
+    .manage-header h1 {
+        font-size: 40px;
+        letter-spacing: -1.8px;
+    }
+
+    .manage-header p {
+        margin-top: 15px;
+        font-size: 13px;
+    }
+
+    .manage-header .view-profile-button {
+        width: 100%;
+    }
+
+
+    /* SECTIONS */
+
+    .manage-section {
+        margin-bottom: 50px;
+    }
+
+    .manage-section-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 22px;
+    }
+
+        .manage-section-header h2 {
+            font-size: 21px;
+        }
+
+
+    /* OVERVIEW */
+
+    .business-overview-card {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 24px;
+        gap: 20px;
+    }
+
+    .manage-logo {
+        width: 90px;
+        height: 90px;
+        border-radius: 15px;
+        font-size: 30px;
+    }
+
+    .business-overview-info h3 {
+        font-size: 21px;
+    }
+
+    .business-overview-info p {
+        font-size: 12px;
+    }
+
+    .business-location {
+        align-items: flex-start;
+        line-height: 1.5;
+    }
+
+
+    /* MANAGEMENT */
+
+    .management-grid {
+        gap: 15px;
+    }
+
+    .management-card {
+        min-height: 225px;
+        padding: 22px;
+        border-radius: 16px;
+    }
+
+    .management-card-icon {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 18px;
+    }
+
+    .management-card h3 {
+        font-size: 19px;
+    }
+
+    .management-card-footer {
+        padding-top: 20px;
+    }
+
+
+    /* PUBLIC PROFILE */
+
+    .public-profile-card {
+        padding: 27px 24px;
+        border-radius: 17px;
+    }
+
+        .public-profile-card h2 {
+            font-size: 20px;
+        }
+
+        .public-profile-card p {
+            font-size: 12px;
+        }
+
+        .public-profile-card .view-profile-button {
+            width: 100%;
+        }
+
+
+    /* BACK */
+
+    .manage-back {
+        margin-top: 0;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .business-manage-page {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .manage-header h1 {
+        font-size: 35px;
+    }
+
+    .business-overview-card,
+    .management-card,
+    .public-profile-card {
+        padding: 20px;
+    }
+
+    .management-card-footer {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+    }
+}

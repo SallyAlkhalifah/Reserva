@@ -1,0 +1,67 @@
+﻿@page "/user/create"
+
+@using Reserva.Application.DTOs
+@using Reserva.Application.Interfaces
+
+@inject IUserService UserService
+
+<h3>Create User</h3>
+
+<EditForm Model="user" OnValidSubmit="HandleCreateUser" FormName="CreateUserForm">
+
+    <div class="mb-3">
+        <label>First Name</label>
+        <InputText class="form-control" @bind-Value="user.FirstName" />
+    </div>
+
+    <div class="mb-3">
+        <label>Last Name</label>
+        <InputText class="form-control" @bind-Value="user.LastName" />
+    </div>
+
+    <div class="mb-3">
+        <label>Email</label>
+        <InputText class="form-control" @bind-Value="user.Email" />
+    </div>
+
+    <div class="mb-3">
+        <label>Phone Number</label>
+        <InputText class="form-control" @bind-Value="user.PhoneNumber" />
+    </div>
+
+    <div class="mb-3">
+        <label>City</label>
+        <InputText class="form-control" @bind-Value="user.City" />
+    </div>
+
+    <div class="mb-3">
+        <label>Date of Birth</label>
+        <InputDate class="form-control" @bind-Value="user.DateOfBirth" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Create User
+    </button>
+
+</EditForm>
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <div class="alert alert-success mt-3">
+        @message
+    </div>
+}
+
+@code {
+
+    private CreateUserDto user = new();
+
+    private string message = string.Empty;
+
+    private async Task HandleCreateUser()
+    {
+        var userId = await UserService.CreateUserAsync(user);
+
+        message = $"User created successfully! ID: {userId}";
+    }
+}

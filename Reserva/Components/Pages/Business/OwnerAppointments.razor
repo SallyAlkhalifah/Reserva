@@ -1,0 +1,476 @@
+﻿@page "/owner/business/{BusinessId:guid}/appointments"
+
+@using Reserva.Application.DTOs
+@using Reserva.Application.Interfaces
+
+@inject IBusinessService BusinessService
+@inject IAppointmentService AppointmentService
+@inject NavigationManager Navigation
+
+<PageTitle>
+    @(business?.Name ?? "Appointments") - Appointments
+</PageTitle>
+
+@if (isLoading)
+{
+    <div class="owner-appointments-loading">
+        Loading appointments...
+    </div>
+}
+else if (business == null)
+{
+    <div class="owner-appointments-error">
+        Business could not be found.
+    </div>
+}
+else
+{
+    <div class="owner-appointments-page">
+
+        <div class="owner-appointments-container">
+
+            <!-- HEADER -->
+            <div class="owner-appointments-header">
+
+                <div>
+
+                    <span class="owner-appointments-eyebrow">
+                        APPOINTMENTS
+                    </span>
+
+                    <h1>
+                        @business.Name
+                    </h1>
+
+                    <p>
+                        View and manage your customer appointments.
+                    </p>
+
+                </div>
+
+                <button type="button"
+                        class="owner-back-button"
+                        @onclick="GoBack">
+                    ← Back to Business
+                </button>
+
+            </div>
+
+
+            <!-- TABS -->
+            <div class="owner-appointment-tabs">
+
+                <button type="button"
+                        class="owner-appointment-tab @(activeTab == "upcoming" ? "active" : "")"
+                        @onclick="ShowUpcoming">
+                    Upcoming
+                </button>
+
+                <button type="button"
+                        class="owner-appointment-tab @(activeTab == "past" ? "active" : "")"
+                        @onclick="ShowPast">
+                    Past
+                </button>
+
+            </div>
+
+
+            <!-- SUMMARY -->
+            <div class="owner-appointment-summary">
+
+                <div class="owner-summary-item">
+
+                    <span class="owner-summary-number">
+                        @displayedAppointments.Count
+                    </span>
+
+                    <span class="owner-summary-label">
+                        Appointments
+                    </span>
+
+                </div>
+
+                <div class="owner-summary-divider"></div>
+
+                <div class="owner-summary-item">
+
+                    <span class="owner-summary-number">
+                        @displayedAppointments.Count(a => a.Status == "Pending")
+                    </span>
+
+                    <span class="owner-summary-label">
+                        Pending
+                    </span>
+
+                </div>
+
+                <div class="owner-summary-divider"></div>
+
+                <div class="owner-summary-item">
+
+                    <span class="owner-summary-number">
+                        @displayedAppointments.Count(a => a.Status == "Confirmed")
+                    </span>
+
+                    <span class="owner-summary-label">
+                        Confirmed
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- APPOINTMENTS -->
+            @if (displayedAppointments.Any())
+            {
+                <div class="owner-appointments-list">
+
+                    @foreach (var appointment in displayedAppointments)
+                    {
+                        <div class="owner-appointment-card">
+
+                            <!-- DATE / TIME -->
+                            <div class="owner-appointment-date">
+
+                                <strong>
+                                    @appointment.AppointmentDate.ToString("dd")
+                                </strong>
+
+                                <span>
+                                    @appointment.AppointmentDate.ToString("MMM")
+                                </span>
+
+                                <small>
+                                    @appointment.AppointmentDate.ToString("yyyy")
+                                </small>
+
+                            </div>
+
+
+                            <!-- INFORMATION -->
+                            <div class="owner-appointment-info">
+
+                                <span class="owner-appointment-label">
+                                    CUSTOMER
+                                </span>
+
+                                <h3>
+                                    @appointment.Customer?.FirstName
+                                    @appointment.Customer?.LastName
+                                </h3>
+
+
+                                <div class="owner-appointment-details">
+
+                                    <div>
+                                        <small>SERVICE</small>
+
+                                        <strong>
+                                            @appointment.Service?.Name
+                                        </strong>
+                                    </div>
+
+
+                                    <div>
+                                        <small>EMPLOYEE</small>
+
+                                        <strong>
+                                            @GetEmployeeName(appointment)
+                                        </strong>
+                                    </div>
+
+
+                                    <div>
+                                        <small>TIME</small>
+
+                                        <strong>
+                                            @appointment.AppointmentDate.ToString("hh:mm tt")
+                                        </strong>
+                                    </div>
+
+
+                                    @if (appointment.Service != null)
+                                    {
+                                        <div>
+                                            <small>DURATION</small>
+
+                                            <strong>
+                                                @appointment.Service.DurationInMinutes min
+                                            </strong>
+                                        </div>
+
+                                        <div>
+                                            <small>PRICE</small>
+
+                                            <strong>
+                                                @appointment.Service.Price.ToString("0.00") SAR
+                                            </strong>
+                                        </div>
+                                    }
+
+                                </div>
+
+
+                                @if (!string.IsNullOrWhiteSpace(appointment.Notes))
+                                {
+                                    <div class="owner-appointment-notes">
+
+                                        <span>
+                                            NOTES
+                                        </span>
+
+                                        <p>
+                                            @appointment.Notes
+                                        </p>
+
+                                    </div>
+                                }
+
+                            </div>
+
+
+                            <!-- ACTIONS -->
+                            <div class="owner-appointment-actions">
+
+                                <span class="owner-appointment-status @GetStatusClass(appointment.Status)">
+                                    @GetStatusText(appointment.Status)
+                                </span>
+
+
+                                @if (appointment.Status == "Pending")
+                                {
+                                    <div class="owner-pending-actions">
+
+                                        <button type="button"
+                                                class="owner-confirm-button"
+                                                @onclick="() => ConfirmAppointment(appointment.Id)">
+                                            Confirm
+                                        </button>
+
+                                        <button type="button"
+                                                class="owner-cancel-button"
+                                                @onclick="() => CancelAppointment(appointment.Id)">
+                                            Cancel
+                                        </button>
+
+                                    </div>
+                                }
+
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+            }
+            else
+            {
+                <div class="owner-empty-appointments">
+
+                    <div class="owner-empty-icon">
+                        ✓
+                    </div>
+
+                    @if (activeTab == "upcoming")
+                    {
+                        <h3>
+                            No upcoming appointments
+                        </h3>
+
+                        <p>
+                            There are no upcoming appointments for this business.
+                        </p>
+                    }
+                    else
+                    {
+                        <h3>
+                            No past appointments
+                        </h3>
+
+                        <p>
+                            There are no past appointments for this business.
+                        </p>
+                    }
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+}
+
+
+@code {
+
+    [Parameter]
+    public Guid BusinessId { get; set; }
+
+    private BusinessDto? business;
+
+    private List<AppointmentDto> appointments = new();
+
+    private List<AppointmentDto> displayedAppointments = new();
+
+    private string activeTab = "upcoming";
+
+    private bool isLoading = true;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            business =
+                await BusinessService.GetBusinessByIdAsync(BusinessId);
+
+            if (business != null)
+            {
+                await LoadAppointments();
+            }
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+
+    private async Task LoadAppointments()
+    {
+        appointments =
+            await AppointmentService
+                .GetAppointmentsByBusinessIdAsync(BusinessId);
+
+        FilterAppointments();
+    }
+
+
+    private void FilterAppointments()
+    {
+        var now = DateTime.Now;
+
+        if (activeTab == "upcoming")
+        {
+            displayedAppointments = appointments
+                .Where(a =>
+                    a.AppointmentDate >= now &&
+                    a.Status != "Cancelled" &&
+                    a.Status != "Completed" &&
+                    a.Status != "NoShow")
+                .OrderBy(a => a.AppointmentDate)
+                .ToList();
+        }
+        else
+        {
+            displayedAppointments = appointments
+                .Where(a =>
+                    a.AppointmentDate < now ||
+                    a.Status == "Completed" ||
+                    a.Status == "Cancelled" ||
+                    a.Status == "NoShow")
+                .OrderByDescending(a => a.AppointmentDate)
+                .ToList();
+        }
+    }
+
+
+    private void ShowUpcoming()
+    {
+        activeTab = "upcoming";
+        FilterAppointments();
+    }
+
+
+    private void ShowPast()
+    {
+        activeTab = "past";
+        FilterAppointments();
+    }
+
+
+    private async Task ConfirmAppointment(Guid appointmentId)
+    {
+        try
+        {
+            await AppointmentService.UpdateAppointmentStatusAsync(
+                appointmentId,
+                "Confirmed");
+
+            await LoadAppointments();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+
+    private async Task CancelAppointment(Guid appointmentId)
+    {
+        try
+        {
+            await AppointmentService.UpdateAppointmentStatusAsync(
+                appointmentId,
+                "Cancelled");
+
+            await LoadAppointments();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+
+    private string GetEmployeeName(AppointmentDto appointment)
+    {
+        if (appointment.EmployeeId == Guid.Empty)
+            return "—";
+
+        var employee =
+            business?.Employees?
+                .FirstOrDefault(e => e.Id == appointment.EmployeeId);
+
+        if (employee == null)
+            return "—";
+
+        return $"{employee.FirstName} {employee.LastName}".Trim();
+    }
+
+
+    private string GetStatusClass(string status)
+    {
+        return status.ToLowerInvariant() switch
+        {
+            "pending" => "owner-status-pending",
+            "confirmed" => "owner-status-confirmed",
+            "completed" => "owner-status-completed",
+            "cancelled" => "owner-status-cancelled",
+            "noshow" => "owner-status-noshow",
+            _ => "owner-status-default"
+        };
+    }
+
+
+    private string GetStatusText(string status)
+    {
+        return status switch
+        {
+            "Pending" => "Pending",
+            "Confirmed" => "Confirmed",
+            "Completed" => "Completed",
+            "Cancelled" => "Cancelled",
+            "NoShow" => "No Show",
+            _ => status
+        };
+    }
+
+
+    private void GoBack()
+    {
+        Navigation.NavigateTo(
+            $"/owner/business/{BusinessId}");
+    }
+}

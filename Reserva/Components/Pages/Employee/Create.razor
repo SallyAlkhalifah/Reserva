@@ -1,0 +1,451 @@
+﻿@page "/owner/business/employee/create/{BusinessId:guid}"
+
+@using Reserva.Application.DTOs
+@using Reserva.Application.Interfaces
+
+@inject IEmployeeService EmployeeService
+@inject IBusinessService BusinessService
+@inject NavigationManager Navigation
+
+<PageTitle>Create Employee - Reserva</PageTitle>
+
+@if (business == null)
+{
+    <div class="employee-loading">
+        Loading...
+    </div>
+}
+else
+{
+    <div class="employee-create-page">
+
+        <div class="employee-create-container">
+
+            <!-- HEADER -->
+
+            <div class="employee-create-header">
+
+                <span class="employee-create-eyebrow">
+                    NEW EMPLOYEE
+                </span>
+
+                <h1>
+                    Add your
+                    <span>employee.</span>
+                </h1>
+
+                <p>
+                    Create an account, assign services,
+                    and set working hours.
+                </p>
+
+            </div>
+
+
+            <div class="employee-create-card">
+
+                <EditForm Model="@employee"
+                          OnValidSubmit="HandleCreateEmployee"
+                          FormName="CreateEmployeeForm">
+
+                    <DataAnnotationsValidator />
+
+
+                    <!-- =====================================
+                         EMPLOYEE INFORMATION
+                    ====================================== -->
+
+                    <div class="employee-section">
+
+                        <span class="employee-section-eyebrow">
+                            EMPLOYEE INFORMATION
+                        </span>
+
+                        <h2>
+                            Basic information
+                        </h2>
+
+                        <div class="employee-form-grid">
+
+                            <div class="form-group">
+
+                                <label>First Name</label>
+
+                                <InputText @bind-Value="employee.FirstName"
+                                           class="form-input"
+                                           placeholder="Enter first name" />
+
+                                <ValidationMessage For="@(() => employee.FirstName)" />
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Last Name</label>
+
+                                <InputText @bind-Value="employee.LastName"
+                                           class="form-input"
+                                           placeholder="Optional" />
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Username</label>
+
+                                <InputText @bind-Value="employee.Username"
+                                           class="form-input"
+                                           placeholder="Employee username" />
+
+                                <small>
+                                    The employee will use this to log in.
+                                </small>
+
+                                <ValidationMessage For="@(() => employee.Username)" />
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Password</label>
+
+                                <InputText @bind-Value="employee.Password"
+                                           type="password"
+                                           class="form-input"
+                                           placeholder="Create password" />
+
+                                <ValidationMessage For="@(() => employee.Password)" />
+
+                            </div>
+
+
+                            <div class="form-group employee-job-title">
+
+                                <label>Job Title</label>
+
+                                <InputText @bind-Value="employee.JobTitle"
+                                           class="form-input"
+                                           placeholder="e.g. Hair Stylist" />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =====================================
+                         SERVICES
+                    ====================================== -->
+
+                    <div class="employee-section">
+
+                        <span class="employee-section-eyebrow">
+                            SERVICES
+                        </span>
+
+                        <h2>
+                            What can this employee do?
+                        </h2>
+
+                        <p class="employee-section-description">
+                            Select the services this employee
+                            can provide.
+                        </p>
+
+
+                        @if (business.Services != null &&
+                             business.Services.Any())
+                        {
+                            <div class="employee-services-list">
+
+                                @foreach (var service in business.Services)
+                                {
+                                    <label class="employee-service-option">
+
+                                        <input type="checkbox"
+                                               checked="@IsServiceSelected(service.Id)"
+                                               @onchange="() => ToggleService(service.Id)" />
+
+                                        <div class="employee-service-check">
+                                            ✓
+                                        </div>
+
+                                        <div class="employee-service-info">
+
+                                            <strong>
+                                                @service.Name
+                                            </strong>
+
+                                            @if (!string.IsNullOrWhiteSpace(service.Description))
+                                            {
+                                                <span>
+                                                    @service.Description
+                                                </span>
+                                            }
+
+                                        </div>
+
+                                        <div class="employee-service-details">
+
+                                            <strong>
+                                                @service.Price.ToString("0.##") SAR
+                                            </strong>
+
+                                            <span>
+                                                @service.DurationInMinutes min
+                                            </span>
+
+                                        </div>
+
+                                    </label>
+                                }
+
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="employee-empty-box">
+                                <p>
+                                    No services have been added yet.
+                                </p>
+
+                                <button type="button"
+                                        @onclick="GoToServices">
+                                    Add Services
+                                </button>
+                            </div>
+                        }
+
+                    </div>
+
+
+                    <!-- =====================================
+                         WORKING HOURS
+                    ====================================== -->
+
+                    <div class="employee-section">
+
+                        <span class="employee-section-eyebrow">
+                            WORKING HOURS
+                        </span>
+
+                        <h2>
+                            When does this employee work?
+                        </h2>
+
+                        <p class="employee-section-description">
+                            Set the employee's working schedule.
+                            You can mark a day as off.
+                        </p>
+
+
+                        <div class="employee-hours-card">
+
+                            @foreach (var hour in employee.WorkingHours)
+                            {
+                                <div class="employee-hours-row">
+
+                                    <div class="employee-day">
+                                        <strong>
+                                            @hour.DayOfWeek
+                                        </strong>
+                                    </div>
+
+
+                                    <div class="employee-time">
+
+                                        <input type="time"
+                                               @bind="hour.OpenTime"
+                                               disabled="@hour.IsClosed" />
+
+                                    </div>
+
+
+                                    <span class="employee-hours-to">
+                                        —
+                                    </span>
+
+
+                                    <div class="employee-time">
+
+                                        <input type="time"
+                                               @bind="hour.CloseTime"
+                                               disabled="@hour.IsClosed" />
+
+                                    </div>
+
+
+                                    <label class="employee-day-off">
+
+                                        <input type="checkbox"
+                                               @bind="hour.IsClosed" />
+
+                                        <span>
+                                            Day off
+                                        </span>
+
+                                    </label>
+
+                                </div>
+                            }
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =====================================
+                         ACTIONS
+                    ====================================== -->
+
+                    <div class="form-actions">
+
+                        <button type="button"
+                                class="cancel-button"
+                                @onclick="GoBack">
+
+                            Cancel
+
+                        </button>
+
+
+                        <button type="submit"
+                                class="create-button"
+                                disabled="@isSubmitting" >
+
+                            @if (isSubmitting)
+                            {
+                                <span>Creating...</span>
+                            }
+                            else
+                            {
+                                <span>Create Employee</span>
+                                <span>→</span>
+                            }
+
+                        </button>
+
+                    </div>
+
+                </EditForm>
+
+
+                @if (!string.IsNullOrWhiteSpace(message))
+                {
+                    <div class="employee-message">
+                        @message
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+}
+
+
+@code {
+
+    [Parameter]
+    public Guid businessId { get; set; }
+
+
+    private BusinessDto? business;
+
+    private CreateEmployeeDto employee = new();
+
+    private string message = string.Empty;
+
+    private bool isSubmitting;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        business =
+            await BusinessService
+                .GetBusinessByIdAsync(businessId);
+
+        // Create 7 days automatically
+        employee.WorkingHours =
+            Enum.GetValues<DayOfWeek>()
+                .Select(day => new EmployeeWorkingHourDto
+                {
+                    DayOfWeek = day,
+
+                    OpenTime = new TimeOnly(9, 0),
+
+                    CloseTime = new TimeOnly(17, 0),
+
+                    IsClosed = false
+                })
+                .ToList();
+    }
+
+
+    private bool IsServiceSelected(Guid serviceId)
+    {
+        return employee.ServiceIds.Contains(serviceId);
+    }
+
+
+    private void ToggleService(Guid serviceId)
+    {
+        if (employee.ServiceIds.Contains(serviceId))
+        {
+            employee.ServiceIds.Remove(serviceId);
+        }
+        else
+        {
+            employee.ServiceIds.Add(serviceId);
+        }
+    }
+
+
+    private async Task HandleCreateEmployee()
+    {
+        try
+        {
+            isSubmitting = true;
+
+            message = string.Empty;
+
+            employee.BusinessId = businessId;
+
+            await EmployeeService
+                .CreateEmployeeAsync(employee);
+
+            Navigation.NavigateTo(
+            $"/owner/business/employee/list/{businessId}");
+        }
+        catch (Exception ex)
+        {
+            message = $"ERROR: {ex.Message}";
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+
+
+    private void GoBack()
+    {
+        Navigation.NavigateTo(
+            $"/owner/business/{businessId}/employees"
+        );
+    }
+
+
+    private void GoToServices()
+    {
+        Navigation.NavigateTo(
+            $"/owner/business/{businessId}/services"
+        );
+    }
+    
+}

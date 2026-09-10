@@ -1,0 +1,240 @@
+﻿@page "/business/dashboard"
+
+@using Reserva.Application.DTOs
+@using Reserva.Application.Interfaces
+
+@inject IUserService UserService
+@inject IBusinessService BusinessService
+@inject NavigationManager Navigation
+
+<PageTitle>Business Dashboard - Reserva</PageTitle>
+
+<div class="owner-dashboard">
+
+    <div class="dashboard-container">
+
+        @if (owner == null)
+        {
+            <div class="dashboard-loading">
+                Loading your dashboard...
+            </div>
+        }
+        else
+        {
+            <!-- HEADER -->
+
+            <section class="dashboard-header">
+
+                <div>
+
+                    <span class="dashboard-eyebrow">
+                        BUSINESS OWNER
+                    </span>
+
+                    <h1>
+                        Welcome,
+                        <span>@owner.FirstName.</span>
+                    </h1>
+
+                    <p>
+                        Manage your businesses, services and appointments
+                        from one place.
+                    </p>
+
+                </div>
+
+                <a href="@($"/business/create?ownerId={OwnerId}")"
+                   class="dashboard-primary-button">
+
+                    + Add Business
+
+                </a>
+
+            </section>
+
+
+            <!-- STATS -->
+
+            <section class="owner-stats">
+
+                <div class="stat-card">
+
+                    <span class="stat-label">
+                        BUSINESSES
+                    </span>
+
+                    <strong>
+                        @(businesses?.Count ?? 0)
+                    </strong>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <span class="stat-label">
+                        SERVICES
+                    </span>
+
+                    <strong>
+                        @(businesses?.Sum(b => b.Services.Count) ?? 0)
+                    </strong>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <span class="stat-label">
+                        EMPLOYEES
+                    </span>
+
+                    <strong>
+                        @(businesses?.Sum(b => b.Employees.Count) ?? 0)
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+            <!-- BUSINESSES -->
+
+            <section class="businesses-section">
+
+                <div class="section-title">
+
+                    <span>
+                        MY BUSINESSES
+                    </span>
+
+                    <h2>
+                        Your businesses
+                    </h2>
+
+                </div>
+
+
+                @if (businesses != null && businesses.Any())
+                {
+                    <div class="businesses-grid">
+
+                        @foreach (var business in businesses)
+                        {
+                            <div class="owner-business-card">
+
+                                <div class="owner-business-logo">
+
+                                    @if (!string.IsNullOrWhiteSpace(business.LogoUrl))
+                                    {
+                                        <img src="@business.LogoUrl"
+                                             alt="@business.Name" />
+                                    }
+                                    else
+                                    {
+                                        <span>
+                                            @business.Name
+                                            .Substring(0, 1)
+                                            .ToUpper()
+                                        </span>
+                                    }
+
+                                </div>
+
+
+                                <div class="owner-business-content">
+
+                                    <span class="business-category">
+                                        @business.Category
+                                    </span>
+
+                                    <h3>
+                                        @business.Name
+                                    </h3>
+
+                                    <p>
+                                        @business.City
+                                    </p>
+
+
+                                    <div class="business-meta">
+
+                                        <span>
+                                            @business.Services.Count Services
+                                        </span>
+
+                                        <span>
+                                            @business.Employees.Count Employees
+                                        </span>
+
+                                    </div>
+
+
+                                    <a href="@($"/owner/business/{business.Id}")"
+                                       class="manage-business-button">
+
+                                        Manage Business
+                                        <span>→</span>
+
+                                    </a>
+
+                                </div>
+
+                            </div>
+                        }
+
+                    </div>
+                }
+                else
+                {
+                    <div class="empty-businesses">
+
+                        <div class="empty-business-icon">
+                            +
+                        </div>
+
+                        <h3>
+                            You don't have a business yet.
+                        </h3>
+
+                        <p>
+                            Create your first business and start managing
+                            your services and appointments.
+                        </p>
+
+                        <a href="@($"/business/create?ownerId={OwnerId}")"
+                           class="dashboard-primary-button">
+                            Create Business →
+                        </a>
+
+                    </div>
+                }
+
+            </section>
+
+        }
+
+    </div>
+
+</div>
+
+
+@code {
+
+    [SupplyParameterFromQuery]
+    public Guid OwnerId { get; set; }
+
+    private UserDto? owner;
+
+    private List<BusinessDto> businesses = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        owner = await UserService.GetUserByIdAsync(OwnerId);
+
+        if (owner != null)
+        {
+            businesses =
+                await BusinessService.GetBusinessesByOwnerIdAsync(OwnerId);
+        }
+    }
+}

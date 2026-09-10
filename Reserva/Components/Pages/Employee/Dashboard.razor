@@ -1,0 +1,669 @@
+﻿@page "/employee/dashboard"
+
+@using Reserva.Application.DTOs
+@using Reserva.Application.Interfaces
+@using Reserva.Application.Services
+
+@inject IEmployeeService EmployeeService
+@inject IAppointmentService AppointmentService
+@inject CurrentUserService CurrentUserService
+@inject NavigationManager Navigation
+
+<PageTitle>Employee Dashboard - Reserva</PageTitle>
+
+@if (isLoading)
+{
+    <div class="employee-dashboard-loading">
+        Loading your schedule...
+    </div>
+}
+else if (employee == null)
+{
+    <div class="employee-dashboard-error">
+        Employee account could not be found.
+    </div>
+}
+else
+{
+    <div class="employee-dashboard">
+
+        <div class="employee-dashboard-container">
+
+            <!-- HEADER -->
+            <div class="employee-dashboard-header">
+
+                <div>
+                    <span class="employee-dashboard-eyebrow">
+                        EMPLOYEE DASHBOARD
+                    </span>
+
+                    <h1>
+                        Welcome,
+                        <span class="employee-name">
+                            @employee.FirstName
+                        </span>
+                    </h1>
+
+                    <p>
+                        View and manage your schedule and upcoming appointments.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- BUSINESS -->
+            <div class="employee-business-card">
+
+                <div>
+                    <span>BUSINESS</span>
+
+                    <h2>
+                        @employee.Business?.Name
+                    </h2>
+
+                    <p>
+                        @employee.JobTitle
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- SCHEDULE -->
+            <section class="employee-appointments-section">
+
+                <!-- SECTION HEADER -->
+                <div class="employee-section-header">
+
+                    <div>
+                        <span>YOUR SCHEDULE</span>
+
+                        <h2>
+                            Appointments
+                        </h2>
+                    </div>
+
+                    <div class="employee-appointment-summary">
+
+                        <span>
+                            @displayedAppointments.Count appointment(s)
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- VIEW TABS -->
+                <div class="employee-schedule-tabs">
+
+                    <button type="button"
+                            class="employee-schedule-tab @(activeView == ScheduleView.Today ? "active" : "")"
+                            @onclick="ShowToday">
+                        Today
+                    </button>
+
+                    <button type="button"
+                            class="employee-schedule-tab @(activeView == ScheduleView.Week ? "active" : "")"
+                            @onclick="ShowWeek">
+                        This Week
+                    </button>
+
+                    <button type="button"
+                            class="employee-schedule-tab @(activeView == ScheduleView.Month ? "active" : "")"
+                            @onclick="ShowMonth">
+                        This Month
+                    </button>
+
+                    <button type="button"
+                            class="employee-schedule-tab @(activeView == ScheduleView.All ? "active" : "")"
+                            @onclick="ShowAll">
+                        All Upcoming
+                    </button>
+
+                </div>
+
+
+                <!-- DATE NAVIGATION -->
+                @if (activeView != ScheduleView.All)
+                {
+                    <div class="employee-date-navigation">
+
+                        <button type="button"
+                                class="employee-date-arrow"
+                                @onclick="PreviousPeriod">
+                            ←
+                        </button>
+
+                        <div class="employee-current-period">
+
+                            <strong>
+                                @periodTitle
+                            </strong>
+
+                        </div>
+
+                        <button type="button"
+                                class="employee-date-arrow"
+                                @onclick="NextPeriod">
+                            →
+                        </button>
+
+                    </div>
+                }
+
+
+                <!-- ALL UPCOMING TITLE -->
+                @if (activeView == ScheduleView.All)
+                {
+                    <div class="employee-all-upcoming-header">
+                        <span>
+                            UPCOMING APPOINTMENTS
+                        </span>
+
+                        <strong>
+                            Your upcoming schedule
+                        </strong>
+                    </div>
+                }
+
+
+                <!-- SUMMARY -->
+                <div class="employee-schedule-summary">
+
+                    <div class="schedule-summary-item">
+
+                        <span class="summary-number">
+                            @displayedAppointments.Count
+                        </span>
+
+                        <span class="summary-label">
+                            Appointments
+                        </span>
+
+                    </div>
+
+                    <div class="schedule-summary-divider"></div>
+
+                    <div class="schedule-summary-item">
+
+                        <span class="summary-number">
+                            @displayedAppointments.Count(a => a.Status == "Pending")
+                        </span>
+
+                        <span class="summary-label">
+                            Pending
+                        </span>
+
+                    </div>
+
+                    <div class="schedule-summary-divider"></div>
+
+                    <div class="schedule-summary-item">
+
+                        <span class="summary-number">
+                            @displayedAppointments.Count(a => a.Status == "Confirmed")
+                        </span>
+
+                        <span class="summary-label">
+                            Confirmed
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- APPOINTMENTS -->
+                @if (displayedAppointments.Any())
+                {
+                    <div class="employee-schedule-list">
+
+                        @foreach (var group in groupedAppointments)
+                        {
+                            <div class="employee-day-group">
+
+                                <!-- DAY -->
+                                <div class="employee-day-header">
+
+                                    <div>
+                                        <span class="employee-day-name">
+                                            @group.Key.ToString("dddd").ToUpper()
+                                        </span>
+
+                                        <strong>
+                                            @group.Key.ToString("dd MMMM yyyy")
+                                        </strong>
+                                    </div>
+
+                                    <span class="employee-day-count">
+                                        @group.Value.Count appointment(s)
+                                    </span>
+
+                                </div>
+
+
+                                <!-- DAY APPOINTMENTS -->
+                                <div class="employee-day-appointments">
+
+                                    @foreach (var appointment in group.Value)
+                                    {
+                                        <div class="employee-appointment-card">
+
+                                            <!-- TIME -->
+                                            <div class="appointment-time">
+
+                                                <strong>
+                                                    @appointment.AppointmentDate.ToString("hh:mm")
+                                                </strong>
+
+                                                <span>
+                                                    @appointment.AppointmentDate.ToString("tt")
+                                                </span>
+
+                                            </div>
+
+
+                                            <!-- INFO -->
+                                            <div class="appointment-info">
+
+                                                <h3>
+                                                    @appointment.Customer?.FirstName
+                                                    @appointment.Customer?.LastName
+                                                </h3>
+
+                                                <p>
+                                                    @appointment.Service?.Name
+                                                </p>
+
+                                                @if (appointment.Service != null)
+                                                {
+                                                    <span class="appointment-duration">
+                                                        @appointment.Service.DurationInMinutes min
+                                                        ·
+                                                        @appointment.Service.Price.ToString("0.00") SAR
+                                                    </span>
+                                                }
+
+                                                @if (!string.IsNullOrWhiteSpace(appointment.Notes))
+                                                {
+                                                    <small>
+                                                        @appointment.Notes
+                                                    </small>
+                                                }
+
+                                            </div>
+
+
+                                            <!-- STATUS -->
+                                            <div class="employee-appointment-status">
+
+                                                <span class="employee-status @GetStatusClass(appointment.Status)">
+                                                    @GetStatusText(appointment.Status)
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+                                    }
+
+                                </div>
+
+                            </div>
+                        }
+
+                    </div>
+                }
+                else
+                {
+                    <div class="no-appointments">
+
+                        <div class="no-appointments-icon">
+                            ✓
+                        </div>
+
+                        @if (activeView == ScheduleView.Today)
+                        {
+                            <h3>
+                                No appointments today
+                            </h3>
+
+                            <p>
+                                You don't have any appointments scheduled for today.
+                            </p>
+                        }
+                        else if (activeView == ScheduleView.Week)
+                        {
+                            <h3>
+                                No appointments this week
+                            </h3>
+
+                            <p>
+                                You don't have any appointments scheduled this week.
+                            </p>
+                        }
+                        else if (activeView == ScheduleView.Month)
+                        {
+                            <h3>
+                                No appointments this month
+                            </h3>
+
+                            <p>
+                                You don't have any appointments scheduled this month.
+                            </p>
+                        }
+                        else
+                        {
+                            <h3>
+                                No upcoming appointments
+                            </h3>
+
+                            <p>
+                                You don't have any upcoming appointments.
+                            </p>
+                        }
+
+                    </div>
+                }
+
+            </section>
+
+        </div>
+
+    </div>
+}
+
+
+@code {
+
+    private EmployeeDto? employee;
+
+    private List<AppointmentDto> appointments = new();
+
+    private List<AppointmentDto> displayedAppointments = new();
+
+    private Dictionary<DateTime, List<AppointmentDto>> groupedAppointments = new();
+
+    private bool isLoading = true;
+
+    private ScheduleView activeView = ScheduleView.Week;
+
+    private DateTime currentDate = DateTime.Today;
+
+    private string periodTitle = string.Empty;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var user = CurrentUserService.User;
+
+            if (user == null)
+            {
+                Navigation.NavigateTo("/login");
+                return;
+            }
+
+            // Get employee profile
+            employee =
+                await EmployeeService.GetEmployeeByUserIdAsync(user.Id);
+
+            if (employee != null)
+            {
+                // Get all employee appointments
+                appointments =
+                    await AppointmentService
+                        .GetAppointmentsByEmployeeIdAsync(employee.Id);
+
+                UpdateSchedule();
+            }
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+
+    private void UpdateSchedule()
+    {
+        var now = DateTime.Now;
+
+        IEnumerable<AppointmentDto> filteredAppointments;
+
+        switch (activeView)
+        {
+            case ScheduleView.Today:
+
+                var today = currentDate.Date;
+
+                periodTitle =
+                    currentDate.ToString("dddd, dd MMMM yyyy");
+
+                filteredAppointments = appointments
+                    .Where(a =>
+                        a.AppointmentDate.Date == today &&
+                        a.Status != "Cancelled")
+                    .OrderBy(a => a.AppointmentDate);
+
+                break;
+
+
+            case ScheduleView.Week:
+
+                var startOfWeek =
+                    GetStartOfWeek(currentDate);
+
+                var endOfWeek =
+                    startOfWeek.AddDays(7);
+
+                periodTitle =
+                    $"{startOfWeek:dd MMMM} – {endOfWeek.AddDays(-1):dd MMMM yyyy}";
+
+                filteredAppointments = appointments
+                    .Where(a =>
+                        a.AppointmentDate >= startOfWeek &&
+                        a.AppointmentDate < endOfWeek &&
+                        a.Status != "Cancelled")
+                    .OrderBy(a => a.AppointmentDate);
+
+                break;
+
+
+            case ScheduleView.Month:
+
+                var monthStart =
+                    new DateTime(
+                        currentDate.Year,
+                        currentDate.Month,
+                        1);
+
+                var monthEnd =
+                    monthStart.AddMonths(1);
+
+                periodTitle =
+                    currentDate.ToString("MMMM yyyy");
+
+                filteredAppointments = appointments
+                    .Where(a =>
+                        a.AppointmentDate >= monthStart &&
+                        a.AppointmentDate < monthEnd &&
+                        a.Status != "Cancelled")
+                    .OrderBy(a => a.AppointmentDate);
+
+                break;
+
+
+            case ScheduleView.All:
+
+                periodTitle = "All Upcoming";
+
+                filteredAppointments = appointments
+                    .Where(a =>
+                        a.AppointmentDate >= now &&
+                        a.Status != "Cancelled" &&
+                        a.Status != "Completed" &&
+                        a.Status != "NoShow")
+                    .OrderBy(a => a.AppointmentDate);
+
+                break;
+
+
+            default:
+
+                filteredAppointments = Enumerable.Empty<AppointmentDto>();
+
+                break;
+        }
+
+        displayedAppointments =
+            filteredAppointments.ToList();
+
+        GroupAppointments();
+    }
+
+
+    private void GroupAppointments()
+    {
+        groupedAppointments =
+            displayedAppointments
+                .GroupBy(a => a.AppointmentDate.Date)
+                .OrderBy(g => g.Key)
+                .ToDictionary(
+                    g => g.Key,
+                    g => g.OrderBy(a => a.AppointmentDate).ToList());
+    }
+
+
+    private DateTime GetStartOfWeek(DateTime date)
+    {
+        var diff =
+            (7 + (date.DayOfWeek - DayOfWeek.Sunday)) % 7;
+
+        return date.Date.AddDays(-diff);
+    }
+
+
+    private void ShowToday()
+    {
+        activeView = ScheduleView.Today;
+        currentDate = DateTime.Today;
+
+        UpdateSchedule();
+    }
+
+
+    private void ShowWeek()
+    {
+        activeView = ScheduleView.Week;
+        currentDate = DateTime.Today;
+
+        UpdateSchedule();
+    }
+
+
+    private void ShowMonth()
+    {
+        activeView = ScheduleView.Month;
+        currentDate = DateTime.Today;
+
+        UpdateSchedule();
+    }
+
+
+    private void ShowAll()
+    {
+        activeView = ScheduleView.All;
+
+        UpdateSchedule();
+    }
+
+
+    private void PreviousPeriod()
+    {
+        if (activeView == ScheduleView.Today)
+        {
+            currentDate = currentDate.AddDays(-1);
+        }
+        else if (activeView == ScheduleView.Week)
+        {
+            currentDate = currentDate.AddDays(-7);
+        }
+        else if (activeView == ScheduleView.Month)
+        {
+            currentDate = currentDate.AddMonths(-1);
+        }
+
+        UpdateSchedule();
+    }
+
+
+    private void NextPeriod()
+    {
+        if (activeView == ScheduleView.Today)
+        {
+            currentDate = currentDate.AddDays(1);
+        }
+        else if (activeView == ScheduleView.Week)
+        {
+            currentDate = currentDate.AddDays(7);
+        }
+        else if (activeView == ScheduleView.Month)
+        {
+            currentDate = currentDate.AddMonths(1);
+        }
+
+        UpdateSchedule();
+    }
+
+
+    private string GetStatusClass(string status)
+    {
+        return status.ToLowerInvariant() switch
+        {
+            "pending" =>
+                "employee-status-pending",
+
+            "confirmed" =>
+                "employee-status-confirmed",
+
+            "completed" =>
+                "employee-status-completed",
+
+            "cancelled" =>
+                "employee-status-cancelled",
+
+            "noshow" =>
+                "employee-status-noshow",
+
+            _ =>
+                "employee-status-default"
+        };
+    }
+
+
+    private string GetStatusText(string status)
+    {
+        return status switch
+        {
+            "Pending" => "Pending",
+            "Confirmed" => "Confirmed",
+            "Completed" => "Completed",
+            "Cancelled" => "Cancelled",
+            "NoShow" => "No Show",
+
+            _ => status
+        };
+    }
+
+
+    private enum ScheduleView
+    {
+        Today,
+        Week,
+        Month,
+        All
+    }
+}

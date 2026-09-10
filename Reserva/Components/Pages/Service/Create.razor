@@ -1,0 +1,65 @@
+﻿@page "/business/{businessId:guid}/service/create"
+
+@using Reserva.Application.DTOs
+@using Reserva.Application.Interfaces
+
+@inject IService Service
+
+<h3>Add Service</h3>
+
+<div class="mb-3">
+    <label>Service Name</label>
+    <InputText class="form-control" @bind-Value="service.Name" />
+</div>
+
+<div class="mb-3">
+    <label>Description</label>
+    <InputTextArea class="form-control" @bind-Value="service.Description" />
+</div>
+
+<div class="mb-3">
+    <label>Price</label>
+    <InputNumber class="form-control" @bind-Value="service.Price" />
+</div>
+
+<div class="mb-3">
+    <label>Duration (minutes)</label>
+    <InputNumber class="form-control" @bind-Value="service.DurationInMinutes" />
+</div>
+
+<button class="btn btn-primary" @onclick="HandleCreateService">
+    Add Service
+</button>
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <div class="alert alert-info mt-3">
+        @message
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Guid businessId { get; set; }
+
+    private CreateServiceDto service = new();
+
+    private string message = string.Empty;
+
+    private async Task HandleCreateService()
+    {
+        try
+        {
+            service.BusinessId = businessId;
+
+            var serviceId =
+                await Service.CreateServiceAsync(service);
+
+            message = $"Service created successfully! ID: {serviceId}";
+        }
+        catch (Exception ex)
+        {
+            message = $"ERROR: {ex.Message}";
+        }
+    }
+}

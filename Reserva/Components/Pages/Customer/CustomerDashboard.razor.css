@@ -1,0 +1,881 @@
+/* =========================================================
+   RESERVA DASHBOARDS
+   Customer + Business Owner
+========================================================= */
+
+.customer-dashboard,
+.owner-dashboard {
+    min-height: 100vh;
+    background: #f7f9fb;
+    color: #092846;
+    padding: 70px 0 100px;
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.dashboard-container {
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.dashboard-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 55px;
+}
+
+.dashboard-eyebrow {
+    display: block;
+    margin-bottom: 15px;
+    color: #c58d3b;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.dashboard-header h1 {
+    margin: 0 0 15px;
+    color: #092846;
+    font-size: 46px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -1px;
+}
+
+    .dashboard-header h1 span {
+        color: #c58d3b;
+    }
+
+.dashboard-header p {
+    max-width: 620px;
+    margin: 0;
+    color: #758596;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   PRIMARY BUTTON
+========================================================= */
+
+.dashboard-primary-button {
+    flex-shrink: 0;
+    height: 54px;
+    padding: 0 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border-radius: 8px;
+    background: #092846;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .dashboard-primary-button:hover {
+        background: #0d355b;
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(9, 40, 70, 0.14);
+    }
+
+    .dashboard-primary-button span {
+        color: #d7a354;
+        font-size: 19px;
+    }
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.section-title {
+    margin-bottom: 28px;
+}
+
+    .section-title span {
+        display: block;
+        margin-bottom: 10px;
+        color: #c58d3b;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+    }
+
+    .section-title h2 {
+        margin: 0;
+        color: #092846;
+        font-size: 30px;
+        font-weight: 700;
+        line-height: 1.2;
+    }
+
+
+/* =========================================================
+   CUSTOMER PROFILE
+========================================================= */
+
+.profile-section {
+    margin-bottom: 70px;
+}
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 32px;
+    background: #ffffff;
+    border: 1px solid #e6ebef;
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(9, 40, 70, 0.05);
+}
+
+.profile-avatar {
+    width: 90px;
+    height: 90px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #092846;
+    color: #d7a354;
+    font-size: 34px;
+    font-weight: 700;
+}
+
+.profile-info {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px 45px;
+}
+
+    .profile-info div {
+        min-width: 0;
+    }
+
+    .profile-info small {
+        display: block;
+        margin-bottom: 7px;
+        color: #9aa7b4;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 2px;
+    }
+
+    .profile-info strong {
+        display: block;
+        color: #092846;
+        font-size: 15px;
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+
+/* =========================================================
+   APPOINTMENTS
+========================================================= */
+
+.appointments-section {
+    margin-bottom: 60px;
+}
+
+.appointments-list {
+    display: grid;
+    gap: 14px;
+}
+
+.appointment-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    padding: 24px 28px;
+    background: #ffffff;
+    border: 1px solid #e6ebef;
+    border-radius: 15px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+    .appointment-card:hover {
+        transform: translateY(-3px);
+        border-color: #dce4ea;
+        box-shadow: 0 15px 35px rgba(9, 40, 70, 0.07);
+    }
+
+    .appointment-card small {
+        display: block;
+        margin-bottom: 7px;
+        color: #c58d3b;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 2px;
+    }
+
+    .appointment-card h3 {
+        margin: 0 0 6px;
+        color: #092846;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .appointment-card p {
+        margin: 0;
+        color: #82909e;
+        font-size: 13px;
+    }
+
+.appointment-date {
+    width: 65px;
+    height: 65px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #092846;
+}
+
+    .appointment-date strong {
+        color: #ffffff;
+        font-size: 23px;
+        line-height: 1;
+    }
+
+    .appointment-date span {
+        margin-top: 5px;
+        color: #d7a354;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-appointments,
+.empty-businesses {
+    padding: 65px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: #ffffff;
+    border: 1px dashed #d9e1e7;
+    border-radius: 18px;
+}
+
+.empty-icon,
+.empty-business-icon {
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    background: #f8f0e5;
+    color: #c58d3b;
+    font-size: 28px;
+}
+
+.empty-appointments h3,
+.empty-businesses h3 {
+    margin: 0 0 10px;
+    color: #092846;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.empty-appointments p,
+.empty-businesses p {
+    max-width: 480px;
+    margin: 0 0 20px;
+    color: #82909e;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.empty-appointments a,
+.empty-businesses a {
+    color: #c58d3b;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+    .empty-appointments a:hover,
+    .empty-businesses a:hover {
+        color: #092846;
+    }
+
+
+/* =========================================================
+   OWNER STATS
+========================================================= */
+
+.owner-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 65px;
+}
+
+.stat-card {
+    padding: 27px 30px;
+    background: #ffffff;
+    border: 1px solid #e6ebef;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(9, 40, 70, 0.04);
+}
+
+.stat-label {
+    display: block;
+    margin-bottom: 12px;
+    color: #9aa7b4;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.stat-card strong {
+    color: #092846;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   BUSINESSES
+========================================================= */
+
+.businesses-section {
+    margin-bottom: 60px;
+}
+
+.businesses-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+
+/* =========================================================
+   OWNER BUSINESS CARD
+========================================================= */
+
+.owner-business-card {
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #e5ebef;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(9, 40, 70, 0.04);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+    .owner-business-card:hover {
+        transform: translateY(-6px);
+        border-color: #dce4ea;
+        box-shadow: 0 20px 45px rgba(9, 40, 70, 0.09);
+    }
+
+
+/* =========================================================
+   BUSINESS LOGO
+========================================================= */
+
+.owner-business-logo {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #092846;
+    overflow: hidden;
+}
+
+    .owner-business-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .owner-business-logo span {
+        width: 75px;
+        height: 75px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #ffffff;
+        color: #c58d3b;
+        font-size: 30px;
+        font-weight: 700;
+    }
+
+
+/* =========================================================
+   BUSINESS CONTENT
+========================================================= */
+
+.owner-business-content {
+    padding: 25px;
+}
+
+.business-category {
+    display: block;
+    margin-bottom: 8px;
+    color: #c58d3b;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.owner-business-content h3 {
+    margin: 0 0 7px;
+    color: #092846;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.owner-business-content > p {
+    margin: 0 0 18px;
+    color: #8794a1;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   BUSINESS META
+========================================================= */
+
+.business-meta {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 22px;
+    padding-top: 18px;
+    border-top: 1px solid #edf0f3;
+}
+
+    .business-meta span {
+        color: #68798a;
+        font-size: 11px;
+    }
+
+
+/* =========================================================
+   MANAGE BUTTON
+========================================================= */
+
+.manage-business-button {
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border-radius: 7px;
+    background: #092846;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+    .manage-business-button:hover {
+        background: #c58d3b;
+        color: #ffffff;
+        transform: translateY(-1px);
+    }
+
+    .manage-business-button span {
+        color: #d7a354;
+        font-size: 18px;
+    }
+
+    .manage-business-button:hover span {
+        color: #ffffff;
+    }
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.dashboard-loading {
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #758596;
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .customer-dashboard,
+    .owner-dashboard {
+        padding: 55px 0 80px;
+    }
+
+    .dashboard-container {
+        padding: 0 30px;
+    }
+
+    .dashboard-header {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 45px;
+    }
+
+        .dashboard-header h1 {
+            font-size: 40px;
+        }
+
+    .owner-stats {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .businesses-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .customer-dashboard,
+    .owner-dashboard {
+        padding: 45px 0 70px;
+    }
+
+    .dashboard-container {
+        padding: 0 20px;
+    }
+
+    .dashboard-header {
+        gap: 25px;
+    }
+
+        .dashboard-header h1 {
+            font-size: 34px;
+        }
+
+        .dashboard-header p {
+            font-size: 14px;
+        }
+
+    .dashboard-primary-button {
+        width: 100%;
+    }
+
+
+    /* PROFILE */
+
+    .profile-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 25px;
+    }
+
+    .profile-avatar {
+        width: 75px;
+        height: 75px;
+        font-size: 28px;
+    }
+
+    .profile-info {
+        width: 100%;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+
+    /* APPOINTMENTS */
+
+    .appointment-card {
+        padding: 20px;
+    }
+
+    .appointment-date {
+        width: 58px;
+        height: 58px;
+    }
+
+
+    /* STATS */
+
+    .owner-stats {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 50px;
+    }
+
+    .stat-card {
+        padding: 22px 25px;
+    }
+
+
+    /* BUSINESSES */
+
+    .businesses-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .owner-business-logo {
+        height: 200px;
+    }
+
+
+    /* TITLES */
+
+    .section-title h2 {
+        font-size: 26px;
+    }
+
+    .empty-appointments,
+    .empty-businesses {
+        padding: 50px 20px;
+    }
+}
+/* =========================================================
+   CUSTOMER APPOINTMENT TABS
+========================================================= */
+
+.appointment-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 22px;
+    padding: 5px;
+    width: fit-content;
+    background: #eef2f5;
+    border-radius: 10px;
+}
+
+.appointment-tab {
+    border: none;
+    background: transparent;
+    color: #758596;
+    padding: 11px 22px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+    .appointment-tab:hover {
+        color: #092846;
+    }
+
+    .appointment-tab.active {
+        background: #ffffff;
+        color: #092846;
+        box-shadow: 0 3px 10px rgba(9, 40, 70, 0.08);
+    }
+
+
+/* =========================================================
+   APPOINTMENT CARD DETAILS
+========================================================= */
+
+.appointment-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.appointment-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px 18px;
+    margin-top: 12px;
+}
+
+    .appointment-details span {
+        color: #82909e;
+        font-size: 12px;
+    }
+
+
+/* =========================================================
+   STATUS + ACTIONS
+========================================================= */
+
+.appointment-actions {
+    min-width: 145px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.appointment-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 85px;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+
+/* PENDING */
+
+.status-pending {
+    background: #fff6e8;
+    color: #b57d2f;
+}
+
+
+/* CONFIRMED */
+
+.status-confirmed {
+    background: #edf7f0;
+    color: #438157;
+}
+
+
+/* COMPLETED */
+
+.status-completed {
+    background: #eef2f5;
+    color: #607080;
+}
+
+
+/* CANCELLED */
+
+.status-cancelled {
+    background: #fdf0f0;
+    color: #b85b5b;
+}
+
+
+/* NO SHOW */
+
+.status-noshow {
+    background: #f4eef8;
+    color: #76578f;
+}
+
+
+/* =========================================================
+   CANCEL RESERVATION
+========================================================= */
+
+.cancel-reservation-button {
+    border: none;
+    background: transparent;
+    color: #b85b5b;
+    padding: 0;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+    .cancel-reservation-button:hover {
+        color: #8f3838;
+        text-decoration: underline;
+    }
+
+
+/* =========================================================
+   APPOINTMENT LOADING
+========================================================= */
+
+.appointments-loading {
+    padding: 50px 20px;
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid #e6ebef;
+    border-radius: 18px;
+    color: #758596;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .appointment-tabs {
+        width: 100%;
+    }
+
+    .appointment-tab {
+        flex: 1;
+        padding: 10px 12px;
+    }
+
+    .appointment-card {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 18px;
+    }
+
+    .appointment-main {
+        grid-column: 1 / -1;
+    }
+
+    .appointment-date {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .appointment-actions {
+        grid-column: 1;
+        grid-row: 2;
+        align-items: flex-start;
+    }
+
+    .appointment-details {
+        flex-direction: column;
+        gap: 5px;
+    }
+}

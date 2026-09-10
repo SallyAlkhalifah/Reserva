@@ -1,0 +1,364 @@
+﻿@page "/customer/dashboard"
+
+@using Reserva.Application.DTOs
+@using Reserva.Application.Interfaces
+
+@inject IUserService UserService
+@inject IAppointmentService AppointmentService
+@inject NavigationManager Navigation
+
+<PageTitle>My Profile - Reserva</PageTitle>
+
+<div class="customer-dashboard">
+
+    <div class="dashboard-container">
+
+        @if (user == null)
+        {
+            <div class="dashboard-loading">
+                Loading your profile...
+            </div>
+        }
+        else
+        {
+            <!-- HEADER -->
+            <section class="dashboard-header">
+
+                <div>
+                    <span class="dashboard-eyebrow">
+                        MY ACCOUNT
+                    </span>
+
+                    <h1>
+                        Welcome,
+                        <span>@user.FirstName.</span>
+                    </h1>
+
+                    <p>
+                        Manage your profile and keep track of your appointments.
+                    </p>
+                </div>
+
+                <a href="/services" class="dashboard-primary-button">
+                    Book an Appointment
+                    <span>→</span>
+                </a>
+
+            </section>
+
+
+            <!-- PROFILE -->
+            <section class="profile-section">
+
+                <div class="section-title">
+                    <span>PROFILE</span>
+                    <h2>Personal information</h2>
+                </div>
+
+                <div class="profile-card">
+
+                    <div class="profile-avatar">
+                        @user.FirstName.Substring(0, 1).ToUpper()
+                    </div>
+
+                    <div class="profile-info">
+
+                        <div>
+                            <small>FIRST NAME</small>
+                            <strong>@user.FirstName</strong>
+                        </div>
+
+                        <div>
+                            <small>LAST NAME</small>
+                            <strong>@user.LastName</strong>
+                        </div>
+
+                        <div>
+                            <small>EMAIL</small>
+                            <strong>@user.Email</strong>
+                        </div>
+
+                        <div>
+                            <small>PHONE</small>
+                            <strong>@user.PhoneNumber</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- APPOINTMENTS -->
+            <section class="appointments-section">
+
+                <div class="section-title">
+                    <span>APPOINTMENTS</span>
+                    <h2>Your appointments</h2>
+                </div>
+
+
+                <!-- TABS -->
+                <div class="appointment-tabs">
+
+                    <button type="button"
+                            class="appointment-tab @(activeTab == "upcoming" ? "active" : "")"
+                            @onclick='() => activeTab = "upcoming"'>
+                        Upcoming
+                    </button>
+
+                    <button type="button"
+                            class="appointment-tab @(activeTab == "past" ? "active" : "")"
+                            @onclick='() => activeTab = "past"'>
+                        Past
+                    </button>
+
+                </div>
+
+
+                @if (isLoadingAppointments)
+                {
+                    <div class="appointments-loading">
+                        Loading your appointments...
+                    </div>
+                }
+                else
+                {
+                    var displayedAppointments =
+                        activeTab == "upcoming"
+                            ? upcomingAppointments
+                            : pastAppointments;
+
+                    @if (displayedAppointments.Any())
+                    {
+                        <div class="appointments-list">
+
+                            @foreach (var appointment in displayedAppointments)
+                            {
+                                <div class="appointment-card">
+
+                                    <!-- APPOINTMENT INFO -->
+                                    <div class="appointment-main">
+
+                                        <small>APPOINTMENT</small>
+
+                                        <h3>
+                                            @appointment.Service?.Name
+                                        </h3>
+
+                                        <p>
+                                            @appointment.Business?.Name
+                                        </p>
+
+                                        <div class="appointment-details">
+
+                                            <span>
+                                                @appointment.AppointmentDate.ToString("dddd, dd MMMM yyyy")
+                                            </span>
+
+                                            <span>
+                                                @appointment.AppointmentDate.ToString("hh:mm tt")
+                                            </span>
+
+                                            @if (appointment.Service != null)
+                                            {
+                                                <span>
+                                                    @appointment.Service.DurationInMinutes min
+                                                    · @appointment.Service.Price.ToString("0.00") SAR
+                                                </span>
+                                            }
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- DATE -->
+                                    <div class="appointment-date">
+
+                                        <strong>
+                                            @appointment.AppointmentDate.ToString("dd")
+                                        </strong>
+
+                                        <span>
+                                            @appointment.AppointmentDate.ToString("MMM")
+                                        </span>
+
+                                    </div>
+
+
+                                    <!-- STATUS -->
+                                    <div class="appointment-actions">
+
+                                        <span class="appointment-status @GetStatusClass(appointment.Status)">
+                                            @GetStatusText(appointment.Status)
+                                        </span>
+
+                                        @if (activeTab == "upcoming"
+                                            && appointment.Status != "Cancelled"
+                                            && appointment.Status != "Completed"
+                                            && appointment.Status != "NoShow")
+                                        {
+                                            <button type="button"
+                                                    class="cancel-reservation-button"
+                                                    @onclick="() => CancelAppointment(appointment.Id)">
+                                                Cancel Reservation
+                                            </button>
+                                        }
+
+                                    </div>
+
+                                </div>
+                            }
+
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="empty-appointments">
+
+                            <div class="empty-icon">
+                                +
+                            </div>
+
+                            @if (activeTab == "upcoming")
+                            {
+                                <h3>No upcoming appointments</h3>
+
+                                <p>
+                                    Your upcoming appointments will appear here.
+                                </p>
+
+                                <a href="/services">
+                                    Find a service →
+                                </a>
+                            }
+                            else
+                            {
+                                <h3>No past appointments</h3>
+
+                                <p>
+                                    Your past appointments will appear here.
+                                </p>
+                            }
+
+                        </div>
+                    }
+                }
+
+            </section>
+
+        }
+
+    </div>
+
+</div>
+
+
+@code {
+
+    [SupplyParameterFromQuery]
+    public Guid UserId { get; set; }
+
+    private UserDto? user;
+
+    private List<AppointmentDto> appointments = new();
+    private List<AppointmentDto> upcomingAppointments = new();
+    private List<AppointmentDto> pastAppointments = new();
+
+    private string activeTab = "upcoming";
+
+    private bool isLoadingAppointments = true;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await UserService.GetUserByIdAsync(UserId);
+
+        if (user != null)
+        {
+            await LoadAppointments();
+        }
+
+        isLoadingAppointments = false;
+    }
+
+
+    private async Task LoadAppointments()
+    {
+        appointments =
+            await AppointmentService.GetAppointmentsByCustomerIdAsync(user!.Id);
+
+        SplitAppointments();
+    }
+
+
+    private void SplitAppointments()
+    {
+        var now = DateTime.Now;
+
+        upcomingAppointments = appointments
+            .Where(a =>
+                a.AppointmentDate >= now &&
+                a.Status != "Cancelled" &&
+                a.Status != "Completed" &&
+                a.Status != "NoShow")
+            .OrderBy(a => a.AppointmentDate)
+            .ToList();
+
+        pastAppointments = appointments
+            .Where(a =>
+                a.AppointmentDate < now ||
+                a.Status == "Completed" ||
+                a.Status == "Cancelled" ||
+                a.Status == "NoShow")
+            .OrderByDescending(a => a.AppointmentDate)
+            .ToList();
+    }
+
+
+    private async Task CancelAppointment(Guid appointmentId)
+    {
+        try
+        {
+            await AppointmentService.UpdateAppointmentStatusAsync(
+                appointmentId,
+                "Cancelled");
+
+            await LoadAppointments();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+
+    private string GetStatusClass(string status)
+    {
+        return status.ToLowerInvariant() switch
+        {
+            "pending" => "status-pending",
+            "confirmed" => "status-confirmed",
+            "completed" => "status-completed",
+            "cancelled" => "status-cancelled",
+            "noshow" => "status-noshow",
+            _ => "status-default"
+        };
+    }
+
+
+    private string GetStatusText(string status)
+    {
+        return status switch
+        {
+            "Pending" => "Pending",
+            "Confirmed" => "Confirmed",
+            "Completed" => "Completed",
+            "Cancelled" => "Cancelled",
+            "NoShow" => "No Show",
+            _ => status
+        };
+    }
+}
