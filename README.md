@@ -197,7 +197,7 @@ Employee	View and manage assigned appointments
 
 ### Business Management
 
-![Business Management](screenshots/business-management.png)
+![Business Management](screenshots/business-management1.png)
 ![Business Management](screenshots/business-management2.png)
 
 
