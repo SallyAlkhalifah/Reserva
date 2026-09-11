@@ -171,7 +171,7 @@ Role	Main Responsibilities
 Customer	Browse services and make appointments
 Business Owner	Manage businesses, employees, services, and appointments
 Employee	View and manage assigned appointments
-## 📸 Screenshots
+##  Screenshots
 
 ### Home Page
 
@@ -201,4 +201,3 @@ Employee	View and manage assigned appointments
 ![Business Management](screenshots/business-management2.png)
 
 
-Add screenshot here
